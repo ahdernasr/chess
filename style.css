@@ -1,0 +1,72 @@
+* {
+    margin: 0;
+}
+
+#homediv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    flex-direction: column;
+}
+
+#grid {
+    display: flex;
+    text-align: center;
+    position: relative;
+}
+
+.el {
+    width: 1.7rem;
+    height: 1.7rem;
+    padding: 1rem;
+    border: 0.1px solid gray;
+    position: relative;
+}
+
+.el:hover {
+    opacity: 90%;
+}
+
+.white {
+    background-color: rgb(207, 206, 206);
+}
+
+.black {
+    background-color: rgb(134, 101, 74);
+}
+
+.side {
+    background-color: black;
+}
+
+.piece {
+    width: 95%;
+    height: 95%;
+    position: absolute;
+    margin-left: auto;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    transition: width 0.3s, height 0.3s;
+}
+
+.piece:hover {
+    cursor: pointer;
+    width: 91.5%;
+    height: 91.5%;
+    transition: width 0.2s, height 0.2s;
+}
+
+.dragging {
+    width: 97%;
+    height: 97%;
+    cursor:-moz-grab;
+}
+
+.hidden {
+    display: none;
+}
