@@ -317,42 +317,83 @@ function addPieces() {
   dragHandler(whitePieces, blackPieces);
 }
 
+function whiteDragStart(event) {
+  event.target.closest(".piece").classList.add("dragging");
+}
+
+function whiteDragEnd(event) {
+  event.target.closest(".piece").classList.remove("dragging");
+}
+
+function blackDragStart(event) {
+  event.target.closest(".piece").classList.add("dragging");
+}
+
+function blackDragEnd(event) {
+  event.target.closest(".piece").classList.remove("dragging");
+}
+
 function dragHandler(whitePieces, blackPieces) {
   elements = document.getElementsByClassName("el");
-  for (draggable of whitePieces) {
-    draggable.addEventListener("dragstart", (event) => {
-      event.target.closest(".piece").classList.add("dragging");
-    });
+  if (turn == "white") {
+    for (draggable of whitePieces) {
+      draggable.addEventListener("dragstart", whiteDragStart);
 
-    draggable.addEventListener("dragend", (event) => {
-      event.target.closest(".piece").classList.remove("dragging");
-    });
+      draggable.addEventListener("dragend", whiteDragEnd);
+    }
+    for (draggable of blackPieces) {
+      draggable.addEventListener("dragstart", blackDragStart);
+
+      draggable.addEventListener("dragend", blackDragEnd);
+    }
+  }
+  if (turn == "black") {
+    for (draggable of blackPieces) {
+      draggable.addEventListener("dragstart", blackDragStart);
+
+      draggable.addEventListener("dragend", blackDragEnd);
+    }
+
+    for (draggable of whitePieces) {
+      draggable.addEventListener("dragstart", whiteDragStart);
+
+      draggable.addEventListener("dragend", whiteDragEnd);
+    }
   }
   for (e of elements) {
     e.addEventListener("dragover", (event) => {
       event.preventDefault();
-      draggable = document.querySelector(".dragging");
-      if (turn == "white") {
-        if (
-          !whitePieces.includes(event.target.closest(".el").firstElementChild)
-        )
-          if (draggable) event.target.closest(".el").appendChild(draggable);
-        if (
-          blackPieces.includes(event.target.closest(".el").firstElementChild)
-        ) {
-          if (draggable) event.target.closest(".el").appendChild(draggable);
-        }
-      }
     });
     e.addEventListener("drop", (event) => {
       event.preventDefault();
       draggable = document.querySelector(".dragging");
       if (turn == "white") {
         if (
+          whitePieces.includes(draggable) &&
           blackPieces.includes(event.target.closest(".el").firstElementChild)
         ) {
           if (draggable) event.target.closest(".el").appendChild(draggable);
-          event.target.closest(".el").firstElementChild.remove();
+          if (event.target.closest(".el").firstElementChild)
+            event.target.closest(".el").firstElementChild.remove();
+        } else if (
+          whitePieces.includes(draggable) &&
+          !whitePieces.includes(event.target.closest(".el").firstElementChild)
+        ) {
+          if (draggable) event.target.closest(".el").appendChild(draggable);
+        }
+      } else if (turn == "black") {
+        if (
+          blackPieces.includes(draggable) &&
+          whitePieces.includes(event.target.closest(".el").firstElementChild)
+        ) {
+          if (draggable) event.target.closest(".el").appendChild(draggable);
+          if (event.target.closest(".el").firstElementChild)
+            event.target.closest(".el").firstElementChild.remove();
+        } else if (
+          blackPieces.includes(draggable) &&
+          !blackPieces.includes(event.target.closest(".el").firstElementChild)
+        ) {
+          if (draggable) event.target.closest(".el").appendChild(draggable);
         }
       }
     });
