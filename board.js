@@ -370,17 +370,17 @@ function blackDragEnd(event) {
   event.target.closest(".piece").classList.remove("dragging");
 }
 
-function initTurn(turn) {
-  if (turn == "white") {
-    removeBlackListeners();
-    addWhiteListeners();
-  }
-  if (turn == "black") {
-    removeWhiteListeners();
-    addBlackListeners();
-  }
-  return;
-}
+// function initTurn(turn) {
+//   if (turn == "white") {
+//     removeBlackListeners();
+//     addWhiteListeners();
+//   }
+//   if (turn == "black") {
+//     removeWhiteListeners();
+//     addBlackListeners();
+//   }
+//   return;
+// }
 
 function onDrop(event) {
   event.preventDefault();
@@ -414,17 +414,10 @@ function onDrop(event) {
       if (draggable) event.target.closest(".el").appendChild(draggable);
     }
   }
-//  f (turn == "black") {
-//     turn = "white";
-//   } else if (turn == "black") {
-//     turn = "white";
-//   }
-
-//   dragHandler() i
+  dragHandler()
 }
 
 function dragHandler() {
-  initTurn(turn);
   elements = document.getElementsByClassName("el");
   for (e of elements) {
     e.addEventListener("dragover", (event) => {
