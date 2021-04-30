@@ -1,6 +1,4 @@
 turn = "black";
-whitePieces = [];
-blackPieces = [];
 
 function createGrid() {
   //DRAW BOARD
@@ -316,11 +314,10 @@ function addPieces() {
         break;
     }
   }
-  dragHandler();
+  dragHandler(whitePieces, blackPieces);
 }
 
 function addWhiteListeners() {
-  console.log("adding white listeners");
   for (draggable of whitePieces) {
     draggable.addEventListener("dragstart", whiteDragStart);
 
@@ -328,7 +325,6 @@ function addWhiteListeners() {
   }
 }
 function removeWhiteListeners() {
-  console.log("remove white listeners");
   for (draggable of whitePieces) {
     draggable.removeEventListener("dragstart", whiteDragStart);
 
@@ -337,7 +333,6 @@ function removeWhiteListeners() {
 }
 
 function addBlackListeners() {
-  console.log("adding black listeners");
   for (draggable of blackPieces) {
     draggable.addEventListener("dragstart", blackDragStart);
 
@@ -345,7 +340,6 @@ function addBlackListeners() {
   }
 }
 function removeBlackListeners() {
-  console.log("remove black listeners");
   for (draggable of blackPieces) {
     draggable.removeEventListener("dragstart", blackDragStart);
 
@@ -354,76 +348,76 @@ function removeBlackListeners() {
 }
 
 function whiteDragStart(event) {
-  if (turn == "white") event.target.closest(".piece").classList.add("dragging");
+  event.target.closest(".piece").classList.add("dragging");
 }
 
 function whiteDragEnd(event) {
-  if (turn == "white")
-    event.target.closest(".piece").classList.remove("dragging");
+  event.target.closest(".piece").classList.remove("dragging");
 }
 
 function blackDragStart(event) {
-  if (turn == "black") event.target.closest(".piece").classList.add("dragging");
+  event.target.closest(".piece").classList.add("dragging");
 }
 
 function blackDragEnd(event) {
   event.target.closest(".piece").classList.remove("dragging");
 }
 
-// function initTurn(turn) {
-//   if (turn == "white") {
-//     removeBlackListeners();
-//     addWhiteListeners();
-//   }
-//   if (turn == "black") {
-//     removeWhiteListeners();
-//     addBlackListeners();
-//   }
-//   return;
-// }
+function initTurn() {
+  if (turn == 'white') {
+    addWhiteListeners()
+    removeBlackListeners()
+  } else {
+    addBlackListeners()
+    removeWhiteListeners()
+  }
+}
 
-function onDrop(event) {
-  event.preventDefault();
-  draggable = document.querySelector(".dragging");
-  if (turn == "white") {
-    if (
-      whitePieces.includes(draggable) &&
-      blackPieces.includes(event.target.closest(".el").firstElementChild)
-    ) {
-      if (draggable) event.target.closest(".el").appendChild(draggable);
-      if (event.target.closest(".el").firstElementChild)
-        event.target.closest(".el").firstElementChild.remove();
-    } else if (
-      whitePieces.includes(draggable) &&
-      !whitePieces.includes(event.target.closest(".el").firstElementChild)
-    ) {
-      if (draggable) event.target.closest(".el").appendChild(draggable);
-    }
-  } else if (turn == "black") {
-    if (
-      blackPieces.includes(draggable) &&
-      whitePieces.includes(event.target.closest(".el").firstElementChild)
-    ) {
-      if (draggable) event.target.closest(".el").appendChild(draggable);
-      if (event.target.closest(".el").firstElementChild)
-        event.target.closest(".el").firstElementChild.remove();
-    } else if (
-      blackPieces.includes(draggable) &&
-      !blackPieces.includes(event.target.closest(".el").firstElementChild)
-    ) {
-      if (draggable) event.target.closest(".el").appendChild(draggable);
+function dropHandler(event) {
+  {
+    event.preventDefault();
+    if (turn == "white") {
+      draggable = document.querySelector(".dragging");
+      if (
+        whitePieces.includes(draggable) &&
+        blackPieces.includes(event.target.closest(".el").firstElementChild)
+      ) {
+        if (draggable) event.target.closest(".el").appendChild(draggable);
+        if (event.target.closest(".el").firstElementChild)
+          event.target.closest(".el").firstElementChild.remove();
+      } else if (
+        whitePieces.includes(draggable) &&
+        !whitePieces.includes(event.target.closest(".el").firstElementChild)
+      ) {
+        if (draggable) event.target.closest(".el").appendChild(draggable);
+      }
+    } else if (turn == "black") {
+      draggable = document.querySelector(".dragging");
+      if (
+        blackPieces.includes(draggable) &&
+        whitePieces.includes(event.target.closest(".el").firstElementChild)
+      ) {
+        if (draggable) event.target.closest(".el").appendChild(draggable);
+        if (event.target.closest(".el").firstElementChild)
+          event.target.closest(".el").firstElementChild.remove();
+      } else if (
+        blackPieces.includes(draggable) &&
+        !blackPieces.includes(event.target.closest(".el").firstElementChild)
+      ) {
+        if (draggable) event.target.closest(".el").appendChild(draggable);
+      }
     }
   }
-  dragHandler()
 }
 
 function dragHandler() {
+  initTurn()
   elements = document.getElementsByClassName("el");
   for (e of elements) {
     e.addEventListener("dragover", (event) => {
       event.preventDefault();
     });
-    e.addEventListener("drop", onDrop);
+    e.addEventListener("drop", dropHandler);
   }
 }
 
