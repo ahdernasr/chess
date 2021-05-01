@@ -25,12 +25,14 @@ body {
 
 /* RIGHT SIDE DIV */
 .side-right {
+    border-radius: 1rem 2rem 1rem 2rem;
+    border: 2px solid gray;
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 70vh;
-    width: 20vw;
+    width: 25vw;
     padding: 1rem;
     right: 2rem;
     flex-direction: column;
@@ -94,12 +96,14 @@ body {
 
 /* LEFT SIDE DIV */
 .side-left {
+    border-radius: 1rem 2rem 1rem 2rem;
+    border: 2px solid gray;
     position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 70vh;
-    width: 20vw;
+    width: 23vw;
     padding: 1rem;
     left: 2rem;
     flex-direction: column;
@@ -134,6 +138,22 @@ body {
     display: flex;
     text-align: center;
     position: relative;
+    z-index: 1000;
+}
+
+.rotate {
+    transform: rotate(180deg);
+    /* transition: transform 2s;
+    transition-timing-function: ease-out; */
+}
+
+#grid:not(.rotate) {
+    /* transition: transform 2s;
+    transition-timing-function: ease-out; */
+}
+
+.rotate-piece {
+    transform: rotate(180deg);
 }
 
 .el {
@@ -238,12 +258,12 @@ body {
         padding: 4px 4px 0 0;
     }
     .side-left {
-        width: 20vw;
+        width: 23vw;
         padding: 1rem;
         left: 4rem;
     }
     .side-right {
-        width: 20vw;
+        width: 23vw;
         padding: 1rem;
         right: 4rem;
     }
@@ -274,13 +294,13 @@ body {
     }
     .side-left {
         height: 60vh;
-        width: 20vw;
+        width: 23vw;
         padding: 1rem;
         left: 4rem;
     }
     .side-right {
         height: 60vh;
-        width: 20vw;
+        width: 23vw;
         padding: 1rem;
         right: 4rem;
     }
@@ -309,14 +329,14 @@ body {
         padding: 4px 4px 0 0;
     }
     .side-left {
-        height: 50vh;
-        width: 20vw;
+        height: 70vh;
+        width: 23vw;
         padding: 1rem;
         left: 2rem;
     }
     .side-right {
-        height: 50vh;
-        width: 20vw;
+        height: 70vh;
+        width: 23vw;
         padding: 1rem;
         right: 2rem;
     }
@@ -345,14 +365,14 @@ body {
         padding: 4px 4px 0 0;
     }
     .side-left {
-        height: 50vh;
-        width: 20vw;
+        height: 70vh;
+        width: 23vw;
         padding: 1rem;
         left: 2rem;
     }
     .side-right {
-        height: 50vh;
-        width: 20vw;
+        height: 70vh;
+        width: 23vw;
         padding: 1rem;
         right: 2rem;
     }

@@ -8,12 +8,12 @@ let kings = [];
 let queens = [];
 
 export function addPieces() {
-  let iconpack = "2";
+  let iconpack = "1";
   whitePieces = [];
   blackPieces = [];
   let elements = document.getElementsByClassName("el");
   let piece = document.createElement("div");
-  let label = document.createElement("h3");
+  // let label = document.createElement("h3");
   if (iconpack == "1") {
     for (let e of elements) {
       switch (e.value.letter + e.value.number) {
@@ -24,6 +24,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           whitePieces.push(piece);
           soldiers.push(piece);
           break;
@@ -33,6 +36,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           whitePieces.push(piece);
           soldiers.push(piece);
           break;
@@ -42,6 +48,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           whitePieces.push(piece);
           soldiers.push(piece);
           break;
@@ -51,6 +60,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           whitePieces.push(piece);
           soldiers.push(piece);
           break;
@@ -60,6 +72,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           whitePieces.push(piece);
           soldiers.push(piece);
           break;
@@ -69,6 +84,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           whitePieces.push(piece);
           soldiers.push(piece);
           break;
@@ -78,6 +96,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           whitePieces.push(piece);
           soldiers.push(piece);
           break;
@@ -87,6 +108,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           whitePieces.push(piece);
           soldiers.push(piece);
           // label = document.createElement("h3");
@@ -100,6 +124,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/wallW.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           whitePieces.push(piece);
           walls.push(piece);
           // label = document.createElement("h3");
@@ -113,6 +140,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/horseW.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           whitePieces.push(piece);
           horses.push(piece);
           // label = document.createElement("h3");
@@ -126,6 +156,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/bishopW.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           whitePieces.push(piece);
           bishops.push(piece);
           // label = document.createElement("h3");
@@ -139,6 +172,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/queenW.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           whitePieces.push(piece);
           queens.push(piece);
           // label = document.createElement("h3");
@@ -152,6 +188,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/kingW.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           whitePieces.push(piece);
           kings.push(piece);
           // label = document.createElement("h3");
@@ -165,6 +204,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/bishopW.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           whitePieces.push(piece);
           bishops.push(piece);
           // label = document.createElement("h3");
@@ -178,6 +220,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/horseW.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           whitePieces.push(piece);
           horses.push(piece);
           // label = document.createElement("h3");
@@ -191,6 +236,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/wallW.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           whitePieces.push(piece);
           walls.push(piece);
           // label = document.createElement("h3");
@@ -209,6 +257,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           blackPieces.push(piece);
           soldiers.push(piece);
           break;
@@ -218,6 +269,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           blackPieces.push(piece);
           soldiers.push(piece);
           break;
@@ -227,6 +281,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           blackPieces.push(piece);
           soldiers.push(piece);
           break;
@@ -236,6 +293,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           blackPieces.push(piece);
           soldiers.push(piece);
           break;
@@ -245,6 +305,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           blackPieces.push(piece);
           soldiers.push(piece);
           break;
@@ -254,6 +317,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           blackPieces.push(piece);
           soldiers.push(piece);
           break;
@@ -263,6 +329,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           blackPieces.push(piece);
           soldiers.push(piece);
           break;
@@ -272,6 +341,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           blackPieces.push(piece);
           soldiers.push(piece);
           // label = document.createElement("h3");
@@ -285,6 +357,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/wallBL.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           blackPieces.push(piece);
           walls.push(piece);
           break;
@@ -294,6 +369,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/horseBL.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           blackPieces.push(piece);
           horses.push(piece);
           break;
@@ -303,6 +381,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/bishopBL.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           blackPieces.push(piece);
           bishops.push(piece);
           break;
@@ -312,6 +393,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/queenBL.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           blackPieces.push(piece);
           queens.push(piece);
           break;
@@ -321,6 +405,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/kingBL.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           blackPieces.push(piece);
           kings.push(piece);
           break;
@@ -330,6 +417,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/bishopBL.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           blackPieces.push(piece);
           bishops.push(piece);
           break;
@@ -339,6 +429,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/horseBL.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           blackPieces.push(piece);
           horses.push(piece);
           break;
@@ -348,6 +441,9 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/wallBL.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
+          piece.style.width = "70%";
           blackPieces.push(piece);
           walls.push(piece);
           // label = document.createElement("h3");
@@ -392,6 +488,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierW2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           whitePieces.push(piece);
           soldiers.push(piece);
           break;
@@ -401,6 +499,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierW2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           whitePieces.push(piece);
           soldiers.push(piece);
           break;
@@ -410,6 +510,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierW2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           whitePieces.push(piece);
           soldiers.push(piece);
           break;
@@ -419,6 +521,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierW2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           whitePieces.push(piece);
           soldiers.push(piece);
           break;
@@ -428,6 +532,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierW2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           whitePieces.push(piece);
           soldiers.push(piece);
           break;
@@ -437,6 +543,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierW2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           whitePieces.push(piece);
           soldiers.push(piece);
           break;
@@ -446,6 +554,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierW2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           whitePieces.push(piece);
           soldiers.push(piece);
           break;
@@ -455,6 +565,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierW2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           whitePieces.push(piece);
           soldiers.push(piece);
           break;
@@ -464,6 +576,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/wallW2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           whitePieces.push(piece);
           walls.push(piece);
 
@@ -474,6 +588,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/horseW2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           whitePieces.push(piece);
           horses.push(piece);
           break;
@@ -483,6 +599,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/bishopW2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           whitePieces.push(piece);
           bishops.push(piece);
           break;
@@ -492,6 +610,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/queenW2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           whitePieces.push(piece);
           queens.push(piece);
           break;
@@ -501,6 +621,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/kingW2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           whitePieces.push(piece);
           kings.push(piece);
           break;
@@ -510,6 +632,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/bishopW2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           whitePieces.push(piece);
           bishops.push(piece);
           break;
@@ -519,6 +643,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/horseW2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           whitePieces.push(piece);
           horses.push(piece);
           break;
@@ -528,6 +654,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/wallW2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           whitePieces.push(piece);
           walls.push(piece);
           break;
@@ -538,6 +666,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierBL2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           blackPieces.push(piece);
           soldiers.push(piece);
           break;
@@ -547,6 +677,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierBL2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           blackPieces.push(piece);
           soldiers.push(piece);
           break;
@@ -556,6 +688,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierBL2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           blackPieces.push(piece);
           soldiers.push(piece);
           break;
@@ -565,6 +699,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierBL2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           blackPieces.push(piece);
           soldiers.push(piece);
           break;
@@ -574,6 +710,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierBL2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           blackPieces.push(piece);
           soldiers.push(piece);
           break;
@@ -583,6 +721,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierBL2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           blackPieces.push(piece);
           soldiers.push(piece);
           break;
@@ -592,6 +732,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierBL2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           blackPieces.push(piece);
           soldiers.push(piece);
           break;
@@ -601,6 +743,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/soldierBL2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           blackPieces.push(piece);
           soldiers.push(piece);
           break;
@@ -610,6 +754,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/wallBL2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           blackPieces.push(piece);
           walls.push(piece);
           break;
@@ -619,6 +765,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/horseBL2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           blackPieces.push(piece);
           horses.push(piece);
           break;
@@ -628,6 +776,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/bishopBL2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           blackPieces.push(piece);
           bishops.push(piece);
           break;
@@ -637,6 +787,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/queenBL2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           blackPieces.push(piece);
           queens.push(piece);
           break;
@@ -646,6 +798,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/kingBL2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           blackPieces.push(piece);
           kings.push(piece);
           break;
@@ -655,6 +809,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/bishopBL2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           blackPieces.push(piece);
           bishops.push(piece);
           break;
@@ -664,6 +820,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/horseBL2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           blackPieces.push(piece);
           horses.push(piece);
           break;
@@ -673,6 +831,8 @@ export function addPieces() {
           piece.draggable = "true";
           e.appendChild(piece);
           piece.style.backgroundImage = "url('./chess_pieces/wallBL2.png')";
+          piece.value = {};
+          piece.value.firstTime = true;
           blackPieces.push(piece);
           walls.push(piece);
           break;

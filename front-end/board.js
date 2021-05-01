@@ -2,6 +2,7 @@ import { addPieces, PIECES } from "./pieces.js";
 import { findOptions, removeOptions } from "./rules.js";
 
 let turn = "white";
+let firstMove = true;
 
 function createGrid() {
   //DRAW BOARD
@@ -22,7 +23,6 @@ function createGrid() {
         y: y,
         letter: alphabet[x],
         number: y,
-        firstTime: true
       };
       el.classList.add("el");
       line.appendChild(el);
@@ -100,7 +100,16 @@ function blackDragEnd(event) {
   removeOptions();
 }
 
-function initTurn() {
+async function initTurn() {
+  await sleep(600)
+  if (!firstMove) {
+    document.getElementById("grid").classList.toggle('rotate')
+    let elements = document.getElementsByClassName("el")
+    for (let e of elements) {
+      e.classList.toggle('rotate-piece')
+    }
+  }
+  firstMove = false
   let turnLabel = document.getElementById("turn");
   if (turn == "white") {
     turnLabel.textContent = "White's";
@@ -135,6 +144,7 @@ function whiteDropHandler(event) {
     if (draggable && event.target.closest(".el").classList.contains("possible")) {
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
+      draggable.value.firstTime = false
       turn = "black";
     }
     if (event.target.closest(".el").firstElementChild &&
@@ -156,6 +166,7 @@ function whiteDropHandler(event) {
     ) {
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
+      draggable.value.firstTime = false
       turn = "black";
     }
   }
@@ -173,6 +184,7 @@ function blackDropHandler(event) {
       draggable &&
       event.target.closest(".el").classList.contains("possible")
     ) {
+      draggable.value.firstTime = false
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
       turn = "white";
@@ -194,6 +206,7 @@ function blackDropHandler(event) {
       draggable &&
       event.target.closest(".el").classList.contains("possible")
     ) {
+      draggable.value.firstTime = false
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
       turn = "white";
@@ -211,6 +224,10 @@ function eventHandler() {
     });
     e.addEventListener("drop", dropHandler);
   }
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 createGrid();

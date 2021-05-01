@@ -38,6 +38,11 @@ export function findOptions(piece) {
           }
         }
       }
+      //   for (let b of PIECES.blackPieces) {
+      //     if (findOptions(b).includes(piece)) {
+      //       a.classLIst.remove("possible");
+      //     }
+      //   }
     }
     if (PIECES.blackPieces.includes(piece)) {
       for (let a of arr) {
@@ -54,6 +59,7 @@ export function findOptions(piece) {
         }
       }
     }
+    return arr;
   } else if (PIECES.bishops.includes(piece)) {
     arr = [];
     x = piece.parentElement.value.x;
@@ -264,6 +270,8 @@ export function findOptions(piece) {
         }
       }
     }
+
+    return arr;
   } else if (PIECES.queens.includes(piece)) {
     arr = [];
     x = piece.parentElement.value.x;
@@ -482,41 +490,6 @@ export function findOptions(piece) {
       }
     }
     for (let i = 0; i < 10; i++) {
-      if (!findSpot(x - 1 - i, y)) {
-        break;
-      }
-      if (findSpot(x - 1 - i, y)) {
-        arr.push(findSpot(x - 1 - i, y));
-      } else if (
-        findSpot(x - 1 - i, y) &&
-        findSpot(x - 1 - i, y).firstElementChild
-      ) {
-        if (
-          PIECES.blackPieces.includes(findSpot(x - 1 - i, y).firstElementChild)
-        ) {
-        }
-      } else if (
-        findSpot(x - 1 - i, y) &&
-        findSpot(x - 1 - i, y).firstElementChild
-      ) {
-        if (
-          PIECES.whitePieces.includes(findSpot(x - 1 - i, y).firstElementChild)
-        ) {
-          arr.push(findSpot(x - 1 - i, y));
-        }
-      }
-      if (
-        PIECES.whitePieces.includes(findSpot(x - 1 - i, y).firstElementChild)
-      ) {
-        break;
-      }
-      if (
-        PIECES.blackPieces.includes(findSpot(x - 1 - i, y).firstElementChild)
-      ) {
-        break;
-      }
-    }
-    for (let i = 0; i < 10; i++) {
       if (!findSpot(x, y + i + 1)) {
         break;
       }
@@ -547,6 +520,76 @@ export function findOptions(piece) {
       }
       if (
         PIECES.blackPieces.includes(findSpot(x, y + 1 + i).firstElementChild)
+      ) {
+        break;
+      }
+    }
+    for (let i = 0; i < 10; i++) {
+      if (!findSpot(x, y - 1 - i)) {
+        break;
+      }
+      if (findSpot(x, y - 1 - i)) {
+        arr.push(findSpot(x, y - 1 - i));
+      } else if (
+        findSpot(x, y - 1 - i) &&
+        findSpot(x, y - 1 - i).firstElementChild
+      ) {
+        if (
+          PIECES.blackPieces.includes(findSpot(x, y - 1 - i).firstElementChild)
+        ) {
+        }
+      } else if (
+        findSpot(x, y - 1 - i) &&
+        findSpot(x, y - 1 - i).firstElementChild
+      ) {
+        if (
+          PIECES.whitePieces.includes(findSpot(x, y - 1 - i).firstElementChild)
+        ) {
+          arr.push(findSpot(x, y - 1 - i));
+        }
+      }
+      if (
+        PIECES.whitePieces.includes(findSpot(x, y - 1 - i).firstElementChild)
+      ) {
+        break;
+      }
+      if (
+        PIECES.blackPieces.includes(findSpot(x, y - 1 - i).firstElementChild)
+      ) {
+        break;
+      }
+    }
+    for (let i = 0; i < 10; i++) {
+      if (!findSpot(x - 1 - i, y)) {
+        break;
+      }
+      if (findSpot(x - 1 - i, y)) {
+        arr.push(findSpot(x - 1 - i, y));
+      } else if (
+        findSpot(x - 1 - i, y) &&
+        findSpot(x - 1 - i, y).firstElementChild
+      ) {
+        if (
+          PIECES.blackPieces.includes(findSpot(x - 1 - i, y).firstElementChild)
+        ) {
+        }
+      } else if (
+        findSpot(x - 1 - i, y) &&
+        findSpot(x - 1 - i, y).firstElementChild
+      ) {
+        if (
+          PIECES.whitePieces.includes(findSpot(x - 1 - i, y).firstElementChild)
+        ) {
+          arr.push(findSpot(x - 1 - i, y));
+        }
+      }
+      if (
+        PIECES.whitePieces.includes(findSpot(x - 1 - i, y).firstElementChild)
+      ) {
+        break;
+      }
+      if (
+        PIECES.blackPieces.includes(findSpot(x - 1 - i, y).firstElementChild)
       ) {
         break;
       }
@@ -624,14 +667,32 @@ export function findOptions(piece) {
         }
       }
     }
+    return arr;
   } else if (PIECES.soldiers.includes(piece)) {
     arr = [];
     x = piece.parentElement.value.x;
     y = piece.parentElement.value.y;
     if (PIECES.whitePieces.includes(piece)) {
-        arr.push(findSpot(x-1, y+1));
-        arr.push(findSpot(x+1, y + 1));
+      if (piece.value.firstTime) {
+        if(!findSpot(x, y+2).firstElementChild) arr.push(findSpot(x, y + 2));
+        if(!findSpot(x, y+1).firstElementChild) arr.push(findSpot(x, y + 1));
+      } else if (!findSpot(x, y + 1).firstElementChild) {
         arr.push(findSpot(x, y + 1));
+      }
+      if (
+        findSpot(x + 1, y + 1) &&
+        findSpot(x + 1, y + 1).firstElementChild &&
+        PIECES.blackPieces.includes(findSpot(x + 1, y + 1).firstElementChild)
+      ) {
+        arr.push(findSpot(x + 1, y + 1));
+      }
+      if (
+        findSpot(x - 1, y + 1) &&
+        findSpot(x - 1, y + 1).firstElementChild &&
+        PIECES.blackPieces.includes(findSpot(x - 1, y + 1).firstElementChild)
+      ) {
+        arr.push(findSpot(x - 1, y + 1));
+      }
       for (let a of arr) {
         if (a) {
           if (
@@ -647,9 +708,26 @@ export function findOptions(piece) {
       }
     }
     if (PIECES.blackPieces.includes(piece)) {
-        arr.push(findSpot(x-1, y-1));
-        arr.push(findSpot(x+1, y - 1));
+      if (piece.value.firstTime) {
+        if(!findSpot(x, y-2).firstElementChild) arr.push(findSpot(x, y - 2));
+        if(!findSpot(x, y-1).firstElementChild) arr.push(findSpot(x, y - 1));
+      } else if (!findSpot(x, y - 1).firstElementChild) {
         arr.push(findSpot(x, y - 1));
+      }
+      if (
+        findSpot(x + 1, y - 1) &&
+        findSpot(x + 1, y - 1).firstElementChild &&
+        PIECES.whitePieces.includes(findSpot(x + 1, y - 1).firstElementChild)
+      ) {
+        arr.push(findSpot(x + 1, y - 1));
+      }
+      if (
+        findSpot(x - 1, y - 1) &&
+        findSpot(x - 1, y - 1).firstElementChild &&
+        PIECES.whitePieces.includes(findSpot(x - 1, y - 1).firstElementChild)
+      ) {
+        arr.push(findSpot(x - 1, y - 1));
+      }
       for (let a of arr) {
         if (a) {
           if (
@@ -664,6 +742,7 @@ export function findOptions(piece) {
         }
       }
     }
+    return arr;
   } else if (PIECES.walls.includes(piece)) {
     arr = [];
     x = piece.parentElement.value.x;
@@ -840,6 +919,7 @@ export function findOptions(piece) {
         }
       }
     }
+    return arr;
   } else if (PIECES.horses.includes(piece)) {
     arr = [];
     x = piece.parentElement.value.x;
