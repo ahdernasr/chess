@@ -671,6 +671,9 @@ export function findOptions(piece) {
     x = piece.parentElement.value.x;
     y = piece.parentElement.value.y;
     for (let i = 0; i < 10; i++) {
+      if (!findSpot(x + 1 + i, y + 1 + i)) {
+        break;
+      }
       if (findSpot(x + 1 + i, y + 1 + i)) {
         arr.push(findSpot(x + 1 + i, y + 1 + i));
       } else if (
@@ -694,9 +697,6 @@ export function findOptions(piece) {
         ) {
           arr.push(findSpot(x + 1 + i, y + 1 + i));
         }
-      }
-      if (!findSpot(x + 1 + i, y + 1 + i)) {
-        break;
       }
       if (
         findSpot(x + 1 + i, y + 1 + i) &&
@@ -804,43 +804,43 @@ export function findOptions(piece) {
       }
     }
     for (let i = 0; i < 10; i++) {
-      if (!findSpot(x - 1 - i, y + 1 + i)) {
+      if (!findSpot(x - 1 - i, y - 1 - i)) {
         break;
       }
-      if (findSpot(x - 1 - i, y + 1 + i)) {
-        arr.push(findSpot(x - 1 - i, y + 1 + i));
+      if (findSpot(x - 1 - i, y - 1 - i)) {
+        arr.push(findSpot(x - 1 - i, y - 1 - i));
       } else if (
-        findSpot(x - 1 - i, y + 1 + i) &&
-        findSpot(x - 1 - i, y + 1 + i).firstElementChild
+        findSpot(x - 1 - i, y - 1 - i) &&
+        findSpot(x - 1 - i, y - 1 - i).firstElementChild
       ) {
         if (
           PIECES.blackPieces.includes(
-            findSpot(x - 1 - i, y + 1 + i).firstElementChild
+            findSpot(x - 1 - i, y - 1 - i).firstElementChild
           )
         ) {
         }
       } else if (
-        findSpot(x - 1 - i, y + 1 + i) &&
-        findSpot(x - 1 - i, y + 1 + i).firstElementChild
+        findSpot(x - 1 - i, y - 1 - i) &&
+        findSpot(x - 1 - i, y - 1 - i).firstElementChild
       ) {
         if (
           PIECES.whitePieces.includes(
-            findSpot(x - 1 - i, y + 1 + i).firstElementChild
+            findSpot(x - 1 - i, y - 1 - i).firstElementChild
           )
         ) {
-          arr.push(findSpot(x - 1 - i, y + 1 + i));
+          arr.push(findSpot(x - 1 - i, y - 1 - i));
         }
       }
       if (
         PIECES.whitePieces.includes(
-          findSpot(x - 1 - i, y + 1 + i).firstElementChild
+          findSpot(x - 1 - i, y - 1 - i).firstElementChild
         )
       ) {
         break;
       }
       if (
         PIECES.blackPieces.includes(
-          findSpot(x - 1 - i, y + 1 + i).firstElementChild
+          findSpot(x - 1 - i, y - 1 - i).firstElementChild
         )
       ) {
         break;
