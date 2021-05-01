@@ -1,4 +1,5 @@
-turn = "black";
+turn = "white";
+iconpack = "1";
 
 function createGrid() {
   //DRAW BOARD
@@ -52,366 +53,668 @@ function addPieces() {
   whitePieces = [];
   blackPieces = [];
   elements = document.getElementsByClassName("el");
-  for (e of elements) {
-    switch (e.value.letter + e.value.number) {
-      //WHITE PIECES
-      case "a2":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
-        whitePieces.push(piece);
-        break;
-      case "b2":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
-        whitePieces.push(piece);
-        break;
-      case "c2":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
-        whitePieces.push(piece);
-        break;
-      case "d2":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
-        whitePieces.push(piece);
-        break;
-      case "e2":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
-        whitePieces.push(piece);
-        break;
-      case "f2":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
-        whitePieces.push(piece);
-        break;
-      case "g2":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
-        whitePieces.push(piece);
-        break;
-      case "h2":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
-        whitePieces.push(piece);
-        break;
-      case "a1":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/wallW.png')";
-        whitePieces.push(piece);
-        break;
-      case "b1":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/horseW.png')";
-        whitePieces.push(piece);
-        break;
-      case "c1":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/bishopW.png')";
-        whitePieces.push(piece);
-        break;
-      case "d1":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/queenW.png')";
-        whitePieces.push(piece);
-        break;
-      case "e1":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/kingW.png')";
-        whitePieces.push(piece);
-        break;
-      case "f1":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/bishopW.png')";
-        whitePieces.push(piece);
-        break;
-      case "g1":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/horseW.png')";
-        whitePieces.push(piece);
-        break;
-      case "h1":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/wallW.png')";
-        whitePieces.push(piece);
-        break;
-      //BLACK PIECES
-      case "a7":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
-        blackPieces.push(piece);
-        break;
-      case "b7":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
-        blackPieces.push(piece);
-        break;
-      case "c7":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
-        blackPieces.push(piece);
-        break;
-      case "d7":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
-        blackPieces.push(piece);
-        break;
-      case "e7":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
-        blackPieces.push(piece);
-        break;
-      case "f7":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
-        blackPieces.push(piece);
-        break;
-      case "g7":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
-        blackPieces.push(piece);
-        break;
-      case "h7":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
-        blackPieces.push(piece);
-        break;
-      case "a8":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/wallBL.png')";
-        blackPieces.push(piece);
-        break;
-      case "b8":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/horseBL.png')";
-        blackPieces.push(piece);
-        break;
-      case "c8":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/bishopBL.png')";
-        blackPieces.push(piece);
-        break;
-      case "d8":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/queenBL.png')";
-        blackPieces.push(piece);
-        break;
-      case "e8":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/kingBL.png')";
-        blackPieces.push(piece);
-        break;
-      case "f8":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/bishopBL.png')";
-        blackPieces.push(piece);
-        break;
-      case "g8":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/horseBL.png')";
-        blackPieces.push(piece);
-        break;
-      case "h8":
-        piece = document.createElement("div");
-        piece.classList.add("piece");
-        piece.draggable = "true";
-        e.appendChild(piece);
-        piece.style.backgroundImage = "url('./chess_pieces/wallBL.png')";
-        blackPieces.push(piece);
-        break;
+  if (iconpack == "1") {
+    for (e of elements) {
+      switch (e.value.letter + e.value.number) {
+        //WHITE PIECES
+        case "a2":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
+          whitePieces.push(piece);
+          break;
+        case "b2":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
+          whitePieces.push(piece);
+          break;
+        case "c2":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
+          whitePieces.push(piece);
+          break;
+        case "d2":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
+          whitePieces.push(piece);
+          break;
+        case "e2":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
+          whitePieces.push(piece);
+          break;
+        case "f2":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
+          whitePieces.push(piece);
+          break;
+        case "g2":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
+          whitePieces.push(piece);
+          break;
+        case "h2":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierW.png')";
+          whitePieces.push(piece);
+          break;
+        case "a1":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/wallW.png')";
+          whitePieces.push(piece);
+          break;
+        case "b1":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/horseW.png')";
+          whitePieces.push(piece);
+          break;
+        case "c1":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/bishopW.png')";
+          whitePieces.push(piece);
+          break;
+        case "d1":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/queenW.png')";
+          whitePieces.push(piece);
+          break;
+        case "e1":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/kingW.png')";
+          whitePieces.push(piece);
+          break;
+        case "f1":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/bishopW.png')";
+          whitePieces.push(piece);
+          break;
+        case "g1":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/horseW.png')";
+          whitePieces.push(piece);
+          break;
+        case "h1":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/wallW.png')";
+          whitePieces.push(piece);
+          break;
+        //BLACK PIECES
+        case "a7":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
+          blackPieces.push(piece);
+          break;
+        case "b7":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
+          blackPieces.push(piece);
+          break;
+        case "c7":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
+          blackPieces.push(piece);
+          break;
+        case "d7":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
+          blackPieces.push(piece);
+          break;
+        case "e7":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
+          blackPieces.push(piece);
+          break;
+        case "f7":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
+          blackPieces.push(piece);
+          break;
+        case "g7":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
+          blackPieces.push(piece);
+          break;
+        case "h7":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierBL.png')";
+          blackPieces.push(piece);
+          break;
+        case "a8":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/wallBL.png')";
+          blackPieces.push(piece);
+          break;
+        case "b8":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/horseBL.png')";
+          blackPieces.push(piece);
+          break;
+        case "c8":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/bishopBL.png')";
+          blackPieces.push(piece);
+          break;
+        case "d8":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/queenBL.png')";
+          blackPieces.push(piece);
+          break;
+        case "e8":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/kingBL.png')";
+          blackPieces.push(piece);
+          break;
+        case "f8":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/bishopBL.png')";
+          blackPieces.push(piece);
+          break;
+        case "g8":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/horseBL.png')";
+          blackPieces.push(piece);
+          break;
+        case "h8":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/wallBL.png')";
+          blackPieces.push(piece);
+          break;
+      }
     }
   }
-  dragHandler(whitePieces, blackPieces);
+  if (iconpack == "2") {
+    for (e of elements) {
+      switch (e.value.letter + e.value.number) {
+        //WHITE PIECES
+        case "a2":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierW2.png')";
+          whitePieces.push(piece);
+          break;
+        case "b2":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierW2.png')";
+          whitePieces.push(piece);
+          break;
+        case "c2":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierW2.png')";
+          whitePieces.push(piece);
+          break;
+        case "d2":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierW2.png')";
+          whitePieces.push(piece);
+          break;
+        case "e2":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierW2.png')";
+          whitePieces.push(piece);
+          break;
+        case "f2":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierW2.png')";
+          whitePieces.push(piece);
+          break;
+        case "g2":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierW2.png')";
+          whitePieces.push(piece);
+          break;
+        case "h2":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierW2.png')";
+          whitePieces.push(piece);
+          break;
+        case "a1":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/wallW2.png')";
+          whitePieces.push(piece);
+          break;
+        case "b1":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/horseW2.png')";
+          whitePieces.push(piece);
+          break;
+        case "c1":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/bishopW2.png')";
+          whitePieces.push(piece);
+          break;
+        case "d1":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/queenW2.png')";
+          whitePieces.push(piece);
+          break;
+        case "e1":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/kingW2.png')";
+          whitePieces.push(piece);
+          break;
+        case "f1":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/bishopW2.png')";
+          whitePieces.push(piece);
+          break;
+        case "g1":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/horseW2.png')";
+          whitePieces.push(piece);
+          break;
+        case "h1":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/wallW2.png')";
+          whitePieces.push(piece);
+          break;
+        //BLACK PIECES
+        case "a7":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierBL2.png')";
+          blackPieces.push(piece);
+          break;
+        case "b7":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierBL2.png')";
+          blackPieces.push(piece);
+          break;
+        case "c7":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierBL2.png')";
+          blackPieces.push(piece);
+          break;
+        case "d7":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierBL2.png')";
+          blackPieces.push(piece);
+          break;
+        case "e7":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierBL2.png')";
+          blackPieces.push(piece);
+          break;
+        case "f7":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierBL2.png')";
+          blackPieces.push(piece);
+          break;
+        case "g7":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierBL2.png')";
+          blackPieces.push(piece);
+          break;
+        case "h7":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/soldierBL2.png')";
+          blackPieces.push(piece);
+          break;
+        case "a8":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/wallBL2.png')";
+          blackPieces.push(piece);
+          break;
+        case "b8":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/horseBL2.png')";
+          blackPieces.push(piece);
+          break;
+        case "c8":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/bishopBL2.png')";
+          blackPieces.push(piece);
+          break;
+        case "d8":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/queenBL2.png')";
+          blackPieces.push(piece);
+          break;
+        case "e8":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/kingBL2.png')";
+          blackPieces.push(piece);
+          break;
+        case "f8":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/bishopBL2.png')";
+          blackPieces.push(piece);
+          break;
+        case "g8":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/horseBL2.png')";
+          blackPieces.push(piece);
+          break;
+        case "h8":
+          piece = document.createElement("div");
+          piece.classList.add("piece");
+          piece.draggable = "true";
+          e.appendChild(piece);
+          piece.style.backgroundImage = "url('./chess_pieces/wallBL2.png')";
+          blackPieces.push(piece);
+          break;
+      }
+    }
+  }
+  eventHandler();
 }
 
 function addWhiteListeners() {
-  for (draggable of whitePieces) {
-    draggable.addEventListener("dragstart", whiteDragStart);
+  for (w of whitePieces) {
+    w.addEventListener("dragstart", whiteDragStart);
 
-    draggable.addEventListener("dragend", whiteDragEnd);
+    w.addEventListener("dragend", whiteDragEnd);
   }
 }
 function removeWhiteListeners() {
-  for (draggable of whitePieces) {
-    draggable.removeEventListener("dragstart", whiteDragStart);
+  for (w of whitePieces) {
+    w.removeEventListener("dragstart", whiteDragStart);
 
-    draggable.removeEventListener("dragend", whiteDragEnd);
+    w.removeEventListener("dragend", whiteDragEnd);
   }
 }
-
 function addBlackListeners() {
-  for (draggable of blackPieces) {
-    draggable.addEventListener("dragstart", blackDragStart);
+  for (b of blackPieces) {
+    b.addEventListener("dragstart", blackDragStart);
 
-    draggable.addEventListener("dragend", blackDragEnd);
+    b.addEventListener("dragend", blackDragEnd);
   }
 }
 function removeBlackListeners() {
-  for (draggable of blackPieces) {
-    draggable.removeEventListener("dragstart", blackDragStart);
+  for (b of blackPieces) {
+    b.removeEventListener("dragstart", blackDragStart);
 
-    draggable.removeEventListener("dragend", blackDragEnd);
+    b.removeEventListener("dragend", blackDragEnd);
   }
 }
 
 function whiteDragStart(event) {
   event.target.closest(".piece").classList.add("dragging");
 }
-
 function whiteDragEnd(event) {
   event.target.closest(".piece").classList.remove("dragging");
 }
-
 function blackDragStart(event) {
   event.target.closest(".piece").classList.add("dragging");
 }
-
 function blackDragEnd(event) {
   event.target.closest(".piece").classList.remove("dragging");
 }
 
 function initTurn() {
-  if (turn == 'white') {
-    addWhiteListeners()
-    removeBlackListeners()
+  turnLabel = document.getElementById("turn");
+  if (turn == "white") {
+    turnLabel.textContent = "White's";
+    addWhiteListeners();
+    removeBlackListeners();
   } else {
-    addBlackListeners()
-    removeWhiteListeners()
+    turnLabel.textContent = "Black's";
+    addBlackListeners();
+    removeWhiteListeners();
   }
 }
 
 function dropHandler(event) {
-  {
-    event.preventDefault();
-    if (turn == "white") {
-      draggable = document.querySelector(".dragging");
-      if (
-        whitePieces.includes(draggable) &&
-        blackPieces.includes(event.target.closest(".el").firstElementChild)
-      ) {
-        if (draggable) event.target.closest(".el").appendChild(draggable);
-        if (event.target.closest(".el").firstElementChild)
-          event.target.closest(".el").firstElementChild.remove();
-      } else if (
-        whitePieces.includes(draggable) &&
-        !whitePieces.includes(event.target.closest(".el").firstElementChild)
-      ) {
-        if (draggable) event.target.closest(".el").appendChild(draggable);
-      }
-    } else if (turn == "black") {
-      draggable = document.querySelector(".dragging");
-      if (
-        blackPieces.includes(draggable) &&
-        whitePieces.includes(event.target.closest(".el").firstElementChild)
-      ) {
-        if (draggable) event.target.closest(".el").appendChild(draggable);
-        if (event.target.closest(".el").firstElementChild)
-          event.target.closest(".el").firstElementChild.remove();
-      } else if (
-        blackPieces.includes(draggable) &&
-        !blackPieces.includes(event.target.closest(".el").firstElementChild)
-      ) {
-        if (draggable) event.target.closest(".el").appendChild(draggable);
-      }
-    }
+  draggable = document.querySelector(".dragging");
+  if (whitePieces.includes(draggable)) {
+    whiteDropHandler(event);
+  }
+  if (blackPieces.includes(draggable)) {
+    blackDropHandler(event);
   }
 }
 
-function dragHandler() {
-  initTurn()
+function whiteDropHandler(event) {
+  draggable = document.querySelector(".dragging");
+  event.preventDefault();
+  if (
+    whitePieces.includes(draggable) &&
+    blackPieces.includes(event.target.closest(".el").firstElementChild)
+  ) {
+    if (draggable) {
+      draggable.classList.remove("dragging");
+      event.target.closest(".el").appendChild(draggable);
+    }
+    if (event.target.closest(".el").firstElementChild)
+      event.target.closest(".el").firstElementChild.remove();
+  } else if (
+    whitePieces.includes(event.target.closest(".el").firstElementChild)
+  ) {
+    turn = "white";
+    eventHandler();
+    return;
+  } else if (
+    whitePieces.includes(draggable) &&
+    !whitePieces.includes(event.target.closest(".el").firstElementChild)
+  ) {
+    if (draggable) {
+      draggable.classList.remove("dragging");
+      event.target.closest(".el").appendChild(draggable);
+    }
+  }
+  turn = "black";
+  eventHandler();
+}
+
+function blackDropHandler(event) {
+  draggable = document.querySelector(".dragging");
+  event.preventDefault();
+  if (
+    blackPieces.includes(draggable) &&
+    whitePieces.includes(event.target.closest(".el").firstElementChild)
+  ) {
+    if (draggable) {
+      draggable.classList.remove("dragging");
+      event.target.closest(".el").appendChild(draggable);
+    }
+    if (event.target.closest(".el").firstElementChild)
+      event.target.closest(".el").firstElementChild.remove();
+  } else if (
+    blackPieces.includes(event.target.closest(".el").firstElementChild)
+  ) {
+    turn = "black";
+    eventHandler();
+    return;
+  } else if (
+    blackPieces.includes(draggable) &&
+    !blackPieces.includes(event.target.closest(".el").firstElementChild)
+  ) {
+    if (draggable) {
+      draggable.classList.remove("dragging");
+      event.target.closest(".el").appendChild(draggable);
+    }
+  }
+  turn = "white";
+  eventHandler();
+}
+
+function eventHandler() {
+  initTurn();
   elements = document.getElementsByClassName("el");
   for (e of elements) {
     e.addEventListener("dragover", (event) => {

@@ -1,5 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@300&display=swap');
+
 * {
     margin: 0;
+    font-family: 'Karla', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    position: relative;
 }
 
 #homediv {
@@ -9,7 +19,104 @@
     height: 100vh;
     width: 100%;
     flex-direction: column;
-    background-color:rgb(218, 211, 197);
+    background-color: rgb(218, 211, 197);
+}
+
+.side-right {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    width: 15rem;
+    padding: 1rem;
+    right: 2rem;
+    flex-direction: column;
+    background-color: whitesmoke;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.side-left {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    width: 15rem;
+    padding: 1rem;
+    left: 2rem;
+    flex-direction: column;
+    background-color: whitesmoke;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.side-left div {
+    position: absolute;
+    top: 0;
+    padding: 1rem 2.5rem 0.75rem 2.5rem;
+    font-size: 25px;
+    border-bottom: 1px solid gray;
+    font-weight: 600;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titlecontent {
+    font-size: 25px;
+}
+
+.side-right h2 {
+    position: absolute;
+    top: 0;
+    padding: 1rem 2.5rem 0.75rem 2.5rem;
+    font-size: 25px;
+    border-bottom: 1px solid gray;
+    font-weight: 600;
+}
+
+#turn {
+    color: red;
+}
+
+#messagecontent {
+    position: absolute;
+    bottom: 0;
+    width: 90%;
+    height: 5%;
+    margin: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#messagecontent input {
+    width: 80%;
+    font-size: 10px;
+    height: 100%;
+    margin-bottom: .5rem;
+}
+
+#messagecontent button {
+    width: 10%;
+    font-size: 15px;
+    height: 130%;
+    margin-bottom: .5rem;
+    /* background-color: rgb(134, 101, 74); */
+    background-color: #b76f20;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#messagecontent button:hover {
+    color: whitesmoke;
+    background-color:#82490b;
+    cursor: pointer;
 }
 
 #grid {
@@ -22,7 +129,8 @@
     width: 1.7rem;
     height: 1.7rem;
     padding: 1rem;
-    border: 0.1px solid gray;
+    /* border: 0.1px solid gray; */
+    border: 0.1px solid beige;
     position: relative;
 }
 
@@ -31,11 +139,13 @@
 }
 
 .white {
-    background-color: rgb(207, 206, 206);
+    /* background-color: rgb(207, 206, 206); */
+    background-color: #b76f20;
 }
 
 .black {
-    background-color: rgb(134, 101, 74);
+    /* background-color: rgb(134, 101, 74); */
+    background-color: #82490b;
 }
 
 .side {
@@ -43,8 +153,8 @@
 }
 
 .piece {
-    width: 95%;
-    height: 95%;
+    width: 65%;
+    height: 65%;
     position: absolute;
     margin-left: auto;
     top: 50%;
@@ -57,15 +167,15 @@
 
 .piece:hover {
     cursor: pointer;
-    width: 91.5%;
-    height: 91.5%;
+    width: 60.5%;
+    height: 60.5%;
     transition: width 0.2s, height 0.2s;
 }
 
 .dragging {
-    width: 97%;
-    height: 97%;
-    cursor:-moz-grab;
+    width: 60.5%;
+    height: 60.5%;
+    cursor: -moz-grab;
 }
 
 .hidden {

@@ -9,10 +9,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="icon.svg">
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/ee56f8faf7.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
+    <div class="side-left">
+        <div><h2 id="turn" class="titlecontent">White's</h2>&nbsp<h2 class="titlecontent">Turn</h2></div>
+    </div>
     <div id="homediv">
+    </div>
+    <div class="side-right">
+        <h2>Game Chat</h2>
+        <form id="messagecontent"  action="">
+            <input type="text" placeholder="Enter message here...">
+            <button type="submit"><i class="fas fa-arrow-right"></i></button>
+        </form>
     </div>
 
     <script src="board.js" async defer></script>
