@@ -28,7 +28,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 70vh;
-    width: 15rem;
+    width: 17.5rem;
     padding: 1rem;
     right: 2rem;
     flex-direction: column;
@@ -43,7 +43,7 @@ body {
     justify-content: center;
     align-items: center;
     height: 70vh;
-    width: 15rem;
+    width: 17.5rem;
     padding: 1rem;
     left: 2rem;
     flex-direction: column;
@@ -111,6 +111,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid gray;
+    margin-left: 0.1rem;
 }
 
 #messagecontent button:hover {
@@ -126,8 +128,8 @@ body {
 }
 
 .el {
-    width: 1.7rem;
-    height: 1.7rem;
+    width: 2rem;
+    height: 2rem;
     padding: 1rem;
     /* border: 0.1px solid gray; */
     border: 0.1px solid beige;
@@ -152,6 +154,27 @@ body {
     background-color: black;
 }
 
+.el-label {
+    position: absolute;
+    font-size: 13px;
+    bottom: 0;
+    left: 0;
+    padding: 0 0 3.5px 3.5px;
+    color: white;
+    font-weight: 500;
+    color: white;
+}
+
+.el-label-top {
+    position: absolute;
+    font-size: 13px;
+    top: 0;
+    right: 0;
+    padding: 3.5px 3.5px 0 0;
+    color: white;
+    font-weight: 500;
+    color: white;
+}
 .piece {
     width: 65%;
     height: 65%;

@@ -193,3 +193,4 @@ function eventHandler() {
 }
 
 createGrid();
+console.log(PIECES.walls, PIECES.soldiers, PIECES.kings, PIECES.horses, PIECES.queens, PIECES.bishops)
