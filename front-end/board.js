@@ -1,4 +1,5 @@
 import { addPieces, PIECES } from "./pieces.js";
+import { findOptions, removeOptions } from "./rules.js";
 
 let turn = "white";
 
@@ -17,6 +18,8 @@ function createGrid() {
     for (let y = 8; y > 0; y--) {
       let el = document.createElement("div");
       el.value = {
+        x: x,
+        y: y,
         letter: alphabet[x],
         number: y,
       };
@@ -65,14 +68,14 @@ function removeWhiteListeners() {
   }
 }
 function addBlackListeners() {
-  for (let b of  PIECES.blackPieces) {
+  for (let b of PIECES.blackPieces) {
     b.addEventListener("dragstart", blackDragStart);
 
     b.addEventListener("dragend", blackDragEnd);
   }
 }
 function removeBlackListeners() {
-  for (let b of  PIECES.blackPieces) {
+  for (let b of PIECES.blackPieces) {
     b.removeEventListener("dragstart", blackDragStart);
 
     b.removeEventListener("dragend", blackDragEnd);
@@ -81,16 +84,19 @@ function removeBlackListeners() {
 
 function whiteDragStart(event) {
   event.target.closest(".piece").classList.add("dragging");
+  findOptions(event.target.closest(".piece"));
 }
 function whiteDragEnd(event) {
   event.target.closest(".piece").classList.remove("dragging");
+  removeOptions();
 }
 function blackDragStart(event) {
   event.target.closest(".piece").classList.add("dragging");
+  findOptions(event.target.closest(".piece"));
 }
 function blackDragEnd(event) {
   event.target.closest(".piece").classList.remove("dragging");
-
+  removeOptions();
 }
 
 function initTurn() {
@@ -107,12 +113,13 @@ function initTurn() {
 }
 
 function dropHandler(event) {
-   (PIECES.whitePieces)
+  removeOptions()
+  PIECES.whitePieces;
   var draggable = document.querySelector(".dragging");
   if (PIECES.whitePieces.includes(draggable)) {
     whiteDropHandler(event);
   }
-  if ( PIECES.blackPieces.includes(draggable)) {
+  if (PIECES.blackPieces.includes(draggable)) {
     blackDropHandler(event);
   }
 }
@@ -122,7 +129,7 @@ function whiteDropHandler(event) {
   event.preventDefault();
   if (
     PIECES.whitePieces.includes(draggable) &&
-     PIECES.blackPieces.includes(event.target.closest(".el").firstElementChild)
+    PIECES.blackPieces.includes(event.target.closest(".el").firstElementChild)
   ) {
     if (draggable) {
       draggable.classList.remove("dragging");
@@ -153,7 +160,7 @@ function blackDropHandler(event) {
   var draggable = document.querySelector(".dragging");
   event.preventDefault();
   if (
-     PIECES.blackPieces.includes(draggable) &&
+    PIECES.blackPieces.includes(draggable) &&
     PIECES.whitePieces.includes(event.target.closest(".el").firstElementChild)
   ) {
     if (draggable) {
@@ -163,14 +170,14 @@ function blackDropHandler(event) {
     if (event.target.closest(".el").firstElementChild)
       event.target.closest(".el").firstElementChild.remove();
   } else if (
-     PIECES.blackPieces.includes(event.target.closest(".el").firstElementChild)
+    PIECES.blackPieces.includes(event.target.closest(".el").firstElementChild)
   ) {
     turn = "black";
     eventHandler();
     return;
   } else if (
-     PIECES.blackPieces.includes(draggable) &&
-    ! PIECES.blackPieces.includes(event.target.closest(".el").firstElementChild)
+    PIECES.blackPieces.includes(draggable) &&
+    !PIECES.blackPieces.includes(event.target.closest(".el").firstElementChild)
   ) {
     if (draggable) {
       draggable.classList.remove("dragging");
@@ -193,4 +200,5 @@ function eventHandler() {
 }
 
 createGrid();
-console.log(PIECES.walls, PIECES.soldiers, PIECES.kings, PIECES.horses, PIECES.queens, PIECES.bishops)
+
+// console.log(PIECES.walls, PIECES.soldiers, PIECES.kings, PIECES.horses, PIECES.queens, PIECES.bishops)
