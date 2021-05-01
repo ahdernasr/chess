@@ -22,6 +22,7 @@ function createGrid() {
         y: y,
         letter: alphabet[x],
         number: y,
+        firstTime: true
       };
       el.classList.add("el");
       line.appendChild(el);
@@ -113,7 +114,7 @@ function initTurn() {
 }
 
 function dropHandler(event) {
-  removeOptions()
+  removeOptions();
   PIECES.whitePieces;
   var draggable = document.querySelector(".dragging");
   if (PIECES.whitePieces.includes(draggable)) {
@@ -131,11 +132,13 @@ function whiteDropHandler(event) {
     PIECES.whitePieces.includes(draggable) &&
     PIECES.blackPieces.includes(event.target.closest(".el").firstElementChild)
   ) {
-    if (draggable) {
+    if (draggable && event.target.closest(".el").classList.contains("possible")) {
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
+      turn = "black";
     }
-    if (event.target.closest(".el").firstElementChild)
+    if (event.target.closest(".el").firstElementChild &&
+    event.target.closest(".el").classList.contains("possible"))
       event.target.closest(".el").firstElementChild.remove();
   } else if (
     PIECES.whitePieces.includes(event.target.closest(".el").firstElementChild)
@@ -147,12 +150,15 @@ function whiteDropHandler(event) {
     PIECES.whitePieces.includes(draggable) &&
     !PIECES.whitePieces.includes(event.target.closest(".el").firstElementChild)
   ) {
-    if (draggable) {
+    if (
+      draggable &&
+      event.target.closest(".el").classList.contains("possible")
+    ) {
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
+      turn = "black";
     }
   }
-  turn = "black";
   eventHandler();
 }
 
@@ -163,11 +169,16 @@ function blackDropHandler(event) {
     PIECES.blackPieces.includes(draggable) &&
     PIECES.whitePieces.includes(event.target.closest(".el").firstElementChild)
   ) {
-    if (draggable) {
+    if (
+      draggable &&
+      event.target.closest(".el").classList.contains("possible")
+    ) {
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
+      turn = "white";
     }
-    if (event.target.closest(".el").firstElementChild)
+    if (event.target.closest(".el").firstElementChild &&
+    event.target.closest(".el").classList.contains("possible"))
       event.target.closest(".el").firstElementChild.remove();
   } else if (
     PIECES.blackPieces.includes(event.target.closest(".el").firstElementChild)
@@ -179,12 +190,15 @@ function blackDropHandler(event) {
     PIECES.blackPieces.includes(draggable) &&
     !PIECES.blackPieces.includes(event.target.closest(".el").firstElementChild)
   ) {
-    if (draggable) {
+    if (
+      draggable &&
+      event.target.closest(".el").classList.contains("possible")
+    ) {
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
+      turn = "white";
     }
   }
-  turn = "white";
   eventHandler();
 }
 
