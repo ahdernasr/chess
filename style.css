@@ -23,37 +23,6 @@ body {
     background-color: rgb(218, 211, 197);
 }
 
-.side-left {
-    border-radius: 1rem 2rem 1rem 2rem;
-    border: 2px solid gray;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70vh;
-    width: 5rem;
-    padding: 1rem;
-    left: 4rem;
-    flex-direction: column;
-    background-color: whitesmoke;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.side-left i {
-    color: gray;
-    margin: auto;
-    justify-content: center;
-    align-items: center;
-    font-size: 25px;
-}
-
-.side-left i:hover {
-    font-weight: 700;
-    color: rgb(3, 3, 51);
-    cursor: pointer;
-}
-
 /* RIGHT SIDE DIV */
 .side-right {
     border-radius: 1rem 2rem 1rem 2rem;
@@ -63,9 +32,80 @@ body {
     justify-content: center;
     align-items: center;
     height: 70vh;
+    width: 25vw;
+    padding: 1rem;
+    right: 2rem;
+    flex-direction: column;
+    background-color: whitesmoke;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.side-right h2 {
+    position: absolute;
+    top: 0;
+    padding: 1rem 2.5rem 0.75rem 2.5rem;
+    font-size: 25px;
+    border-bottom: 1px solid gray;
+    font-weight: 600;
+}
+
+#messagecontent {
+    position: absolute;
+    bottom: 0;
+    width: 90%;
+    height: 5%;
+    margin: .5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#messagecontent input {
+    width: 80%;
+    font-size: 10px;
+    height: 100%;
+    margin-bottom: .5rem;
+}
+
+#messagecontent button {
+    width: 10%;
+    font-size: 15px;
+    height: 110%;
+    margin-bottom: .5rem;
+    /* background-color: rgb(134, 101, 74); */
+    background-color: #b76f20;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid gray;
+    margin-left: 0.1rem;
+    transition: color 0.6s;
+    transition: background-color 0.5s;
+}
+
+#messagecontent button:hover {
+    color: whitesmoke;
+    background-color:#82490b;
+    cursor: pointer;
+    transition: color 0.6s;
+    transition: background-color 0.5s;
+}
+
+
+/* LEFT SIDE DIV */
+.side-left {
+    border-radius: 1rem 2rem 1rem 2rem;
+    border: 2px solid gray;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
     width: 23vw;
     padding: 1rem;
-    left: 50rem;
+    left: 2rem;
     flex-direction: column;
     background-color: whitesmoke;
     top: 50%;
@@ -99,14 +139,15 @@ body {
     text-align: center;
     position: relative;
     z-index: 1000;
-    position: absolute;
-    top: 50%;
-    left: 15rem;
-    transform: translateY(-50%);
 }
 
-#grid .rotate {
+.rotate {
     transform: rotate(180deg);
+    /* transition: transform 2s;
+    transition-timing-function: ease-out; */
+}
+
+#grid:not(.rotate) {
     /* transition: transform 2s;
     transition-timing-function: ease-out; */
 }
@@ -217,13 +258,19 @@ body {
         padding: 4px 4px 0 0;
     }
     .side-left {
-        width: 5vw;
+        width: 23vw;
         padding: 1rem;
+        left: 4rem;
     }
     .side-right {
         width: 23vw;
         padding: 1rem;
+        right: 4rem;
     }
+    #messagecontent input {
+        font-size: 17.5px;
+    }
+
 }
 
 
@@ -247,13 +294,18 @@ body {
     }
     .side-left {
         height: 60vh;
-        width: 5vw;
+        width: 23vw;
         padding: 1rem;
+        left: 4rem;
     }
     .side-right {
         height: 60vh;
         width: 23vw;
         padding: 1rem;
+        right: 4rem;
+    }
+    #messagecontent input {
+        font-size: 15px;
     }
 
 }
@@ -278,14 +330,20 @@ body {
     }
     .side-left {
         height: 70vh;
-        width: 5vw;
+        width: 23vw;
         padding: 1rem;
+        left: 2rem;
     }
     .side-right {
         height: 70vh;
         width: 23vw;
         padding: 1rem;
+        right: 2rem;
     }
+    #messagecontent input {
+        font-size: 12px;
+    }
+
 }
 
 @media (max-width: 1300px) {
@@ -308,13 +366,18 @@ body {
     }
     .side-left {
         height: 70vh;
-        width: 5vw;
+        width: 23vw;
         padding: 1rem;
+        left: 2rem;
     }
     .side-right {
         height: 70vh;
         width: 23vw;
         padding: 1rem;
+        right: 2rem;
+    }
+    #messagecontent input {
+        font-size: 12px;
     }
 
 }
