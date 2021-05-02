@@ -3,6 +3,9 @@ import { findOptions, removeOptions } from "./rules.js";
 
 let turn = "white";
 let firstMove = true;
+let currentMove = "";
+let newMove = "";
+let moveLog = document.querySelector(".lastmove").firstElementChild
 
 function createGrid() {
   //DRAW BOARD
@@ -85,6 +88,7 @@ function removeBlackListeners() {
 
 function whiteDragStart(event) {
   event.target.closest(".piece").classList.add("dragging");
+  currentMove = event.target.closest(".el");
   findOptions(event.target.closest(".piece"));
 }
 function whiteDragEnd(event) {
@@ -93,6 +97,7 @@ function whiteDragEnd(event) {
 }
 function blackDragStart(event) {
   event.target.closest(".piece").classList.add("dragging");
+  currentMove = event.target.closest(".el");
   findOptions(event.target.closest(".piece"));
 }
 function blackDragEnd(event) {
@@ -145,6 +150,10 @@ function whiteDropHandler(event) {
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
       draggable.value.firstTime = false
+      newMove = event.target.closest(".el")
+      moveLog.innerHTML = `<h2>${currentMove.value.letter.toUpperCase()}${currentMove.value.number} &nbsp; &rAarr; &nbsp;${newMove.value.letter.toUpperCase()}${newMove.value.number}</h2>`
+      document.querySelector(".loader") ? document.querySelector(".loader").remove() : null
+      moveLog.firstElementChild.classList.add('absolute-middle')
       turn = "black";
     }
     if (event.target.closest(".el").firstElementChild &&
@@ -167,6 +176,10 @@ function whiteDropHandler(event) {
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
       draggable.value.firstTime = false
+      newMove = event.target.closest(".el")
+      moveLog.innerHTML = `<h2>${currentMove.value.letter.toUpperCase()}${currentMove.value.number} &nbsp; &rAarr; &nbsp;${newMove.value.letter.toUpperCase()}${newMove.value.number}</h2>`
+      document.querySelector(".loader") ? document.querySelector(".loader").remove() : null
+      moveLog.firstElementChild.classList.add('absolute-middle')
       turn = "black";
     }
   }
@@ -187,7 +200,11 @@ function blackDropHandler(event) {
       draggable.value.firstTime = false
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
+      newMove = event.target.closest(".el")
+      moveLog.innerHTML = `<h2>${currentMove.value.letter.toUpperCase()}${currentMove.value.number} &nbsp; &rAarr; &nbsp;${newMove.value.letter.toUpperCase()}${newMove.value.number}</h2>`
+      document.querySelector(".loader") ? document.querySelector(".loader").remove() : null
       turn = "white";
+      moveLog.firstElementChild.classList.add('absolute-middle')
     }
     if (event.target.closest(".el").firstElementChild &&
     event.target.closest(".el").classList.contains("possible"))
@@ -209,6 +226,10 @@ function blackDropHandler(event) {
       draggable.value.firstTime = false
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
+      newMove = event.target.closest(".el")
+      moveLog.innerHTML = `<h2>${currentMove.value.letter.toUpperCase()}${currentMove.value.number} &nbsp; &rAarr; &nbsp;${newMove.value.letter.toUpperCase()}${newMove.value.number}</h2>`
+      document.querySelector(".loader") ? document.querySelector(".loader").remove() : null
+      moveLog.firstElementChild.classList.add('absolute-middle')
       turn = "white";
     }
   }
