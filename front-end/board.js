@@ -101,8 +101,9 @@ function blackDragEnd(event) {
 }
 
 async function initTurn() {
-  await sleep(600)
   if (!firstMove) {
+    console.log('here')
+    console.log(document.getElementById("grid"))
     document.getElementById("grid").classList.toggle('rotate')
     let elements = document.getElementsByClassName("el")
     for (let e of elements) {
