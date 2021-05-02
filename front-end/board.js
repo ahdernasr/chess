@@ -4,8 +4,8 @@ import { findOptions, removeOptions } from "./rules.js";
 let turn = "white";
 let firstMove = true;
 let currentMove = "";
+let oldCurrentMove = "";
 let newMove = "";
-let moveLog = document.querySelector(".lastmove").firstElementChild
 
 function createGrid() {
   //DRAW BOARD
@@ -107,7 +107,7 @@ function blackDragEnd(event) {
 
 async function initTurn() {
   await sleep(600)
-  if (!firstMove) {
+  if (!firstMove && newMove != currentMove) {
     document.getElementById("grid").classList.toggle('rotate')
     let elements = document.getElementsByClassName("el")
     for (let e of elements) {
@@ -115,19 +115,18 @@ async function initTurn() {
     }
   }
   firstMove = false
-  let turnLabel = document.getElementById("turn");
   if (turn == "white") {
-    turnLabel.textContent = "White's";
     addWhiteListeners();
     removeBlackListeners();
   } else {
-    turnLabel.textContent = "Black's";
     addBlackListeners();
     removeWhiteListeners();
   }
 }
 
 function dropHandler(event) {
+  newMove ? newMove.classList.remove('newMove') : null
+  oldCurrentMove ? oldCurrentMove.classList.remove('currentMove') : null
   removeOptions();
   PIECES.whitePieces;
   var draggable = document.querySelector(".dragging");
@@ -151,9 +150,9 @@ function whiteDropHandler(event) {
       event.target.closest(".el").appendChild(draggable);
       draggable.value.firstTime = false
       newMove = event.target.closest(".el")
-      moveLog.innerHTML = `<h2>${currentMove.value.letter.toUpperCase()}${currentMove.value.number} &nbsp; &rAarr; &nbsp;${newMove.value.letter.toUpperCase()}${newMove.value.number}</h2>`
-      document.querySelector(".loader") ? document.querySelector(".loader").remove() : null
-      moveLog.firstElementChild.classList.add('absolute-middle')
+      newMove.classList.add('newMove')
+      currentMove.classList.add('currentMove')
+      oldCurrentMove = currentMove
       turn = "black";
     }
     if (event.target.closest(".el").firstElementChild &&
@@ -162,6 +161,7 @@ function whiteDropHandler(event) {
   } else if (
     PIECES.whitePieces.includes(event.target.closest(".el").firstElementChild)
   ) {
+    newMove = currentMove
     turn = "white";
     eventHandler();
     return;
@@ -177,9 +177,9 @@ function whiteDropHandler(event) {
       event.target.closest(".el").appendChild(draggable);
       draggable.value.firstTime = false
       newMove = event.target.closest(".el")
-      moveLog.innerHTML = `<h2>${currentMove.value.letter.toUpperCase()}${currentMove.value.number} &nbsp; &rAarr; &nbsp;${newMove.value.letter.toUpperCase()}${newMove.value.number}</h2>`
-      document.querySelector(".loader") ? document.querySelector(".loader").remove() : null
-      moveLog.firstElementChild.classList.add('absolute-middle')
+      newMove.classList.add('newMove')
+      currentMove.classList.add('currentMove')
+      oldCurrentMove = currentMove
       turn = "black";
     }
   }
@@ -201,10 +201,10 @@ function blackDropHandler(event) {
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
       newMove = event.target.closest(".el")
-      moveLog.innerHTML = `<h2>${currentMove.value.letter.toUpperCase()}${currentMove.value.number} &nbsp; &rAarr; &nbsp;${newMove.value.letter.toUpperCase()}${newMove.value.number}</h2>`
-      document.querySelector(".loader") ? document.querySelector(".loader").remove() : null
+      newMove.classList.add('newMove')
+      currentMove.classList.add('currentMove')
+      oldCurrentMove = currentMove
       turn = "white";
-      moveLog.firstElementChild.classList.add('absolute-middle')
     }
     if (event.target.closest(".el").firstElementChild &&
     event.target.closest(".el").classList.contains("possible"))
@@ -212,6 +212,7 @@ function blackDropHandler(event) {
   } else if (
     PIECES.blackPieces.includes(event.target.closest(".el").firstElementChild)
   ) {
+    newMove = currentMove
     turn = "black";
     eventHandler();
     return;
@@ -227,9 +228,9 @@ function blackDropHandler(event) {
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
       newMove = event.target.closest(".el")
-      moveLog.innerHTML = `<h2>${currentMove.value.letter.toUpperCase()}${currentMove.value.number} &nbsp; &rAarr; &nbsp;${newMove.value.letter.toUpperCase()}${newMove.value.number}</h2>`
-      document.querySelector(".loader") ? document.querySelector(".loader").remove() : null
-      moveLog.firstElementChild.classList.add('absolute-middle')
+      newMove.classList.add('newMove')
+      currentMove.classList.add('currentMove')
+      oldCurrentMove = currentMove
       turn = "white";
     }
   }
