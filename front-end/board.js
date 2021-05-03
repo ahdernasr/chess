@@ -1,5 +1,5 @@
 import { addPieces, PIECES } from "./pieces.js";
-import { findOptions, removeOptions } from "./rules.js";
+import { findOptions, removeOptions, findKingDanger } from "./rules.js";
 
 let turn = "white";
 let firstMove = true;
@@ -89,7 +89,8 @@ function removeBlackListeners() {
 function whiteDragStart(event) {
   event.target.closest(".piece").classList.add("dragging");
   currentMove = event.target.closest(".el");
-  findOptions(event.target.closest(".piece"));
+  findKingDanger(event.target.closest(".piece"), currentMove);
+  findOptions(event.target.closest(".piece"), true, true);
 }
 function whiteDragEnd(event) {
   event.target.closest(".piece").classList.remove("dragging");
@@ -98,7 +99,8 @@ function whiteDragEnd(event) {
 function blackDragStart(event) {
   event.target.closest(".piece").classList.add("dragging");
   currentMove = event.target.closest(".el");
-  findOptions(event.target.closest(".piece"));
+  findKingDanger(event.target.closest(".piece")), currentMove;
+  findOptions(event.target.closest(".piece"), true, true);
 }
 function blackDragEnd(event) {
   event.target.closest(".piece").classList.remove("dragging");
@@ -106,15 +108,15 @@ function blackDragEnd(event) {
 }
 
 async function initTurn() {
-  await sleep(600)
+  await sleep(600);
   if (!firstMove && newMove != currentMove) {
-    document.getElementById("grid").classList.toggle('rotate')
-    let elements = document.getElementsByClassName("el")
+    document.getElementById("grid").classList.toggle("rotate");
+    let elements = document.getElementsByClassName("el");
     for (let e of elements) {
-      e.classList.toggle('rotate-piece')
+      e.classList.toggle("rotate-piece");
     }
   }
-  firstMove = false
+  firstMove = false;
   if (turn == "white") {
     addWhiteListeners();
     removeBlackListeners();
@@ -125,11 +127,10 @@ async function initTurn() {
 }
 
 function dropHandler(event) {
-  newMove ? newMove.classList.remove('newMove') : null
-  oldCurrentMove ? oldCurrentMove.classList.remove('currentMove') : null
-  removeOptions();
-  PIECES.whitePieces;
+  newMove ? newMove.classList.remove("newMove") : null;
+  oldCurrentMove ? oldCurrentMove.classList.remove("currentMove") : null;
   var draggable = document.querySelector(".dragging");
+  removeOptions(draggable);
   if (PIECES.whitePieces.includes(draggable)) {
     whiteDropHandler(event);
   }
@@ -145,23 +146,31 @@ function whiteDropHandler(event) {
     PIECES.whitePieces.includes(draggable) &&
     PIECES.blackPieces.includes(event.target.closest(".el").firstElementChild)
   ) {
-    if (draggable && event.target.closest(".el").classList.contains("possible")) {
+    if (
+      draggable &&
+      event.target.closest(".el").classList.contains("possible")
+    ) {
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
-      draggable.value.firstTime = false
-      newMove = event.target.closest(".el")
-      newMove.classList.add('newMove')
-      currentMove.classList.add('currentMove')
-      oldCurrentMove = currentMove
+      draggable.value.firstTime = false;
+      newMove = event.target.closest(".el");
+      newMove.classList.add("newMove");
+      currentMove.classList.add("currentMove");
+      oldCurrentMove = currentMove;
       turn = "black";
     }
-    if (event.target.closest(".el").firstElementChild &&
-    event.target.closest(".el").classList.contains("possible"))
+    if (
+      event.target.closest(".el").firstElementChild &&
+      event.target.closest(".el").classList.contains("possible")
+    )
       event.target.closest(".el").firstElementChild.remove();
   } else if (
-    PIECES.whitePieces.includes(event.target.closest(".el").firstElementChild)
+    PIECES.whitePieces.includes(
+      event.target.closest(".el").firstElementChild
+    ) ||
+    !event.target.closest(".el").classList.contains("possible")
   ) {
-    newMove = currentMove
+    newMove = currentMove;
     turn = "white";
     eventHandler();
     return;
@@ -175,11 +184,11 @@ function whiteDropHandler(event) {
     ) {
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
-      draggable.value.firstTime = false
-      newMove = event.target.closest(".el")
-      newMove.classList.add('newMove')
-      currentMove.classList.add('currentMove')
-      oldCurrentMove = currentMove
+      draggable.value.firstTime = false;
+      newMove = event.target.closest(".el");
+      newMove.classList.add("newMove");
+      currentMove.classList.add("currentMove");
+      oldCurrentMove = currentMove;
       turn = "black";
     }
   }
@@ -197,22 +206,27 @@ function blackDropHandler(event) {
       draggable &&
       event.target.closest(".el").classList.contains("possible")
     ) {
-      draggable.value.firstTime = false
+      draggable.value.firstTime = false;
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
-      newMove = event.target.closest(".el")
-      newMove.classList.add('newMove')
-      currentMove.classList.add('currentMove')
-      oldCurrentMove = currentMove
+      newMove = event.target.closest(".el");
+      newMove.classList.add("newMove");
+      currentMove.classList.add("currentMove");
+      oldCurrentMove = currentMove;
       turn = "white";
     }
-    if (event.target.closest(".el").firstElementChild &&
-    event.target.closest(".el").classList.contains("possible"))
+    if (
+      event.target.closest(".el").firstElementChild &&
+      event.target.closest(".el").classList.contains("possible")
+    )
       event.target.closest(".el").firstElementChild.remove();
   } else if (
-    PIECES.blackPieces.includes(event.target.closest(".el").firstElementChild)
+    PIECES.blackPieces.includes(
+      event.target.closest(".el").firstElementChild
+    ) ||
+    !event.target.closest(".el").classList.contains("possible")
   ) {
-    newMove = currentMove
+    newMove = currentMove;
     turn = "black";
     eventHandler();
     return;
@@ -224,13 +238,13 @@ function blackDropHandler(event) {
       draggable &&
       event.target.closest(".el").classList.contains("possible")
     ) {
-      draggable.value.firstTime = false
+      draggable.value.firstTime = false;
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
-      newMove = event.target.closest(".el")
-      newMove.classList.add('newMove')
-      currentMove.classList.add('currentMove')
-      oldCurrentMove = currentMove
+      newMove = event.target.closest(".el");
+      newMove.classList.add("newMove");
+      currentMove.classList.add("currentMove");
+      oldCurrentMove = currentMove;
       turn = "white";
     }
   }

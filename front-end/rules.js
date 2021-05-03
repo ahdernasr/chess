@@ -1,16 +1,18 @@
 // TODO
 // CHECKMATE, CHECK
-// CORRECT MOVES ONLY ON CHECK
-// STOP KING FROM MOVING INTO DANGEROUS SPOT
+// CORRECT MOVES ONLY ON CHECK +  STOP KING FROM MOVING INTO DANGEROUS SPOT
+// SPECIAL RULES:
 // CODE ENPASSANT
 // CODE KING ROOK SWITCH
-//ONLY SWITCH BOARD UPON PLAYING
+// CODE PAWN PROMOTION
+// FEN STRINGS?
 
 import { PIECES } from "./pieces.js";
 
 let arr = [];
+let soldierDanger = [];
 
-export function findOptions(piece) {
+export function findOptions(piece, color, checkForDanger) {
   arr = [];
   let x, y;
 
@@ -33,18 +35,17 @@ export function findOptions(piece) {
             a.firstElementChild &&
             PIECES.blackPieces.includes(a.firstElementChild)
           ) {
-            a.classList.add("possible");
+            color && !a.classList.contains("danger")
+              ? a.classList.add("possible")
+              : null;
           }
           if (!PIECES.whitePieces.includes(a.firstElementChild)) {
-            a.classList.add("possible");
+            color && !a.classList.contains("danger")
+              ? a.classList.add("possible")
+              : null;
           }
         }
       }
-      //   for (let b of PIECES.blackPieces) {
-      //     if (findOptions(b).includes(piece)) {
-      //       a.classLIst.remove("possible");
-      //     }
-      //   }
     }
     if (PIECES.blackPieces.includes(piece)) {
       for (let a of arr) {
@@ -53,15 +54,14 @@ export function findOptions(piece) {
             a.firstElementChild &&
             PIECES.whitePieces.includes(a.firstElementChild)
           ) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
           if (!PIECES.blackPieces.includes(a.firstElementChild)) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
         }
       }
     }
-    return arr;
   } else if (PIECES.bishops.includes(piece)) {
     arr = [];
     x = piece.parentElement.value.x;
@@ -249,10 +249,10 @@ export function findOptions(piece) {
             a.firstElementChild &&
             PIECES.blackPieces.includes(a.firstElementChild)
           ) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
           if (!PIECES.whitePieces.includes(a.firstElementChild)) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
         }
       }
@@ -264,16 +264,14 @@ export function findOptions(piece) {
             a.firstElementChild &&
             PIECES.whitePieces.includes(a.firstElementChild)
           ) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
           if (!PIECES.blackPieces.includes(a.firstElementChild)) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
         }
       }
     }
-
-    return arr;
   } else if (PIECES.queens.includes(piece)) {
     arr = [];
     x = piece.parentElement.value.x;
@@ -646,10 +644,10 @@ export function findOptions(piece) {
             a.firstElementChild &&
             PIECES.blackPieces.includes(a.firstElementChild)
           ) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
           if (!PIECES.whitePieces.includes(a.firstElementChild)) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
         }
       }
@@ -661,23 +659,22 @@ export function findOptions(piece) {
             a.firstElementChild &&
             PIECES.whitePieces.includes(a.firstElementChild)
           ) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
           if (!PIECES.blackPieces.includes(a.firstElementChild)) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
         }
       }
     }
-    return arr;
   } else if (PIECES.soldiers.includes(piece)) {
     arr = [];
     x = piece.parentElement.value.x;
     y = piece.parentElement.value.y;
     if (PIECES.whitePieces.includes(piece)) {
       if (piece.value.firstTime) {
-        if(!findSpot(x, y+2).firstElementChild) arr.push(findSpot(x, y + 2));
-        if(!findSpot(x, y+1).firstElementChild) arr.push(findSpot(x, y + 1));
+        if (!findSpot(x, y + 2).firstElementChild) arr.push(findSpot(x, y + 2));
+        if (!findSpot(x, y + 1).firstElementChild) arr.push(findSpot(x, y + 1));
       } else if (!findSpot(x, y + 1).firstElementChild) {
         arr.push(findSpot(x, y + 1));
       }
@@ -701,18 +698,18 @@ export function findOptions(piece) {
             a.firstElementChild &&
             PIECES.blackPieces.includes(a.firstElementChild)
           ) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
           if (!PIECES.whitePieces.includes(a.firstElementChild)) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
         }
       }
     }
     if (PIECES.blackPieces.includes(piece)) {
       if (piece.value.firstTime) {
-        if(!findSpot(x, y-2).firstElementChild) arr.push(findSpot(x, y - 2));
-        if(!findSpot(x, y-1).firstElementChild) arr.push(findSpot(x, y - 1));
+        if (!findSpot(x, y - 2).firstElementChild) arr.push(findSpot(x, y - 2));
+        if (!findSpot(x, y - 1).firstElementChild) arr.push(findSpot(x, y - 1));
       } else if (!findSpot(x, y - 1).firstElementChild) {
         arr.push(findSpot(x, y - 1));
       }
@@ -736,15 +733,19 @@ export function findOptions(piece) {
             a.firstElementChild &&
             PIECES.whitePieces.includes(a.firstElementChild)
           ) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
           if (!PIECES.blackPieces.includes(a.firstElementChild)) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
         }
       }
+      soldierDanger = arr
+      soldierDanger.push(findSpot(x - 1, y - 1))
+      soldierDanger.push(findSpot(x + 1, y - 1))
+      soldierDanger.remove(findSpot(x, y - 1))
+      // array modifiction for when kingDanger is called
     }
-    return arr;
   } else if (PIECES.walls.includes(piece)) {
     arr = [];
     x = piece.parentElement.value.x;
@@ -898,10 +899,10 @@ export function findOptions(piece) {
             a.firstElementChild &&
             PIECES.blackPieces.includes(a.firstElementChild)
           ) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
           if (!PIECES.whitePieces.includes(a.firstElementChild)) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
         }
       }
@@ -913,15 +914,14 @@ export function findOptions(piece) {
             a.firstElementChild &&
             PIECES.whitePieces.includes(a.firstElementChild)
           ) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
           if (!PIECES.blackPieces.includes(a.firstElementChild)) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
         }
       }
     }
-    return arr;
   } else if (PIECES.horses.includes(piece)) {
     arr = [];
     x = piece.parentElement.value.x;
@@ -941,10 +941,10 @@ export function findOptions(piece) {
             a.firstElementChild &&
             PIECES.blackPieces.includes(a.firstElementChild)
           ) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
           if (!PIECES.whitePieces.includes(a.firstElementChild)) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
         }
       }
@@ -956,15 +956,17 @@ export function findOptions(piece) {
             a.firstElementChild &&
             PIECES.whitePieces.includes(a.firstElementChild)
           ) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
           if (!PIECES.blackPieces.includes(a.firstElementChild)) {
-            a.classList.add("possible");
+            color ? a.classList.add("possible") : null;
           }
         }
       }
     }
   }
+  arr.push(findSpot(x, y - 1))
+  return arr;
 }
 
 function sleep(ms) {
@@ -977,6 +979,60 @@ export async function removeOptions() {
     if (a) a.classList.remove("possible");
   }
 }
+
+function getArraysIntersection(a1, a2) {
+  return a1.filter(function (n) {
+    return a2.indexOf(n) !== -1;
+  });
+}
+
+export function findKingDanger(piece, curr) {
+  let x, y;
+  let kingArr = [];
+  let newKingArr = [];
+  let allOppositeMoves = [];
+  if (PIECES.whitePieces.includes(piece)) {
+    x = PIECES.kings[1].parentElement.value.x;
+    y = PIECES.kings[1].parentElement.value.y;
+  } else {
+    x = PIECES.kings[0].parentElement.value.x;
+    y = PIECES.kings[0].parentElement.value.y;
+  }
+  kingArr.push(findSpot(x + 1, y));
+  kingArr.push(findSpot(x - 1, y));
+  kingArr.push(findSpot(x + 1, y + 1));
+  kingArr.push(findSpot(x + 1, y - 1));
+  kingArr.push(findSpot(x, y + 1));
+  kingArr.push(findSpot(x, y - 1));
+  kingArr.push(findSpot(x - 1, y + 1));
+  kingArr.push(findSpot(x - 1, y - 1));
+  if (PIECES.whitePieces.includes(piece)) {
+    newKingArr = kingArr.filter((e) => {
+      return e && !PIECES.whitePieces.includes(e.firstElementChild)
+    });
+    if (kingArr.includes(curr)) newKingArr.push(curr)
+    for (let b of PIECES.blackPieces) {
+      allOppositeMoves.push(findOptions(b, false, false))
+    }
+    for (let o of allOppositeMoves){
+      for (let c of getArraysIntersection(o, kingArr)) {
+        c ? c.classList.add('danger') : null
+      }
+    }
+  }
+
+}
+
+Array.prototype.remove = function() {
+  var what, a = arguments, L = a.length, ax;
+  while (L && this.length) {
+      what = a[--L];
+      while ((ax = this.indexOf(what)) !== -1) {
+          this.splice(ax, 1);
+      }
+  }
+  return this;
+};
 
 function findSpot(x, y) {
   let elements = document.getElementsByClassName("el");

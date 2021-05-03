@@ -140,13 +140,6 @@ body {
 
 .rotate {
     transform: rotate(180deg);
-    /* transition: transform 2s;
-    transition-timing-function: ease-out; */
-}
-
-#grid:not(.rotate) {
-    /* transition: transform 2s;
-    transition-timing-function: ease-out; */
 }
 
 .rotate-piece {
@@ -231,7 +224,7 @@ body {
 }
 
 .possible {
-    box-shadow: 1px 1px 10px 10px rgba(119, 255, 107, 0.46) inset;
+    box-shadow: 1px 1px 5px 5px rgba(119, 255, 107, 0.46) inset;
     /* background-color: rgba(107, 255, 107, 0.186); */
 }
 
