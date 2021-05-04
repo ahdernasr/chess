@@ -23,113 +23,6 @@ body {
     background-color: rgb(218, 211, 197);
 }
 
-/* RIGHT SIDE DIV */
-.side-right {
-    border-radius: 1rem 2rem 1rem 2rem;
-    border: 2px solid gray;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70vh;
-    width: 25vw;
-    padding: 1rem;
-    right: 2rem;
-    flex-direction: column;
-    background-color: whitesmoke;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.side-right h2 {
-    position: absolute;
-    top: 0;
-    padding: 1rem 2.5rem 0.75rem 2.5rem;
-    font-size: 25px;
-    border-bottom: 1px solid gray;
-    font-weight: 600;
-}
-
-/* LEFT SIDE DIV */
-.side-left {
-    border-radius: 1rem 2rem 1rem 2rem;
-    border: 2px solid gray;
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 30vh;
-    width: 23vw;
-    padding: 1rem;
-    left: 2rem;
-    flex-direction: column;
-    background-color: whitesmoke;
-    top: 50%;
-    transform: translateY(-50%);
-}
-
-.titlediv {
-    position: absolute;
-    top: 0;
-    padding: 1rem 2.5rem 0.75rem 2.5rem;
-    font-size: 25px;
-    border-bottom: 1px solid gray;
-    font-weight: 600;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.titlecontent {
-    font-size: 27.5px;
-    letter-spacing: .75px;
-}
-
-#turn {
-    color: red;
-}
-
-.lastmove {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    width: 100%;
-    position: relative;
-}
-
-.lastmove h2 {
-    color: #311b04;
-    font-size: 30px;
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-    padding: 1rem;
-    display: flex;
-    justify-content: space-between;
-}
-
-.absolute-middle {
-    top: 50%;
-    left: 50%;
-    transform: translateY(-50%, -50%);
-    margin: 0;
-    padding: 0;
-}
-
-.loader {
-    border: 6px solid #c5c5c5;
-    border-top: 6px solid #b76f20; 
-    border-bottom: 6px solid #82490b;
-    border-radius: 50%;
-    width: 25px;
-    height: 25px;
-    animation: spin 2s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
 /* CHESS BOARD */
 #grid {
     display: flex;
@@ -147,9 +40,9 @@ body {
 }
 
 .el {
-    width: 2rem;
-    height: 2rem;
-    padding: 1rem;
+    width: 3rem;
+    height: 3rem;
+    padding: 0.4rem;
     /* border: 0.1px solid gray; */
     border: 0.1px solid beige;
     position: relative;
@@ -227,6 +120,11 @@ body {
     box-shadow: 1px 1px 5px 5px rgba(119, 255, 107, 0.46) inset;
     /* background-color: rgba(107, 255, 107, 0.186); */
 }
+
+.check {
+    box-shadow: 1px 1px 5px 5px rgba(247, 43, 43, 0.46) inset;
+}
+
 
 .currentMove {
     background-color: rgba(255, 166, 0, 0.493);

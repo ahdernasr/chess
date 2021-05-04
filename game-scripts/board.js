@@ -1,11 +1,12 @@
 import { addPieces, PIECES } from "./pieces.js";
-import { findOptions, removeOptions, findKingDanger } from "./rules.js";
+import { findOptions, removeOptions, findKingDanger, fixCheck} from "./rules.js";
 
 let turn = "white";
 let firstMove = true;
 let currentMove = "";
 let oldCurrentMove = "";
 let newMove = "";
+let spinOnTurn = false;
 
 function createGrid() {
   //DRAW BOARD
@@ -89,27 +90,29 @@ function removeBlackListeners() {
 function whiteDragStart(event) {
   event.target.closest(".piece").classList.add("dragging");
   currentMove = event.target.closest(".el");
-  findKingDanger(event.target.closest(".piece"), currentMove);
+  fixCheck(event.target.closest(".piece"));
   findOptions(event.target.closest(".piece"), true, true);
 }
 function whiteDragEnd(event) {
   event.target.closest(".piece").classList.remove("dragging");
+  findKingDanger(event.target.closest(".piece"), currentMove);
   removeOptions();
 }
 function blackDragStart(event) {
   event.target.closest(".piece").classList.add("dragging");
   currentMove = event.target.closest(".el");
-  findKingDanger(event.target.closest(".piece")), currentMove;
+  fixCheck(event.target.closest(".piece"));
   findOptions(event.target.closest(".piece"), true, true);
 }
 function blackDragEnd(event) {
   event.target.closest(".piece").classList.remove("dragging");
+  findKingDanger(event.target.closest(".piece"), currentMove);
   removeOptions();
 }
 
 async function initTurn() {
   await sleep(600);
-  if (!firstMove && newMove != currentMove) {
+  if (!firstMove && newMove != currentMove && spinOnTurn) {
     document.getElementById("grid").classList.toggle("rotate");
     let elements = document.getElementsByClassName("el");
     for (let e of elements) {
@@ -162,8 +165,10 @@ function whiteDropHandler(event) {
     if (
       event.target.closest(".el").firstElementChild &&
       event.target.closest(".el").classList.contains("possible")
-    )
+    ) {
+      PIECES.blackPieces.remove(event.target.closest(".el").firstElementChild);
       event.target.closest(".el").firstElementChild.remove();
+    }
   } else if (
     PIECES.whitePieces.includes(
       event.target.closest(".el").firstElementChild
@@ -193,6 +198,7 @@ function whiteDropHandler(event) {
     }
   }
   eventHandler();
+  clearAllDanger();
 }
 
 function blackDropHandler(event) {
@@ -206,9 +212,9 @@ function blackDropHandler(event) {
       draggable &&
       event.target.closest(".el").classList.contains("possible")
     ) {
-      draggable.value.firstTime = false;
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
+      draggable.value.firstTime = false;
       newMove = event.target.closest(".el");
       newMove.classList.add("newMove");
       currentMove.classList.add("currentMove");
@@ -218,8 +224,10 @@ function blackDropHandler(event) {
     if (
       event.target.closest(".el").firstElementChild &&
       event.target.closest(".el").classList.contains("possible")
-    )
+    ) {
+      PIECES.whitePieces.remove(event.target.closest(".el").firstElementChild);
       event.target.closest(".el").firstElementChild.remove();
+    }
   } else if (
     PIECES.blackPieces.includes(
       event.target.closest(".el").firstElementChild
@@ -238,9 +246,9 @@ function blackDropHandler(event) {
       draggable &&
       event.target.closest(".el").classList.contains("possible")
     ) {
-      draggable.value.firstTime = false;
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
+      draggable.value.firstTime = false;
       newMove = event.target.closest(".el");
       newMove.classList.add("newMove");
       currentMove.classList.add("currentMove");
@@ -249,6 +257,7 @@ function blackDropHandler(event) {
     }
   }
   eventHandler();
+  clearAllDanger();
 }
 
 function eventHandler() {
@@ -265,5 +274,25 @@ function eventHandler() {
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+async function clearAllDanger() {
+  for (let e of document.getElementsByClassName("el")) {
+    e.classList.remove("danger");
+  }
+}
+
+Array.prototype.remove = function () {
+  var what,
+    a = arguments,
+    L = a.length,
+    ax;
+  while (L && this.length) {
+    what = a[--L];
+    while ((ax = this.indexOf(what)) !== -1) {
+      this.splice(ax, 1);
+    }
+  }
+  return this;
+};
 
 createGrid();
