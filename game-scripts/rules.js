@@ -131,18 +131,17 @@ export function findOptions(piece, color, checkForDanger = true) {
     piece.parentElement ? (y = piece.parentElement.value.y) : null;
     if (PIECES.whitePieces.includes(piece)) {
       arr = findWhitePawn(piece, color);
-      soldierDanger = arr
-      soldierDanger.push(findSpot(x - 1, y + 1))
-      soldierDanger.push(findSpot(x + 1, y + 1))
-      soldierDanger.remove(findSpot(x, y + 1))
+      soldierDanger = arr;
+      soldierDanger.push(findSpot(x - 1, y + 1));
+      soldierDanger.push(findSpot(x + 1, y + 1));
+      soldierDanger.remove(findSpot(x, y + 1));
       // array modifiction for when kingDanger is called
-    }
-    else if (PIECES.blackPieces.includes(piece)) {
+    } else if (PIECES.blackPieces.includes(piece)) {
       arr = findBlackPawn(piece, color);
-      soldierDanger = arr
-      soldierDanger.push(findSpot(x - 1, y - 1))
-      soldierDanger.push(findSpot(x + 1, y - 1))
-      soldierDanger.remove(findSpot(x, y - 1))
+      soldierDanger = arr;
+      soldierDanger.push(findSpot(x - 1, y - 1));
+      soldierDanger.push(findSpot(x + 1, y - 1));
+      soldierDanger.remove(findSpot(x, y - 1));
       // array modifiction for when kingDanger is called
     }
   } else if (PIECES.walls.includes(piece)) {
@@ -231,10 +230,10 @@ function sleep(ms) {
 }
 
 export async function removeOptions() {
-  for (let a of arr) {
-    await sleep(1);
-    if (a) a.classList.remove("possible");
-  }
+    for (let a of arr) {
+      await sleep(1);
+      if (a) a.classList.remove("possible");
+    }
 }
 
 function getArraysIntersection(a1, a2) {
@@ -332,29 +331,99 @@ export function findKingDanger(piece, curr) {
 }
 
 export function fixCheck(piece) {
-  if (inCheck) {
-    let white;
-    PIECES.whitePieces.includes(piece) ? (white = true) : (white = false);
-    let options = findOptions(piece, false, false);
-  }
-  // for each of the dragging piece's availible moves
-  // if the king is in check after placing
-  // classlist remove possible
+  findPath(piece);
 }
 
 function findPath(piece) {
-  if (PIECES.whitePieces.includes(piece)) {
-    //attacking black
-    if (PIECES.queens.includes(piece)) {
-    } else if (PIECES.bishops.includes(piece)) {
-    } else if (PIECES.soldiers.includes(piece)) {
-    } else if (PIECES.walls.includes(piece)) {
-    } else if (PIECES.horses.includes(piece)) {
-    }
-  } else if (PIECES.blackPieces.includes(piece)) {
-    //attacking white
+  let options = [];
+  let x, y;
+  let kingArr = [];
+  let newKingArr = [];
+  let opponentArr = [];
+  let tempArr = [];
+  let restrictedAreas = [];
+  if (PIECES.blackPieces.includes(piece)) {
+    x = PIECES.kings[0].parentElement.value.x;
+    y = PIECES.kings[0].parentElement.value.y;
+  } else {
+    x = PIECES.kings[1].parentElement.value.x;
+    y = PIECES.kings[1].parentElement.value.y;
   }
+  kingArr.push(findSpot(x + 1, y));
+  kingArr.push(findSpot(x - 1, y));
+  kingArr.push(findSpot(x + 1, y + 1));
+  kingArr.push(findSpot(x + 1, y - 1));
+  kingArr.push(findSpot(x, y + 1));
+  kingArr.push(findSpot(x, y - 1));
+  kingArr.push(findSpot(x - 1, y + 1));
+  kingArr.push(findSpot(x - 1, y - 1));
+  if (PIECES.whitePieces.includes(piece) && PIECES.kings[1] != piece) {
+    restrictedAreas = [];
+    newKingArr = kingArr.filter((e) => {
+      return e && !PIECES.whitePieces.includes(e.firstElementChild);
+    });
+    for (let a of findOptions(piece, false, true)) {
+      opponentArr = [];
+      a ? a.classList.add("vision") : null;
+      for (let b of PIECES.blackPieces) {
+        tempArr = findOptions(b, false, true)
+        tempArr = tempArr.filter((e) => {
+          return e && !PIECES.blackPieces.includes(e.firstElementChild) && !e.classList.contains('vision');
+        });
+        tempArr.length > 0 ? opponentArr.push(tempArr) : null;
+      }
+      kingArr = [PIECES.kings[1].parentElement]
+      for (let t of opponentArr) {
+        if (getArraysIntersection(t, kingArr).length > 0) {
+          restrictedAreas.push(a)
+        }
+      }
+      a ? a.classList.remove('vision'): null;
+    }
+    let c = getArraysIntersection(restrictedAreas, findOptions(piece, false, true))
+    for (let k of c) {
+      k ? k.classList.remove('possible') : null;
+    }
+  } else if (PIECES.blackPieces.includes(piece) && PIECES.kings[0] != piece) {
+    restrictedAreas = [];
+    newKingArr = kingArr.filter((e) => {
+      return e && !PIECES.blackPieces.includes(e.firstElementChild);
+    });
+    for (let a of findOptions(piece, false, true)) {
+      opponentArr = [];
+      a ? a.classList.add("vision") : null;
+      for (let b of PIECES.whitePieces) {
+        tempArr = findOptions(b, false, true)
+        tempArr = tempArr.filter((e) => {
+          return e && !PIECES.whitePieces.includes(e.firstElementChild) && !e.classList.contains('vision');
+        });
+        tempArr.length > 0 ? opponentArr.push(tempArr) : null;
+      }
+      kingArr = [PIECES.kings[1].parentElement]
+      for (let t of opponentArr) {
+        if (getArraysIntersection(t, kingArr).length > 0) {
+          restrictedAreas.push(a)
+        }
+      }
+      a ? a.classList.remove('vision'): null;
+    }
+    let c = getArraysIntersection(restrictedAreas, findOptions(piece, false, true))
+    for (let k of c) {
+      k ? k.classList.remove('possible') : null;
+    }
+  } 
+
+  //DONT RUN THIS FOR KING
+
+  //have: The friendly king's options (in newKingArr)
+  //for each option of the dragging piece
+  // add ('vision') class to each one
+  // implement that a findOptions loop will break if it meets a vision
+  // find opponent's options
+  // if opponent's options still includes king's spot
+  // remove the option
 }
+
 Array.prototype.remove = function () {
   var what,
     a = arguments,
@@ -376,6 +445,12 @@ function findDiagonals(piece) {
   y = piece.parentElement.value.y;
   for (let i = 0; i < 10; i++) {
     if (!findSpot(x + 1 + i, y + 1 + i)) {
+      break;
+    }
+    if (
+      findSpot(x + 1 + i, y + 1 + i) &&
+      findSpot(x + 1 + i, y + 1 + i).classList.contains("vision")
+    ) {
       break;
     }
     if (findSpot(x + 1 + i, y + 1 + i)) {
@@ -423,6 +498,12 @@ function findDiagonals(piece) {
     if (!findSpot(x - 1 - i, y + 1 + i)) {
       break;
     }
+    if (
+      findSpot(x - 1 - i, y + 1 + i) &&
+      findSpot(x - 1 - i, y + 1 + i).classList.contains("vision")
+    ) {
+      break;
+    }
     if (findSpot(x - 1 - i, y + 1 + i)) {
       arr.push(findSpot(x - 1 - i, y + 1 + i));
     } else if (
@@ -466,6 +547,12 @@ function findDiagonals(piece) {
     if (!findSpot(x + 1 + i, y - 1 - i)) {
       break;
     }
+    if (
+      findSpot(x + 1 + i, y - 1 - i) &&
+      findSpot(x + 1 + i, y - 1 - i).classList.contains("vision")
+    ) {
+      break;
+    }
     if (findSpot(x + 1 + i, y - 1 - i)) {
       arr.push(findSpot(x + 1 + i, y - 1 - i));
     } else if (
@@ -507,9 +594,15 @@ function findDiagonals(piece) {
       break;
     }
   }
-  for (let i = 0; i < 10; i++) {
+  loop4: for (let i = 0; i < 10; i++) {
     if (!findSpot(x - 1 - i, y - 1 - i)) {
-      break;
+      break loop4;
+    }
+    if (
+      findSpot(x - 1 - i, y - 1 - i) &&
+      findSpot(x - 1 - i, y - 1 - i).classList.contains("vision")
+    ) {
+      break loop4;
     }
     if (findSpot(x - 1 - i, y - 1 - i)) {
       arr.push(findSpot(x - 1 - i, y - 1 - i));
@@ -540,14 +633,14 @@ function findDiagonals(piece) {
         findSpot(x - 1 - i, y - 1 - i).firstElementChild
       )
     ) {
-      break;
+      break loop4;
     }
     if (
       PIECES.blackPieces.includes(
         findSpot(x - 1 - i, y - 1 - i).firstElementChild
       )
     ) {
-      break;
+      break loop4;
     }
   }
   return arr;
@@ -560,6 +653,12 @@ function findHorizontals(piece) {
   y = piece.parentElement.value.y;
   for (let i = 0; i < 10; i++) {
     if (!findSpot(x + 1 + i, y)) {
+      break;
+    }
+    if (
+      findSpot(x + 1 + i, y) &&
+      findSpot(x + 1 + i, y).classList.contains("vision")
+    ) {
       break;
     }
     if (findSpot(x + 1 + i, y)) {
@@ -599,6 +698,12 @@ function findHorizontals(piece) {
     if (!findSpot(x - 1 - i, y)) {
       break;
     }
+    if (
+      findSpot(x - 1 - i, y) &&
+      findSpot(x - 1 - i, y).classList.contains("vision")
+    ) {
+      break;
+    }
     if (findSpot(x - 1 - i, y)) {
       arr.push(findSpot(x - 1 - i, y));
     } else if (
@@ -630,6 +735,12 @@ function findHorizontals(piece) {
     if (!findSpot(x, y + i + 1)) {
       break;
     }
+    if (
+      findSpot(x, y + i + 1) &&
+      findSpot(x, y + i + 1).classList.contains("vision")
+    ) {
+      break;
+    }
     if (findSpot(x, y + 1 + i)) {
       arr.push(findSpot(x, y + 1 + i));
     } else if (
@@ -659,6 +770,12 @@ function findHorizontals(piece) {
   }
   for (let i = 0; i < 10; i++) {
     if (!findSpot(x, y - 1 - i)) {
+      break;
+    }
+    if (
+      findSpot(x, y - 1 - i) &&
+      findSpot(x, y - 1 - i).classList.contains("vision")
+    ) {
       break;
     }
     if (findSpot(x, y - 1 - i)) {
@@ -696,14 +813,30 @@ function findHorses(piece) {
   var arr = [];
   x = piece.parentElement.value.x;
   y = piece.parentElement.value.y;
-  arr.push(findSpot(x + 1, y + 2));
-  arr.push(findSpot(x + 2, y + 1));
-  arr.push(findSpot(x + 2, y - 1));
-  arr.push(findSpot(x + 1, y - 2));
-  arr.push(findSpot(x - 1, y - 2));
-  arr.push(findSpot(x - 2, y - 1));
-  arr.push(findSpot(x - 2, y + 1));
-  arr.push(findSpot(x - 1, y + 2));
+  findSpot(x + 1, y + 2) && !findSpot(x + 1, y + 2).classList.contains("vision")
+    ? arr.push(findSpot(x + 1, y + 2))
+    : null;
+  findSpot(x + 2, y + 2) && !findSpot(x + 2, y + 2).classList.contains("vision")
+    ? arr.push(findSpot(x + 2, y + 1))
+    : null;
+  findSpot(x + 2, y - 2) && !findSpot(x + 2, y - 2).classList.contains("vision")
+    ? arr.push(findSpot(x + 2, y - 1))
+    : null;
+  findSpot(x + 1, y - 2) && !findSpot(x + 1, y - 2).classList.contains("vision")
+    ? arr.push(findSpot(x + 1, y - 2))
+    : null;
+  findSpot(x - 1, y - 2) && !findSpot(x - 1, y - 2).classList.contains("vision")
+    ? arr.push(findSpot(x - 1, y - 2))
+    : null;
+  findSpot(x - 2, y - 1) && !findSpot(x - 2, y - 1).classList.contains("vision")
+    ? arr.push(findSpot(x - 2, y - 1))
+    : null;
+  findSpot(x - 2, y + 1) && !findSpot(x - 2, y + 1).classList.contains("vision")
+    ? arr.push(findSpot(x - 2, y + 1))
+    : null;
+  findSpot(x - 1, y + 2) && !findSpot(x - 1, y + 2).classList.contains("vision")
+    ? arr.push(findSpot(x - 1, y + 2))
+    : null;
   return arr;
 }
 
@@ -714,25 +847,35 @@ function findWhitePawn(piece, color) {
   piece.parentElement ? (y = piece.parentElement.value.y) : null;
   if (piece.value.firstTime) {
     if (findSpot(x, y + 2) && !findSpot(x, y + 2).firstElementChild)
-      arr.push(findSpot(x, y + 2));
+      !findSpot(x, y + 2).classList.contains("vision")
+        ? arr.push(findSpot(x, y + 2))
+        : null;
     if (findSpot(x, y + 1) && !findSpot(x, y + 1).firstElementChild)
-      arr.push(findSpot(x, y + 1));
+      !findSpot(x, y + 1).classList.contains("vision")
+        ? arr.push(findSpot(x, y + 1))
+        : null;
   } else if (findSpot(x, y + 1) && !findSpot(x, y + 1).firstElementChild) {
-    arr.push(findSpot(x, y + 1));
+    !findSpot(x, y + 1).classList.contains("vision")
+      ? arr.push(findSpot(x, y + 1))
+      : null;
   }
   if (
     findSpot(x + 1, y + 1) &&
     findSpot(x + 1, y + 1).firstElementChild &&
     PIECES.blackPieces.includes(findSpot(x + 1, y + 1).firstElementChild)
   ) {
-    arr.push(findSpot(x + 1, y + 1));
+    !findSpot(x + 1, y + 1).classList.contains("vision")
+      ? arr.push(findSpot(x + 1, y + 1))
+      : null;
   }
   if (
     findSpot(x - 1, y + 1) &&
     findSpot(x - 1, y + 1).firstElementChild &&
     PIECES.blackPieces.includes(findSpot(x - 1, y + 1).firstElementChild)
   ) {
-    arr.push(findSpot(x - 1, y + 1));
+    !findSpot(x - 1, y + 1).classList.contains("vision")
+      ? arr.push(findSpot(x - 1, y + 1))
+      : null;
   }
   for (let a of arr) {
     if (a) {
@@ -757,25 +900,35 @@ function findBlackPawn(piece, color) {
   piece.parentElement ? (y = piece.parentElement.value.y) : null;
   if (piece.value.firstTime) {
     if (findSpot(x, y - 2) && !findSpot(x, y - 2).firstElementChild)
-      arr.push(findSpot(x, y - 2));
+      !findSpot(x, y - 2).classList.contains("vision")
+        ? arr.push(findSpot(x, y - 2))
+        : null;
     if (findSpot(x, y - 1) && !findSpot(x, y - 1).firstElementChild)
-      arr.push(findSpot(x, y - 1));
+      !findSpot(x, y - 1).classList.contains("vision")
+        ? arr.push(findSpot(x, y - 1))
+        : null;
   } else if (findSpot(x, y + 1) && !findSpot(x, y - 1).firstElementChild) {
-    arr.push(findSpot(x, y - 1));
+    !findSpot(x, y - 1).classList.contains("vision")
+      ? arr.push(findSpot(x, y - 1))
+      : null;
   }
   if (
     findSpot(x + 1, y - 1) &&
     findSpot(x + 1, y - 1).firstElementChild &&
     PIECES.whitePieces.includes(findSpot(x + 1, y - 1).firstElementChild)
   ) {
-    arr.push(findSpot(x + 1, y - 1));
+    !findSpot(x + 1, y - 1).classList.contains("vision")
+      ? arr.push(findSpot(x + 1, y - 1))
+      : null;
   }
   if (
     findSpot(x - 1, y - 1) &&
     findSpot(x - 1, y - 1).firstElementChild &&
     PIECES.whitePieces.includes(findSpot(x - 1, y - 1).firstElementChild)
   ) {
-    arr.push(findSpot(x - 1, y - 1));
+    !findSpot(x - 1, y - 1).classList.contains("vision")
+      ? arr.push(findSpot(x - 1, y - 1))
+      : null;
   }
   for (let a of arr) {
     if (a) {

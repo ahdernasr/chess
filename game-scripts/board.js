@@ -29,6 +29,7 @@ function createGrid() {
         number: y,
       };
       el.classList.add("el");
+
       line.appendChild(el);
     }
   }
@@ -90,8 +91,8 @@ function removeBlackListeners() {
 function whiteDragStart(event) {
   event.target.closest(".piece").classList.add("dragging");
   currentMove = event.target.closest(".el");
-  fixCheck(event.target.closest(".piece"));
   findOptions(event.target.closest(".piece"), true, true);
+  fixCheck(event.target.closest(".piece"));
 }
 function whiteDragEnd(event) {
   event.target.closest(".piece").classList.remove("dragging");
@@ -101,8 +102,8 @@ function whiteDragEnd(event) {
 function blackDragStart(event) {
   event.target.closest(".piece").classList.add("dragging");
   currentMove = event.target.closest(".el");
-  fixCheck(event.target.closest(".piece"));
   findOptions(event.target.closest(".piece"), true, true);
+  fixCheck(event.target.closest(".piece"));
 }
 function blackDragEnd(event) {
   event.target.closest(".piece").classList.remove("dragging");
