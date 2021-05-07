@@ -4,7 +4,10 @@ let arr = [];
 let soldierDanger = [];
 let lastCheck, inCheck;
 
-export function findOptions(piece, color, checkForDanger = true) {
+export function findOptions(piece, color, checkForDanger = true, removePiece=null) {
+  let removePieceParent;
+  removePiece ? removePieceParent = removePiece.parentElement : null;
+  removePiece ? removePiece.remove() : null;
   arr = [];
   let x, y;
 
@@ -222,6 +225,8 @@ export function findOptions(piece, color, checkForDanger = true) {
       findSpot(x, y + 1) ? arr.push(findSpot(x, y + 1)) : null;
     }
   }
+
+  removePieceParent ? removePieceParent.append(removePiece) : null;
   return arr;
 }
 
@@ -335,8 +340,10 @@ function findPath(piece) {
   let kingArr = [];
   let newKingArr = [];
   let opponentArr = [];
+  let killArr = [];
   let tempArr = [];
   let restrictedAreas = [];
+  let possibles = [];
   if (PIECES.blackPieces.includes(piece)) {
     x = PIECES.kings[0].parentElement.value.x;
     y = PIECES.kings[0].parentElement.value.y;
@@ -352,20 +359,28 @@ function findPath(piece) {
   kingArr.push(findSpot(x, y - 1));
   kingArr.push(findSpot(x - 1, y + 1));
   kingArr.push(findSpot(x - 1, y - 1));
-  if (PIECES.whitePieces.includes(piece) && PIECES.kings[1] != piece) {
+  if (PIECES.whitePieces.includes(piece) && PIECES.kings[1] != (piece)) {
     restrictedAreas = [];
+    killArr = []
     newKingArr = kingArr.filter((e) => {
       return e && !PIECES.whitePieces.includes(e.firstElementChild);
     });
     for (let a of findOptions(piece, false, true)) {
       opponentArr = [];
       a ? a.classList.add("vision") : null;
-      console.log(a)
       for (let b of PIECES.blackPieces) {
-        tempArr = findOptions(b, false, true)
+        tempArr = findOptions(b, false, true, piece)
         tempArr = tempArr.filter((e) => {
-          return e && !PIECES.blackPieces.includes(e.firstElementChild) && !e.classList.contains('vision');
+          return e && !PIECES.blackPieces.includes(e) && !e.classList.contains('vision');
         });
+      killArr = findOptions(b, false, false)  
+      for (let k of killArr) {
+        if (k && k.firstElementChild == PIECES.kings[1]) {
+          if (findOptions(piece, false, true).includes(b.parentElement)) {
+           possibles.push(b.parentElement)
+          }
+        }
+      }
         tempArr.length > 0 ? opponentArr.push(tempArr) : null;
       }
       kingArr = [PIECES.kings[1].parentElement]
@@ -380,8 +395,9 @@ function findPath(piece) {
     for (let k of c) {
       k ? k.classList.remove('possible') : null;
     }
-  } else if (PIECES.blackPieces.includes(piece) && PIECES.kings[0] != piece) {
+  } else if (PIECES.blackPieces.includes(piece) && PIECES.kings[0] != (piece)) {
     restrictedAreas = [];
+    killArr = []
     newKingArr = kingArr.filter((e) => {
       return e && !PIECES.blackPieces.includes(e.firstElementChild);
     });
@@ -389,13 +405,21 @@ function findPath(piece) {
       opponentArr = [];
       a ? a.classList.add("vision") : null;
       for (let b of PIECES.whitePieces) {
-        tempArr = findOptions(b, false, true)
+        tempArr = findOptions(b, false, true, piece)
         tempArr = tempArr.filter((e) => {
-          return e && !PIECES.whitePieces.includes(e.firstElementChild) && !e.classList.contains('vision');
+          return e && !PIECES.whitePieces.includes(e) && !e.classList.contains('vision');
         });
+      killArr = findOptions(b, false, false)  
+      for (let k of killArr) {
+        if (k && k.firstElementChild == PIECES.kings[0]) {
+          if (findOptions(piece, false, true).includes(b.parentElement)) {
+           possibles.push(b.parentElement)
+          }
+        }
+      }
         tempArr.length > 0 ? opponentArr.push(tempArr) : null;
       }
-      kingArr = [PIECES.kings[1].parentElement]
+      kingArr = [PIECES.kings[0].parentElement]
       for (let t of opponentArr) {
         if (getArraysIntersection(t, kingArr).length > 0) {
           restrictedAreas.push(a)
@@ -407,10 +431,10 @@ function findPath(piece) {
     for (let k of c) {
       k ? k.classList.remove('possible') : null;
     }
-  } 
-
-  //THE PROBLEM:
-  //When checking for danger in path, the findOptions doesn't look through the piece, so it does not detect the king, the path is not dangeorus
+  }
+  for (let p of possibles) {
+    p.classList.add('possible')
+  }
 
 
   //DONT RUN THIS FOR KING
@@ -422,6 +446,39 @@ function findPath(piece) {
   // find opponent's options
   // if opponent's options still includes king's spot
   // remove the option
+}
+
+export function checkMate(color) {
+  // console.log('checking mate')
+  // let sameSideMoves = [];
+  // if (color == 'white') {
+  //   for (let w of PIECES.whitePieces) {
+  //     sameSideMoves.push(findPath(w))
+  //   }
+  //   let empty = false;
+  //   for (let s of sameSideMoves) {
+  //     if (s) s = s.filter((e) => {
+  //       return e && !PIECES.whitePieces.includes(e.firstElementChild);
+  //     });
+  //     console.log(s)
+  //     if (s && s.length > 0){
+  //       empty = true
+  //     }
+  //   }
+  //   !empty ? alert('Black Wins') : null;
+  // }
+  // else if (color == "black") {
+  //   for (let w of PIECES.blackPieces) {
+  //     sameSideMoves.push(findOptions(w, false, true))
+  //   }
+  //   let empty = false;
+  //   for (let s of sameSideMoves) {
+  //     if (s.length > 0){
+  //       empty = true
+  //     }
+  //   }
+  //   !empty ? alert('White Wins') : null;
+  // }
 }
 
 Array.prototype.remove = function () {
@@ -491,6 +548,7 @@ function findDiagonals(piece) {
         findSpot(x + 1 + i, y + 1 + i).firstElementChild
       )
     ) {
+      
       break;
     }
   }
@@ -594,15 +652,15 @@ function findDiagonals(piece) {
       break;
     }
   }
-  loop4: for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 10; i++) {
     if (!findSpot(x - 1 - i, y - 1 - i)) {
-      break loop4;
+      break;
     }
     if (
       findSpot(x - 1 - i, y - 1 - i) &&
       findSpot(x - 1 - i, y - 1 - i).classList.contains("vision")
     ) {
-      break loop4;
+      break;
     }
     if (findSpot(x - 1 - i, y - 1 - i)) {
       arr.push(findSpot(x - 1 - i, y - 1 - i));
@@ -633,14 +691,14 @@ function findDiagonals(piece) {
         findSpot(x - 1 - i, y - 1 - i).firstElementChild
       )
     ) {
-      break loop4;
+      break;
     }
     if (
       PIECES.blackPieces.includes(
         findSpot(x - 1 - i, y - 1 - i).firstElementChild
       )
     ) {
-      break loop4;
+      break;
     }
   }
   return arr;

@@ -103,9 +103,8 @@ body {
 
 .piece:hover {
     cursor: pointer;
-    width: 60.5%;
-    height: 60.5%;
-    transition: width 0.2s, height 0.2s;
+    top: 52.5%;
+    transition: top 0.2s;
 }
 
 .dragging {
@@ -125,7 +124,8 @@ body {
     /* background-color: rgba(107, 255, 107, 0.186) */
     /* background-color: #ce5501; */
     /* background-color: #ff9205; */
-    box-shadow: inset 0px 0px 0px 5px rgb(12, 153, 12);
+    /* box-shadow: inset 0px 0px 0px 4px rgb(12, 153, 12); */
+    background-color: #829769;
 }
 
 .check {
