@@ -1,7 +1,6 @@
 import { PIECES } from "./pieces.js";
 
 let arr = [];
-let soldierDanger = [];
 let lastCheck, inCheck;
 
 export function findOptions(piece, color, checkForDanger = true, removePiece=null) {
@@ -129,23 +128,12 @@ export function findOptions(piece, color, checkForDanger = true, removePiece=nul
     }
   } else if (PIECES.soldiers.includes(piece)) {
     arr = [];
-    let soldierDanger = [];
     piece.parentElement ? (x = piece.parentElement.value.x) : null;
     piece.parentElement ? (y = piece.parentElement.value.y) : null;
     if (PIECES.whitePieces.includes(piece)) {
       arr = findWhitePawn(piece, color);
-      soldierDanger = arr;
-      soldierDanger.push(findSpot(x - 1, y + 1));
-      soldierDanger.push(findSpot(x + 1, y + 1));
-      soldierDanger.remove(findSpot(x, y + 1));
-      // array modifiction for when kingDanger is called
     } else if (PIECES.blackPieces.includes(piece)) {
       arr = findBlackPawn(piece, color);
-      soldierDanger = arr;
-      soldierDanger.push(findSpot(x - 1, y - 1));
-      soldierDanger.push(findSpot(x + 1, y - 1));
-      soldierDanger.remove(findSpot(x, y - 1));
-      // array modifiction for when kingDanger is called
     }
   } else if (PIECES.walls.includes(piece)) {
     arr = [];
@@ -217,12 +205,14 @@ export function findOptions(piece, color, checkForDanger = true, removePiece=nul
   if (PIECES.blackPieces.includes(piece)) {
     if (checkForDanger && PIECES.soldiers.includes(piece)) {
       findSpot(x, y - 1) ? arr.push(findSpot(x, y - 1)) : null;
+      findSpot(x, y - 2) ? arr.push(findSpot(x, y - 2)) : null;
     }
   }
 
   if (PIECES.whitePieces.includes(piece)) {
     if (checkForDanger && PIECES.soldiers.includes(piece)) {
       findSpot(x, y + 1) ? arr.push(findSpot(x, y + 1)) : null;
+      findSpot(x, y + 2) ? arr.push(findSpot(x, y + 2)) : null;
     }
   }
 
