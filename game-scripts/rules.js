@@ -316,18 +316,14 @@ export function findKingDanger(piece, curr) {
       k.classList.remove("danger");
     }
   }
-  inCheck = false;
   if (PIECES.kings[0].parentElement.classList.contains("danger")) {
     PIECES.kings[0].parentElement.classList.add("check");
     lastCheck = PIECES.kings[0].parentElement;
-    inCheck = true;
   }
   if (PIECES.kings[1].parentElement.classList.contains("danger")) {
     PIECES.kings[1].parentElement.classList.add("check");
-    inCheck = true;
     lastCheck = PIECES.kings[1].parentElement;
   }
-  return inCheck;
 }
 
 export function fixCheck(piece) {
@@ -335,7 +331,6 @@ export function fixCheck(piece) {
 }
 
 function findPath(piece) {
-  let options = [];
   let x, y;
   let kingArr = [];
   let newKingArr = [];
@@ -365,6 +360,7 @@ function findPath(piece) {
     for (let a of findOptions(piece, false, true)) {
       opponentArr = [];
       a ? a.classList.add("vision") : null;
+      console.log(a)
       for (let b of PIECES.blackPieces) {
         tempArr = findOptions(b, false, true)
         tempArr = tempArr.filter((e) => {
@@ -412,6 +408,10 @@ function findPath(piece) {
       k ? k.classList.remove('possible') : null;
     }
   } 
+
+  //THE PROBLEM:
+  //When checking for danger in path, the findOptions doesn't look through the piece, so it does not detect the king, the path is not dangeorus
+
 
   //DONT RUN THIS FOR KING
 
