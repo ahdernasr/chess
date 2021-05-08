@@ -120,12 +120,12 @@ body {
 
 .possible {
     /* box-shadow: 1px 1px 5px 5px rgba(119, 255, 107, 0.46) inset; */
-    /* background-color: rgba(12, 153, 12, 0.514); */
+    background-color: rgba(12, 153, 12, 0.391);
     /* box-shadow: inset 0px 0px 0px 5px #ce5501; */
     /* background-color: rgba(107, 255, 107, 0.186) */
     /* background-color: #ce5501; */
     /* background-color: #ff9205; */
-    box-shadow: inset 0px 0px 0px 5px rgb(12, 153, 12);
+    /* box-shadow: inset 0px 0px 0px 5px rgb(12, 153, 12); */
 }
 
 .check {
