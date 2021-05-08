@@ -1,7 +1,7 @@
 import { PIECES } from "./pieces.js";
 
 let arr = [];
-let lastCheck, inCheck;
+let lastCheck;
 
 export function findOptions(piece, color, checkForDanger = true, removePiece=null) {
   let removePieceParent;
@@ -202,20 +202,24 @@ export function findOptions(piece, color, checkForDanger = true, removePiece=nul
       }
     }
   }
+
   if (PIECES.blackPieces.includes(piece)) {
-    if (checkForDanger && PIECES.soldiers.includes(piece)) {
-      findSpot(x, y - 1) ? arr.push(findSpot(x, y - 1)) : null;
-      findSpot(x, y - 2) ? arr.push(findSpot(x, y - 2)) : null;
+    if (!checkForDanger && PIECES.soldiers.includes(piece)) {
+      findSpot(x, y - 1) ? arr.remove(findSpot(x, y - 1)) : null;
+      findSpot(x, y - 2) ? arr.remove(findSpot(x, y - 2)) : null;
+      findSpot(x+1, y - 1) ? arr.push(findSpot(x+1, y - 1)) : null;
+      findSpot(x-1, y - 1) ? arr.push(findSpot(x-1, y - 1)) : null;
     }
   }
 
   if (PIECES.whitePieces.includes(piece)) {
-    if (checkForDanger && PIECES.soldiers.includes(piece)) {
-      findSpot(x, y + 1) ? arr.push(findSpot(x, y + 1)) : null;
-      findSpot(x, y + 2) ? arr.push(findSpot(x, y + 2)) : null;
+    if (!checkForDanger && PIECES.soldiers.includes(piece)) {
+      findSpot(x, y + 1) ? arr.remove(findSpot(x, y + 1)) : null;
+      findSpot(x, y + 2) ? arr.remove(findSpot(x, y + 2)) : null;
+      findSpot(x+1, y + 1) ? arr.push(findSpot(x+1, y + 1)) : null;
+      findSpot(x-1, y + 1) ? arr.push(findSpot(x-1, y + 1)) : null;
     }
   }
-
   removePieceParent ? removePieceParent.append(removePiece) : null;
   return arr;
 }
