@@ -1,5 +1,5 @@
 import { addPieces, PIECES } from "./pieces.js";
-import { findOptions, removeOptions, findKingDanger, fixCheck} from "./rules.js";
+import { findOptions, removeOptions, findKingDanger, fixCheck, checkMate} from "./rules.js";
 
 let turn = "white";
 let firstMove = true;
@@ -89,6 +89,8 @@ function removeBlackListeners() {
 }
 
 function whiteDragStart(event) {
+  newMove ? newMove.classList.remove('newMove'): null;
+  currentMove ? currentMove.classList.remove('currentMove'):null;
   event.target.closest(".piece").classList.add("dragging");
   currentMove = event.target.closest(".el");
   findOptions(event.target.closest(".piece"), true, true);
@@ -100,6 +102,8 @@ function whiteDragEnd(event) {
   removeOptions();
 }
 function blackDragStart(event) {
+  newMove ? newMove.classList.remove('newMove'): null;
+  currentMove ? currentMove.classList.remove('currentMove'):null;
   event.target.closest(".piece").classList.add("dragging");
   currentMove = event.target.closest(".el");
   findOptions(event.target.closest(".piece"), true, true);
@@ -136,9 +140,11 @@ function dropHandler(event) {
   var draggable = document.querySelector(".dragging");
   removeOptions(draggable);
   if (PIECES.whitePieces.includes(draggable)) {
+    checkMate('black')
     whiteDropHandler(event);
   }
   if (PIECES.blackPieces.includes(draggable)) {
+    checkMate('white')
     blackDropHandler(event);
   }
 }

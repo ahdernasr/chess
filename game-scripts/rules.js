@@ -2,6 +2,7 @@ import { PIECES } from "./pieces.js";
 
 let arr = [];
 let lastCheck;
+let possibles = [];
 
 export function findOptions(piece, color, checkForDanger = true, removePiece=null) {
   let removePieceParent;
@@ -330,6 +331,7 @@ export function fixCheck(piece) {
 }
 
 function findPath(piece) {
+  possibles = []
   let x, y;
   let kingArr = [];
   let newKingArr = [];
@@ -337,7 +339,6 @@ function findPath(piece) {
   let killArr = [];
   let tempArr = [];
   let restrictedAreas = [];
-  let possibles = [];
   if (PIECES.blackPieces.includes(piece)) {
     x = PIECES.kings[0].parentElement.value.x;
     y = PIECES.kings[0].parentElement.value.y;
@@ -387,6 +388,7 @@ function findPath(piece) {
     }
     let c = getArraysIntersection(restrictedAreas, findOptions(piece, false, true))
     for (let k of c) {
+      console.log(k)
       k ? k.classList.remove('possible') : null;
     }
   } else if (PIECES.blackPieces.includes(piece) && PIECES.kings[0] != (piece)) {
@@ -429,6 +431,7 @@ function findPath(piece) {
   for (let p of possibles) {
     p.classList.add('possible')
   }
+
   return opponentArr
 
   //DONT RUN THIS FOR KING
@@ -443,7 +446,11 @@ function findPath(piece) {
 }
 
 export function checkMate(color) {
-  // console.log('checking mate')
+
+  let currentMoves = []
+  if (color == 'white') {
+      // console.log(findPath(PIECES.blackPieces[0]))
+  }
   // let sameSideMoves = [];
   // if (color == 'white') {
   //   for (let w of PIECES.blackPieces) {
