@@ -141,9 +141,11 @@ function dropHandler(event) {
   removeOptions(draggable);
   if (PIECES.whitePieces.includes(draggable)) {
     whiteDropHandler(event);
+    checkMate('black')
   }
   if (PIECES.blackPieces.includes(draggable)) {
     blackDropHandler(event);
+    checkMate('white')
   }
 }
 
@@ -203,7 +205,6 @@ function whiteDropHandler(event) {
     }
   }
   eventHandler();
-  checkMate('black')
   clearAllDanger();
 }
 
@@ -263,7 +264,6 @@ function blackDropHandler(event) {
     }
   }
   eventHandler();
-  checkMate('white')
   clearAllDanger();
 }
 

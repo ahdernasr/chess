@@ -131,9 +131,9 @@ export function findOptions(piece, color, checkForDanger = true, removePiece=nul
     piece.parentElement ? (x = piece.parentElement.value.x) : null;
     piece.parentElement ? (y = piece.parentElement.value.y) : null;
     if (PIECES.whitePieces.includes(piece)) {
-      arr = findWhitePawn(piece, color);
+      arr = findWhitePawn(piece, color, checkForDanger);
     } else if (PIECES.blackPieces.includes(piece)) {
-      arr = findBlackPawn(piece, color);
+      arr = findBlackPawn(piece, color, checkForDanger);
     }
   } else if (PIECES.walls.includes(piece)) {
     arr = [];
@@ -202,19 +202,19 @@ export function findOptions(piece, color, checkForDanger = true, removePiece=nul
       }
     }
   }
-  if (PIECES.blackPieces.includes(piece)) {
-    if (checkForDanger && PIECES.soldiers.includes(piece)) {
-      findSpot(x, y - 1) ? arr.push(findSpot(x, y - 1)) : null;
-      findSpot(x, y - 2) ? arr.push(findSpot(x, y - 2)) : null;
-    }
-  }
+  // if (PIECES.blackPieces.includes(piece)) {
+  //   if (checkForDanger && PIECES.soldiers.includes(piece)) {
+  //     findSpot(x, y - 1) ? arr.push(findSpot(x, y - 1)) : null;
+  //     findSpot(x, y - 2) ? arr.push(findSpot(x, y - 2)) : null;
+  //   }
+  // }
 
-  if (PIECES.whitePieces.includes(piece)) {
-    if (checkForDanger && PIECES.soldiers.includes(piece)) {
-      findSpot(x, y + 1) ? arr.push(findSpot(x, y + 1)) : null;
-      findSpot(x, y + 2) ? arr.push(findSpot(x, y + 2)) : null;
-    }
-  }
+  // if (PIECES.whitePieces.includes(piece)) {
+  //   if (checkForDanger && PIECES.soldiers.includes(piece)) {
+  //     findSpot(x, y + 1) ? arr.push(findSpot(x, y + 1)) : null;
+  //     findSpot(x, y + 2) ? arr.push(findSpot(x, y + 2)) : null;
+  //   }
+  // }
 
   removePieceParent ? removePieceParent.append(removePiece) : null;
   return arr;
@@ -350,6 +350,7 @@ function findPath(piece) {
   kingArr.push(findSpot(x - 1, y + 1));
   kingArr.push(findSpot(x - 1, y - 1));
   if (PIECES.whitePieces.includes(piece) && PIECES.kings[1] != (piece)) {
+    console.log('finding path')
     restrictedAreas = [];
     killArr = []
     newKingArr = kingArr.filter((e) => {
@@ -425,7 +426,7 @@ function findPath(piece) {
   for (let p of possibles) {
     p.classList.add('possible')
   }
-
+  return opponentArr
 
   //DONT RUN THIS FOR KING
 
@@ -442,7 +443,7 @@ export function checkMate(color) {
   // console.log('checking mate')
   // let sameSideMoves = [];
   // if (color == 'white') {
-  //   for (let w of PIECES.whitePieces) {
+  //   for (let w of PIECES.blackPieces) {
   //     sameSideMoves.push(findPath(w))
   //   }
   //   let empty = false;
@@ -450,7 +451,6 @@ export function checkMate(color) {
   //     if (s) s = s.filter((e) => {
   //       return e && !PIECES.whitePieces.includes(e.firstElementChild);
   //     });
-  //     console.log(s)
   //     if (s && s.length > 0){
   //       empty = true
   //     }
@@ -888,22 +888,22 @@ function findHorses(piece) {
   return arr;
 }
 
-function findWhitePawn(piece, color) {
+function findWhitePawn(piece, color, checkForDanger) {
   let x, y;
   var arr = [];
   piece.parentElement ? (x = piece.parentElement.value.x) : null;
   piece.parentElement ? (y = piece.parentElement.value.y) : null;
   if (piece.value.firstTime) {
     if (findSpot(x, y + 2) && !findSpot(x, y + 2).firstElementChild)
-      !findSpot(x, y + 2).classList.contains("vision")
+      !findSpot(x, y + 2).classList.contains("vision") && checkForDanger
         ? arr.push(findSpot(x, y + 2))
         : null;
     if (findSpot(x, y + 1) && !findSpot(x, y + 1).firstElementChild)
-      !findSpot(x, y + 1).classList.contains("vision")
+      !findSpot(x, y + 1).classList.contains("vision") && checkForDanger
         ? arr.push(findSpot(x, y + 1))
         : null;
   } else if (findSpot(x, y + 1) && !findSpot(x, y + 1).firstElementChild) {
-    !findSpot(x, y + 1).classList.contains("vision")
+    !findSpot(x, y + 1).classList.contains("vision") && checkForDanger
       ? arr.push(findSpot(x, y + 1))
       : null;
   }
@@ -912,7 +912,7 @@ function findWhitePawn(piece, color) {
     findSpot(x + 1, y + 1).firstElementChild &&
     PIECES.blackPieces.includes(findSpot(x + 1, y + 1).firstElementChild)
   ) {
-    !findSpot(x + 1, y + 1).classList.contains("vision")
+    !findSpot(x + 1, y + 1).classList.contains("vision")&& checkForDanger
       ? arr.push(findSpot(x + 1, y + 1))
       : null;
   }
@@ -921,7 +921,7 @@ function findWhitePawn(piece, color) {
     findSpot(x - 1, y + 1).firstElementChild &&
     PIECES.blackPieces.includes(findSpot(x - 1, y + 1).firstElementChild)
   ) {
-    !findSpot(x - 1, y + 1).classList.contains("vision")
+    !findSpot(x - 1, y + 1).classList.contains("vision")&& checkForDanger
       ? arr.push(findSpot(x - 1, y + 1))
       : null;
   }
@@ -941,22 +941,22 @@ function findWhitePawn(piece, color) {
   return arr;
 }
 
-function findBlackPawn(piece, color) {
+function findBlackPawn(piece, color, checkForDanger) {
   let x, y;
   var arr = [];
   piece.parentElement ? (x = piece.parentElement.value.x) : null;
   piece.parentElement ? (y = piece.parentElement.value.y) : null;
   if (piece.value.firstTime) {
     if (findSpot(x, y - 2) && !findSpot(x, y - 2).firstElementChild)
-      !findSpot(x, y - 2).classList.contains("vision")
+      !findSpot(x, y - 2).classList.contains("vision") && checkForDanger
         ? arr.push(findSpot(x, y - 2))
         : null;
     if (findSpot(x, y - 1) && !findSpot(x, y - 1).firstElementChild)
-      !findSpot(x, y - 1).classList.contains("vision")
+      !findSpot(x, y - 1).classList.contains("vision") && checkForDanger
         ? arr.push(findSpot(x, y - 1))
         : null;
   } else if (findSpot(x, y + 1) && !findSpot(x, y - 1).firstElementChild) {
-    !findSpot(x, y - 1).classList.contains("vision")
+    !findSpot(x, y - 1).classList.contains("vision") && checkForDanger
       ? arr.push(findSpot(x, y - 1))
       : null;
   }
@@ -966,7 +966,7 @@ function findBlackPawn(piece, color) {
     PIECES.whitePieces.includes(findSpot(x + 1, y - 1).firstElementChild)
   ) {
     !findSpot(x + 1, y - 1).classList.contains("vision")
-      ? arr.push(findSpot(x + 1, y - 1))
+      ? arr.push(findSpot(x + 1, y - 1)) && checkForDanger
       : null;
   }
   if (
@@ -975,7 +975,7 @@ function findBlackPawn(piece, color) {
     PIECES.whitePieces.includes(findSpot(x - 1, y - 1).firstElementChild)
   ) {
     !findSpot(x - 1, y - 1).classList.contains("vision")
-      ? arr.push(findSpot(x - 1, y - 1))
+      ? arr.push(findSpot(x - 1, y - 1)) && checkForDanger
       : null;
   }
   for (let a of arr) {
@@ -994,6 +994,10 @@ function findBlackPawn(piece, color) {
           : null;
       }
     }
+  }
+
+  if (!checkForDanger) {
+    console.log('hello')
   }
   return arr;
 }
