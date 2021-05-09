@@ -163,6 +163,7 @@ async function dropHandler(event) {
 }
 
 function whiteDropHandler(event) {
+  mySound.play()
   var draggable = document.querySelector(".dragging");
   event.preventDefault();
   if (
@@ -224,12 +225,12 @@ function whiteDropHandler(event) {
     promoPrompt(newMove, 'white')
   }
 
-  mySound.play()
   eventHandler();
   clearAllDanger();
 }
 
 function blackDropHandler(event) {
+  mySound.play()
   var draggable = document.querySelector(".dragging");
   event.preventDefault();
   if (
@@ -301,8 +302,6 @@ function blackDropHandler(event) {
   } else {
     PIECES.kings[1].parentElement.classList.remove("check");
   }
-
-  mySound.play()
   eventHandler();
   clearAllDanger();
 }

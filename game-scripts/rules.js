@@ -275,7 +275,7 @@ export function findKingDanger(piece, curr) {
           newKingArr.remove(k)
         }
     }
-    if (dangerArr.filter((e) => e && !PIECES.whitePieces.includes(e.firstElementChild)).length == newKingArr.filter((e) => e && !PIECES.whitePieces.includes(e.firstElementChild)).length) {
+    if (dangerArr.filter((e) => e && !PIECES.whitePieces.includes(e.firstElementChild)).length >= newKingArr.filter((e) => e && !PIECES.whitePieces.includes(e.firstElementChild)).length) {
       return false
     }
   }
@@ -314,7 +314,7 @@ export function findKingDanger(piece, curr) {
           newKingArr.remove(k)
         }
     }
-    if (dangerArr.filter((e) => e && !PIECES.blackPieces.includes(e.firstElementChild)).length == newKingArr.filter((e) => e && !PIECES.blackPieces.includes(e.firstElementChild)).length) {
+    if (dangerArr.filter((e) => e && !PIECES.blackPieces.includes(e.firstElementChild)).length >= newKingArr.filter((e) => e && !PIECES.blackPieces.includes(e.firstElementChild)).length) {
       return false
     }
   }
