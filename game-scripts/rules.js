@@ -245,6 +245,7 @@ function getArraysIntersection(a1, a2) {
 export function findKingDanger(piece, curr) {
   lastCheck ? lastCheck.classList.remove("check") : null;
   let dangerFound;
+  let dangerArr = [];
   let x, y;
   let kingArr = [];
   let newKingArr = [];
@@ -281,15 +282,30 @@ export function findKingDanger(piece, curr) {
       for (let c of getArraysIntersection(o, kingArr)) {
         if (c) {
           c.classList.add("danger");
+          dangerArr.push(c)
           dangerZone ? dangerZone.push(c) : null;
         }
       }
+    }
+    for (let k of newKingArr) {
+      if (
+        k &&
+        !dangerZone.includes(k) &&
+        PIECES.blackPieces.includes(k.firstElementChild)
+      ) {
+        k.classList.remove("danger");
+        dangerArr.remove(k)
+      }
+    }
+    if (dangerArr.filter((e) => e && !PIECES.whitePieces.includes(e.firstElementChild)).length == newKingArr.filter((e) => e && !PIECES.whitePieces.includes(e.firstElementChild)).length) {
+      return false
     }
   }
   if (PIECES.whitePieces.includes(piece)) {
     newKingArr = kingArr.filter((e) => {
       return e && !PIECES.blackPieces.includes(e.firstElementChild);
     });
+
     for (let b of PIECES.whitePieces) {
       allOppositeMoves.push(findOptions(b, false, false));
     }
@@ -302,20 +318,26 @@ export function findKingDanger(piece, curr) {
       for (let c of getArraysIntersection(o, kingArr)) {
         if (c) {
           c.classList.add("danger");
+          dangerArr.push(c)
           dangerZone ? dangerZone.push(c) : null;
         }
       }
     }
-  }
-  for (let k of newKingArr) {
-    if (
-      k &&
-      !dangerZone.includes(k) &&
-      PIECES.blackPieces.includes(k.firstElementChild)
-    ) {
-      k.classList.remove("danger");
+    for (let k of newKingArr) {
+      if (
+        k &&
+        !dangerZone.includes(k) &&
+        PIECES.whitePieces.includes(k.firstElementChild)
+      ) {
+        k.classList.remove("danger");
+        dangerArr.remove(k)
+      }
+    }
+    if (dangerArr.filter((e) => e && !PIECES.blackPieces.includes(e.firstElementChild)).length == newKingArr.filter((e) => e && !PIECES.blackPieces.includes(e.firstElementChild)).length) {
+      return false
     }
   }
+
   if (PIECES.kings[0].parentElement.classList.contains("danger")) {
     PIECES.kings[0].parentElement.classList.add("check");
     lastCheck = PIECES.kings[0].parentElement;
@@ -324,13 +346,14 @@ export function findKingDanger(piece, curr) {
     PIECES.kings[1].parentElement.classList.add("check");
     lastCheck = PIECES.kings[1].parentElement;
   }
+  return true
 }
 
 export function fixCheck(piece) {
   findPath(piece);
 }
 
-function findPath(piece) {
+ function findPath(piece, returnOpponentArr = true) {
   possibles = []
   let x, y;
   let kingArr = [];
@@ -338,6 +361,8 @@ function findPath(piece) {
   let opponentArr = [];
   let killArr = [];
   let tempArr = [];
+  let kArr = [];
+  let options = true;
   let restrictedAreas = [];
   if (PIECES.blackPieces.includes(piece)) {
     x = PIECES.kings[0].parentElement.value.x;
@@ -346,6 +371,7 @@ function findPath(piece) {
     x = PIECES.kings[1].parentElement.value.x;
     y = PIECES.kings[1].parentElement.value.y;
   }
+  //STOP PIECE FROM MOVING IF IT DANGERS THE KING && returns opponent's moves
   kingArr.push(findSpot(x + 1, y));
   kingArr.push(findSpot(x - 1, y));
   kingArr.push(findSpot(x + 1, y + 1));
@@ -388,8 +414,14 @@ function findPath(piece) {
     }
     let c = getArraysIntersection(restrictedAreas, findOptions(piece, false, true))
     for (let k of c) {
-      console.log(k)
       k ? k.classList.remove('possible') : null;
+      k ? kArr.push(k) : null;;
+    }
+    let optionsArr = findOptions(piece, false, true).filter((e) => {
+      return e && !PIECES.whitePieces.includes(e.firstElementChild) && !e.classList.contains('vision');
+    });
+    if (kArr.length >= optionsArr.length) {
+      options = false
     }
   } else if (PIECES.blackPieces.includes(piece) && PIECES.kings[0] != (piece)) {
     restrictedAreas = [];
@@ -426,14 +458,25 @@ function findPath(piece) {
     let c = getArraysIntersection(restrictedAreas, findOptions(piece, false, true))
     for (let k of c) {
       k ? k.classList.remove('possible') : null;
+      k ? kArr.push(k) : null;;
     }
+    let optionsArr = findOptions(piece, false, true).filter((e) => {
+      return e && !PIECES.blackPieces.includes(e.firstElementChild) && !e.classList.contains('vision');
+    });
+    if (kArr.length >= optionsArr.length) {
+      options = false
+    }
+  } else {
+    options = false;
   }
   for (let p of possibles) {
     p.classList.add('possible')
   }
-
-  return opponentArr
-
+  if(returnOpponentArr) {
+    return opponentArr
+  } else {
+    return options
+  }
   //DONT RUN THIS FOR KING
 
   //have: The friendly king's options (in newKingArr)
@@ -442,43 +485,36 @@ function findPath(piece) {
   // implement that a findOptions loop will break if it meets a vision
   // find opponent's options
   // if opponent's options still includes king's spot
-  // remove the option
+  // remove piece's option
 }
 
 export function checkMate(color) {
-
-  let currentMoves = []
+  let availbleOptions = 0
   if (color == 'white') {
-      // console.log(findPath(PIECES.blackPieces[0]))
+    for (let w of PIECES.whitePieces) {
+      if (findPath(w, false)){
+        availbleOptions += 1 
+      }
+    }
+    if(findKingDanger(PIECES.blackPieces[0])){
+      availbleOptions += 1;
+    } 
+    if (availbleOptions == 0) {
+     return 0
+    }
+  } else if (color == 'black') {
+    for (let w of PIECES.blackPieces) {
+      if (findPath(w, false)){
+        availbleOptions += 1 
+      }
+    }
+    if(findKingDanger(PIECES.whitePieces[0])){
+      availbleOptions += 1;
+    } 
+    if (availbleOptions == 0) {
+      return 1
+    }
   }
-  // let sameSideMoves = [];
-  // if (color == 'white') {
-  //   for (let w of PIECES.blackPieces) {
-  //     sameSideMoves.push(findPath(w))
-  //   }
-  //   let empty = false;
-  //   for (let s of sameSideMoves) {
-  //     if (s) s = s.filter((e) => {
-  //       return e && !PIECES.whitePieces.includes(e.firstElementChild);
-  //     });
-  //     if (s && s.length > 0){
-  //       empty = true
-  //     }
-  //   }
-  //   !empty ? alert('Black Wins') : null;
-  // }
-  // else if (color == "black") {
-  //   for (let w of PIECES.blackPieces) {
-  //     sameSideMoves.push(findOptions(w, false, true))
-  //   }
-  //   let empty = false;
-  //   for (let s of sameSideMoves) {
-  //     if (s.length > 0){
-  //       empty = true
-  //     }
-  //   }
-  //   !empty ? alert('White Wins') : null;
-  // }
 }
 
 Array.prototype.remove = function () {
@@ -1008,7 +1044,7 @@ function findBlackPawn(piece, color) {
   return arr;
 }
 
-function findSpot(x, y) {
+export function findSpot(x, y) {
   let elements = document.getElementsByClassName("el");
   for (let e of elements) {
     if (e.value.x == x && e.value.y == y) {

@@ -23,6 +23,54 @@ body {
     background-color: rgb(218, 211, 197);
 }
 
+.promotion {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    width: 5%;
+    height: 40%;
+    background-color: rgb(255, 154, 101);
+    border: 3px solid #9a4d00;
+    z-index: 999;
+    right: 20%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    padding: 1.5rem 0 1.5rem 0;
+    border-radius: 2rem;
+}
+
+.promoW {
+    width: 65%;
+    height: 65%;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    transition: transform 0.3s;
+}
+
+.promoW:hover {
+    transform: translate(10%);
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.promoB {
+    width: 65%;
+    height: 65%;
+    background-repeat: no-repeat;
+    background-size: 100%;
+    transition: transform 0.3s;
+}
+
+.promoB:hover {
+    transform: translate(10%);
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
 /* CHESS BOARD */
 #grid {
     display: flex;
@@ -68,26 +116,6 @@ body {
     background-color: black;
 }
 
-.el-label {
-    position: absolute;
-    font-size: 13px;
-    bottom: 0;
-    left: 0;
-    padding: 0 0 3.5px 3.5px;
-    font-weight: 500;
-    color: white;
-}
-
-.el-label-top {
-    position: absolute;
-    font-size: 13px;
-    top: 0;
-    right: 0;
-    padding: 3.5px 3.5px 0 0;
-    font-weight: 500;
-    color: white;
-}
-
 .piece {
     width: 65%;
     height: 65%;
@@ -98,14 +126,13 @@ body {
     transform: translate(-50%, -50%);
     background-repeat: no-repeat;
     background-size: 100%;
-    transition: width 0.3s, height 0.3s;
+    transition: top 0.3s;
 }
 
 .piece:hover {
     cursor: pointer;
-    width: 60.5%;
-    height: 60.5%;
-    transition: width 0.2s, height 0.2s;
+    top: 52%;
+    transition: top 0.2s;
 }
 
 .dragging {

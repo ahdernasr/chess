@@ -7,6 +7,7 @@ let currentMove = "";
 let oldCurrentMove = "";
 let newMove = "";
 let spinOnTurn = false;
+let mySound = new sound("sounds/move.mp3")
 
 function createGrid() {
   //DRAW BOARD
@@ -134,22 +135,30 @@ async function initTurn() {
   }
 }
 
-function dropHandler(event) {
+async function dropHandler(event) {
   newMove ? newMove.classList.remove("newMove") : null;
   oldCurrentMove ? oldCurrentMove.classList.remove("currentMove") : null;
   var draggable = document.querySelector(".dragging");
   removeOptions(draggable);
   if (PIECES.whitePieces.includes(draggable)) {
-    checkMate('black')
-    whiteDropHandler(event);
+    await whiteDropHandler(event);
+    if(checkMate('black')==1){
+      removeWhiteListeners()
+      await sleep(50)
+      alert('White wins')
+    }
   }
   if (PIECES.blackPieces.includes(draggable)) {
-    checkMate('white')
-    blackDropHandler(event);
+    await blackDropHandler(event);
+    if(checkMate('white')==0){
+      removeBlackListeners()
+      await sleep(50)
+      alert('Black wins')
+    }
   }
 }
 
-function whiteDropHandler(event) {
+async function whiteDropHandler(event) {
   var draggable = document.querySelector(".dragging");
   event.preventDefault();
   if (
@@ -204,11 +213,12 @@ function whiteDropHandler(event) {
       turn = "black";
     }
   }
+  mySound.play()
   eventHandler();
   clearAllDanger();
 }
 
-function blackDropHandler(event) {
+async function blackDropHandler(event) {
   var draggable = document.querySelector(".dragging");
   event.preventDefault();
   if (
@@ -263,6 +273,7 @@ function blackDropHandler(event) {
       turn = "white";
     }
   }
+  mySound.play()
   eventHandler();
   clearAllDanger();
 }
@@ -285,6 +296,21 @@ function sleep(ms) {
 async function clearAllDanger() {
   for (let e of document.getElementsByClassName("el")) {
     e.classList.remove("danger");
+  }
+}
+
+function sound(src) {
+  this.sound = document.createElement("audio");
+  this.sound.src = src;
+  this.sound.setAttribute("preload", "auto");
+  this.sound.setAttribute("controls", "none");
+  this.sound.style.display = "none";
+  document.body.appendChild(this.sound);
+  this.play = async function(){
+    this.sound.play();
+  }
+  this.stop = async function(){
+    this.sound.pause();
   }
 }
 
