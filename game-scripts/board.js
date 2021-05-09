@@ -136,6 +136,7 @@ async function initTurn() {
 }
 
 async function dropHandler(event) {
+  clearChecks()
   newMove ? newMove.classList.remove("newMove") : null;
   oldCurrentMove ? oldCurrentMove.classList.remove("currentMove") : null;
   var draggable = document.querySelector(".dragging");
@@ -452,10 +453,14 @@ function promoPrompt(spot, color) {
   return;
 }
 
-async function clearAllDanger() {
+function clearAllDanger() {
   for (let e of document.getElementsByClassName("el")) {
     e.classList.remove("danger");
   }
+}
+
+function clearChecks() {
+  document.querySelector(".check") ? document.querySelector(".check").classList.remove('check') : null;
 }
 
 function sound(src) {

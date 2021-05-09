@@ -472,7 +472,6 @@ function findPath(piece, returnOpponentArr = true) {
 }
 
 export async function checkMate(color) {
-  console.log('////////////////////////')
   let availbleOptions = 0
   if (color == 'white') {
     for (let w of PIECES.whitePieces) {
