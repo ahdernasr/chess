@@ -336,6 +336,7 @@ function findPath(piece, returnOpponentArr = true) {
   let kArr = [];
   let options = true;
   let restrictedAreas = [];
+  let pieceOptions = findOptions(piece, false, true);
   if (PIECES.blackPieces.includes(piece)) {
     x = PIECES.kings[0].parentElement.value.x;
     y = PIECES.kings[0].parentElement.value.y;
@@ -358,7 +359,7 @@ function findPath(piece, returnOpponentArr = true) {
     newKingArr = kingArr.filter((e) => {
       return e && !PIECES.whitePieces.includes(e.firstElementChild);
     });
-    for (let a of findOptions(piece, false, true)) {
+    for (let a of pieceOptions) {
       opponentArr = [];
       a && !PIECES.kings.includes(a.firstElementChild) ? a.classList.add("vision") : null;
       for (let b of PIECES.blackPieces) {
@@ -369,7 +370,7 @@ function findPath(piece, returnOpponentArr = true) {
       killArr = findOptions(b, false, false)  
       for (let k of killArr) {
         if (k && k.firstElementChild == PIECES.kings[1]) {
-          if (findOptions(piece, false, true).includes(b.parentElement)) {
+          if (pieceOptions.includes(b.parentElement)) {
            possibles.push(b.parentElement)
           }
         }
@@ -384,7 +385,7 @@ function findPath(piece, returnOpponentArr = true) {
       }
       a ? a.classList.remove('vision'): null;
     }
-    let c = getArraysIntersection(restrictedAreas, findOptions(piece, false, true))
+    let c = getArraysIntersection(restrictedAreas, pieceOptions)
     for (let k of c) {
       k ? k.classList.remove('possible') : null;
       k ? kArr.push(k) : null;;
@@ -408,7 +409,7 @@ function findPath(piece, returnOpponentArr = true) {
     newKingArr = kingArr.filter((e) => {
       return e && !PIECES.blackPieces.includes(e.firstElementChild);
     });
-    for (let a of findOptions(piece, false, true)) {
+    for (let a of pieceOptions) {
       opponentArr = [];
       a  && !PIECES.kings.includes(a.firstElementChild) ? a.classList.add("vision") : null;
       for (let b of PIECES.whitePieces) {
@@ -419,7 +420,7 @@ function findPath(piece, returnOpponentArr = true) {
       killArr = findOptions(b, false, false)  
       for (let k of killArr) {
         if (k && k.firstElementChild == PIECES.kings[0]) {
-          if (findOptions(piece, false, true).includes(b.parentElement)) {
+          if (pieceOptions.includes(b.parentElement)) {
            possibles.push(b.parentElement)
           }
         }
@@ -434,7 +435,7 @@ function findPath(piece, returnOpponentArr = true) {
       }
       a ? a.classList.remove('vision'): null;
     }
-    let c = getArraysIntersection(restrictedAreas, findOptions(piece, false, true))
+    let c = getArraysIntersection(restrictedAreas, pieceOptions)
     for (let k of c) {
       k ? k.classList.remove('possible') : null;
       k ? kArr.push(k) : null;;

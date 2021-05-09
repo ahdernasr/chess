@@ -7,6 +7,8 @@ let currentMove = "";
 let oldCurrentMove = "";
 let newMove = "";
 let spinOnTurn = false;
+let possibles = [];
+let whiteHover, blackHover;
 let mySound = new sound("sounds/move.mp3")
 
 function createGrid() {
@@ -60,32 +62,73 @@ function createGrid() {
   eventHandler();
 }
 
+function showOptions(w, color) {
+  if (color == 'white' && whiteHover) {
+    possibles = findOptions(w, true, true)
+  }
+  if (color == "black" && blackHover) {
+    possibles = findOptions(w, true, true)
+  }
+}
+
+function clearAllOptions() {
+  for (let p of possibles) {
+    p ? p.classList.remove('possible') : null;
+  }
+}
+
+function addWhiteHoverListeners() {
+  whiteHover = true;
+  for (let w of PIECES.whitePieces) {
+    w.addEventListener("mouseenter", showOptions.bind(this, w, 'white'));
+    w.addEventListener("mouseleave", clearAllOptions);
+  }
+}
+function removeWhiteHoverListeners() {
+  whiteHover = false;
+}
+
+function addBlackHoverListeners() {
+  blackHover = true;
+  for (let w of PIECES.blackPieces) {
+    w.addEventListener("mouseenter", showOptions.bind(this, w, 'black'));
+    w.addEventListener("mouseleave", clearAllOptions);
+  }
+}
+function removeBlackHoverListeners() {
+  blackHover = false;
+}
+
 function addWhiteListeners() {
   for (let w of PIECES.whitePieces) {
     w.addEventListener("dragstart", whiteDragStart);
-
     w.addEventListener("dragend", whiteDragEnd);
+    w.addEventListener("mouseenter", showOptions.bind(this, w));
+    w.addEventListener("mouseleave", clearAllOptions);
   }
 }
 function removeWhiteListeners() {
   for (let w of PIECES.whitePieces) {
     w.removeEventListener("dragstart", whiteDragStart);
-
     w.removeEventListener("dragend", whiteDragEnd);
+    w.removeEventListener("mouseenter", showOptions);
+    w.removeEventListener("mouseexit", clearAllOptions);
   }
 }
 function addBlackListeners() {
   for (let b of PIECES.blackPieces) {
     b.addEventListener("dragstart", blackDragStart);
-
     b.addEventListener("dragend", blackDragEnd);
+    b.addEventListener("mouseenter", showOptions.bind(this, b));
+    b.addEventListener("mouseleave", clearAllOptions);
   }
 }
 function removeBlackListeners() {
   for (let b of PIECES.blackPieces) {
     b.removeEventListener("dragstart", blackDragStart);
-
     b.removeEventListener("dragend", blackDragEnd);
+    b.removeEventListener("mouseenter", showOptions);
+    b.removeEventListener("mouseleave", clearAllOptions);
   }
 }
 
@@ -127,9 +170,13 @@ async function initTurn() {
   }
   firstMove = false;
   if (turn == "white") {
+    addWhiteHoverListeners();
+    removeBlackHoverListeners();
     addWhiteListeners();
     removeBlackListeners();
   } else {
+    addBlackHoverListeners();
+    removeWhiteHoverListeners();
     addBlackListeners();
     removeWhiteListeners();
   }
