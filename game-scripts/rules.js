@@ -908,7 +908,7 @@ function findHorses(piece) {
   (findSpot(x + 2, y + 1) && !findSpot(x + 2, y + 1).classList.contains("vision")) 
     ? arr.push(findSpot(x + 2, y + 1))
     : null;
-  (findSpot(x + 2, y - 2) && !findSpot(x + 2, y - 2).classList.contains("vision")) 
+  (findSpot(x + 2, y - 1) && !findSpot(x + 2, y - 1).classList.contains("vision")) 
     ? arr.push(findSpot(x + 2, y - 1))
     : null;
   (findSpot(x + 1, y - 2) && !findSpot(x + 1, y - 2).classList.contains("vision")) 
