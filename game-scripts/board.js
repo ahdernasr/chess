@@ -213,8 +213,10 @@ function whiteDropHandler(event) {
       turn = "black";
     }
   }
-  if (newMove.value.x == 7) {
-    console.log(event.closest.target('.piece'))
+  if (newMove.value.y == 8) {
+    document.getElementById('whitepromotion').classList.remove('hidden')
+    removeBlackListeners()
+    promoPrompt(newMove, 'white')
   }
   mySound.play()
   eventHandler();
@@ -276,6 +278,11 @@ function blackDropHandler(event) {
       turn = "white";
     }
   }
+  if (newMove.value.y == 0 && PIECES.soldiers.includes(newMove.firstElementChild)) {
+    document.getElementById('blackpromotion').classList.remove('hidden')
+    removeWhiteListeners()
+    promoPrompt(newMove, 'black')
+  }
   mySound.play()
   eventHandler();
   clearAllDanger();
@@ -294,6 +301,115 @@ function eventHandler() {
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function promoPrompt(spot, color) {
+  let piece = document.createElement("div");
+  piece.classList.add("piece");
+  piece.draggable = "true";
+  piece.value = {};
+  piece.value.firstTime = true;
+  piece.style.width = "70%";
+  if (color == 'white') {
+    document.getElementById('whitewall').addEventListener('click', () => {
+      spot.firstElementChild.remove()
+      PIECES.whitePieces.remove(spot.firstElementChild)
+      PIECES.walls.remove(spot.firstElementChild)
+      spot.appendChild(piece);
+      piece.style.backgroundImage = "url('./chess_pieces/wallW.png')";
+      PIECES.whitePieces.push(piece);
+      PIECES.walls.push(piece);
+      addBlackListeners()
+      document.getElementById('whitepromotion').classList.add('hidden')
+      return;
+    })
+    document.getElementById('whitehorse').addEventListener('click', () => {
+      spot.firstElementChild.remove()
+      PIECES.whitePieces.remove(spot.firstElementChild)
+      PIECES.horses.remove(spot.firstElementChild)
+      spot.appendChild(piece);
+      piece.style.backgroundImage = "url('./chess_pieces/horseW.png')";
+      PIECES.whitePieces.push(piece);
+      PIECES.horses.push(piece);
+      addBlackListeners()
+      document.getElementById('whitepromotion').classList.add('hidden')
+      return;
+    })
+    document.getElementById('whitebishop').addEventListener('click', () => {
+      spot.firstElementChild.remove()
+      PIECES.whitePieces.remove(spot.firstElementChild)
+      PIECES.bishops.remove(spot.firstElementChild)
+      spot.appendChild(piece);
+      piece.style.backgroundImage = "url('./chess_pieces/bishopW.png')";
+      PIECES.whitePieces.push(piece);
+      PIECES.bishops.push(piece);
+      addBlackListeners()
+      document.getElementById('whitepromotion').classList.add('hidden')
+      return;
+    })
+    document.getElementById('whitequeen').addEventListener('click', () => {
+      spot.firstElementChild.remove()
+      PIECES.whitePieces.remove(spot.firstElementChild)
+      PIECES.queens.remove(spot.firstElementChild)
+      spot.appendChild(piece);
+      piece.style.backgroundImage = "url('./chess_pieces/queenW.png')";
+      PIECES.whitePieces.push(piece);
+      PIECES.queens.push(piece);
+      addBlackListeners()
+      document.getElementById('whitepromotion').classList.add('hidden')
+      return;
+    })
+  } else if (color == "black") {
+    document.getElementById('blackwall').addEventListener('click', () => {
+      spot.firstElementChild.remove()
+      PIECES.blackPieces.remove(spot.firstElementChild)
+      PIECES.walls.remove(spot.firstElementChild)
+      spot.appendChild(piece);
+      piece.style.backgroundImage = "url('./chess_pieces/wallBL.png')";
+      PIECES.blackPieces.push(piece);
+      PIECES.walls.push(piece);
+      addWhiteListeners()
+      document.getElementById('blackpromotion').classList.add('hidden')
+      return;
+    })
+    document.getElementById('blackhorse').addEventListener('click', () => {
+      spot.firstElementChild.remove()
+      PIECES.blackPieces.remove(spot.firstElementChild)
+      PIECES.horses.remove(spot.firstElementChild)
+      spot.appendChild(piece);
+      piece.style.backgroundImage = "url('./chess_pieces/horseBL.png')";
+      PIECES.blackPieces.push(piece);
+      PIECES.horses.push(piece);
+      addWhiteListeners()
+      document.getElementById('blackpromotion').classList.add('hidden')
+      return;
+    })
+    document.getElementById('blackbishop').addEventListener('click', () => {
+      spot.firstElementChild.remove()
+      PIECES.blackPieces.remove(spot.firstElementChild)
+      PIECES.bishops.remove(spot.firstElementChild)
+      spot.appendChild(piece);
+      piece.style.backgroundImage = "url('./chess_pieces/bishopBL.png')";
+      PIECES.blackPieces.push(piece);
+      PIECES.bishops.push(piece);
+      addWhiteListeners()
+      document.getElementById('blackpromotion').classList.add('hidden')
+      return;
+    })
+    document.getElementById('blackqueen').addEventListener('click', () => {
+      spot.firstElementChild.remove()
+
+      PIECES.whitePieces.remove(spot.firstElementChild)
+      PIECES.queens.remove(spot.firstElementChild)
+      spot.appendChild(piece);
+      piece.style.backgroundImage = "url('./chess_pieces/queenBL.png')";
+      PIECES.blackPieces.push(piece);
+      PIECES.queens.push(piece);
+      addWhiteListeners()
+      document.getElementById('blackpromotion').classList.add('hidden')
+      return;
+    })
+  }
 }
 
 async function clearAllDanger() {

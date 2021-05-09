@@ -537,6 +537,9 @@ Array.prototype.remove = function () {
 function findDiagonals(piece) {
   let x, y;
   var arr = [];
+  if (!piece.parentElement) {
+    return arr
+  }
   x = piece.parentElement.value.x;
   y = piece.parentElement.value.y;
   for (let i = 0; i < 10; i++) {
@@ -746,6 +749,9 @@ function findDiagonals(piece) {
 function findHorizontals(piece) {
   let x, y;
   var arr = [];
+  if (!piece.parentElement) {
+    return arr
+  }
   x = piece.parentElement.value.x;
   y = piece.parentElement.value.y;
   for (let i = 0; i < 10; i++) {
@@ -908,6 +914,9 @@ function findHorizontals(piece) {
 function findHorses(piece) {
   let x, y;
   var arr = [];
+  if (!piece.parentElement) {
+    return arr
+  }
   x = piece.parentElement.value.x;
   y = piece.parentElement.value.y;
   findSpot(x + 1, y + 2) && !findSpot(x + 1, y + 2).classList.contains("vision")
@@ -940,6 +949,9 @@ function findHorses(piece) {
 function findWhitePawn(piece, color) {
   let x, y;
   var arr = [];
+  if (!piece.parentElement) {
+    return arr
+  }
   piece.parentElement ? (x = piece.parentElement.value.x) : null;
   piece.parentElement ? (y = piece.parentElement.value.y) : null;
   if (piece.value.firstTime) {
@@ -993,6 +1005,9 @@ function findWhitePawn(piece, color) {
 function findBlackPawn(piece, color) {
   let x, y;
   var arr = [];
+  if (!piece.parentElement) {
+    return arr
+  }
   piece.parentElement ? (x = piece.parentElement.value.x) : null;
   piece.parentElement ? (y = piece.parentElement.value.y) : null;
   if (piece.value.firstTime) {

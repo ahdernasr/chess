@@ -29,12 +29,12 @@ body {
     bottom: 0;
     margin-top: auto;
     margin-bottom: auto;
-    width: 5%;
-    height: 40%;
+    width: 5rem;
+    height: 18rem;
     background-color: rgb(255, 154, 101);
     border: 3px solid #9a4d00;
     z-index: 999;
-    right: 20%;
+    right: 10rem;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
@@ -44,29 +44,29 @@ body {
 }
 
 .promoW {
-    width: 65%;
-    height: 65%;
+    width: 20%;
+    height: 20%;
     background-repeat: no-repeat;
     background-size: 100%;
     transition: transform 0.3s;
 }
 
 .promoW:hover {
-    transform: translate(10%);
+    transform: translate(2%, -2%);
     transition: transform 0.3s;
     cursor: pointer;
 }
 
 .promoB {
-    width: 65%;
-    height: 65%;
+    width: 20%;
+    height: 20%;
     background-repeat: no-repeat;
     background-size: 100%;
     transition: transform 0.3s;
 }
 
 .promoB:hover {
-    transform: translate(10%);
+    transform: translate(2%, -2%);
     transition: transform 0.3s;
     cursor: pointer;
 }
