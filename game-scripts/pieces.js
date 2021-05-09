@@ -20,6 +20,7 @@ export function addPieces() {
       piece.draggable = "true";
       piece.value = {};
       piece.value.firstTime = true;
+      piece.value.promoted = false;
       piece.style.width = "70%";
       switch (e.value.letter + e.value.number) {
         //WHITE PIECES

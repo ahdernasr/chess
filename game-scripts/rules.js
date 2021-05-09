@@ -1,7 +1,6 @@
 import { PIECES } from "./pieces.js";
 
 let arr = [];
-let lastCheck;
 let possibles = [];
 
 export function findOptions(piece, color, checkForDanger = true, removePiece=null) {
@@ -142,12 +141,6 @@ export function findOptions(piece, color, checkForDanger = true, removePiece=nul
     if (PIECES.whitePieces.includes(piece)) {
       for (let a of arr) {
         if (a) {
-          if (
-            a.firstElementChild &&
-            PIECES.blackPieces.includes(a.firstElementChild)
-          ) {
-            color ? a.classList.add("possible") : null;
-          }
           if (!PIECES.whitePieces.includes(a.firstElementChild)) {
             color ? a.classList.add("possible") : null;
           }
@@ -157,12 +150,6 @@ export function findOptions(piece, color, checkForDanger = true, removePiece=nul
     if (PIECES.blackPieces.includes(piece)) {
       for (let a of arr) {
         if (a) {
-          if (
-            a.firstElementChild &&
-            PIECES.whitePieces.includes(a.firstElementChild)
-          ) {
-            color ? a.classList.add("possible") : null;
-          }
           if (!PIECES.blackPieces.includes(a.firstElementChild)) {
             color ? a.classList.add("possible") : null;
           }
@@ -175,12 +162,6 @@ export function findOptions(piece, color, checkForDanger = true, removePiece=nul
     if (PIECES.whitePieces.includes(piece)) {
       for (let a of arr) {
         if (a) {
-          if (
-            a.firstElementChild &&
-            PIECES.blackPieces.includes(a.firstElementChild)
-          ) {
-            color ? a.classList.add("possible") : null;
-          }
           if (!PIECES.whitePieces.includes(a.firstElementChild)) {
             color ? a.classList.add("possible") : null;
           }
@@ -190,12 +171,6 @@ export function findOptions(piece, color, checkForDanger = true, removePiece=nul
     if (PIECES.blackPieces.includes(piece)) {
       for (let a of arr) {
         if (a) {
-          if (
-            a.firstElementChild &&
-            PIECES.whitePieces.includes(a.firstElementChild)
-          ) {
-            color ? a.classList.add("possible") : null;
-          }
           if (!PIECES.blackPieces.includes(a.firstElementChild)) {
             color ? a.classList.add("possible") : null;
           }
@@ -243,7 +218,6 @@ function getArraysIntersection(a1, a2) {
 }
 
 export function findKingDanger(piece, curr) {
-  lastCheck ? lastCheck.classList.remove("check") : null;
   let dangerFound;
   let dangerArr = [];
   let x, y;
@@ -296,6 +270,10 @@ export function findKingDanger(piece, curr) {
         k.classList.remove("danger");
         dangerArr.remove(k)
       }
+      if (
+        k && k.classList.contains('danger')) {
+          newKingArr.remove(k)
+        }
     }
     if (dangerArr.filter((e) => e && !PIECES.whitePieces.includes(e.firstElementChild)).length == newKingArr.filter((e) => e && !PIECES.whitePieces.includes(e.firstElementChild)).length) {
       return false
@@ -331,19 +309,14 @@ export function findKingDanger(piece, curr) {
         k.classList.remove("danger");
         dangerArr.remove(k)
       }
+      if (
+        k && k.classList.contains('danger')) {
+          newKingArr.remove(k)
+        }
     }
     if (dangerArr.filter((e) => e && !PIECES.blackPieces.includes(e.firstElementChild)).length == newKingArr.filter((e) => e && !PIECES.blackPieces.includes(e.firstElementChild)).length) {
       return false
     }
-  }
-
-  if (PIECES.kings[0].parentElement.classList.contains("danger")) {
-    PIECES.kings[0].parentElement.classList.add("check");
-    lastCheck = PIECES.kings[0].parentElement;
-  }
-  if (PIECES.kings[1].parentElement.classList.contains("danger")) {
-    PIECES.kings[1].parentElement.classList.add("check");
-    lastCheck = PIECES.kings[1].parentElement;
   }
   return true
 }
@@ -352,7 +325,7 @@ export function fixCheck(piece) {
   findPath(piece);
 }
 
- function findPath(piece, returnOpponentArr = true) {
+function findPath(piece, returnOpponentArr = true) {
   possibles = []
   let x, y;
   let kingArr = [];
@@ -387,7 +360,7 @@ export function fixCheck(piece) {
     });
     for (let a of findOptions(piece, false, true)) {
       opponentArr = [];
-      a ? a.classList.add("vision") : null;
+      a && !PIECES.kings.includes(a.firstElementChild) ? a.classList.add("vision") : null;
       for (let b of PIECES.blackPieces) {
         tempArr = findOptions(b, false, true, piece)
         tempArr = tempArr.filter((e) => {
@@ -419,6 +392,13 @@ export function fixCheck(piece) {
     let optionsArr = findOptions(piece, false, true).filter((e) => {
       return e && !PIECES.whitePieces.includes(e.firstElementChild) && !e.classList.contains('vision');
     });
+    for (let p of possibles) {
+      p.classList.add('possible')
+      kArr.remove(p)
+    }
+    kArr = kArr.filter((e) => {
+      return e && !PIECES.whitePieces.includes(e.firstElementChild) && !e.classList.contains('vision');
+    })
     if (kArr.length >= optionsArr.length) {
       options = false
     }
@@ -430,7 +410,7 @@ export function fixCheck(piece) {
     });
     for (let a of findOptions(piece, false, true)) {
       opponentArr = [];
-      a ? a.classList.add("vision") : null;
+      a  && !PIECES.kings.includes(a.firstElementChild) ? a.classList.add("vision") : null;
       for (let b of PIECES.whitePieces) {
         tempArr = findOptions(b, false, true, piece)
         tempArr = tempArr.filter((e) => {
@@ -462,24 +442,24 @@ export function fixCheck(piece) {
     let optionsArr = findOptions(piece, false, true).filter((e) => {
       return e && !PIECES.blackPieces.includes(e.firstElementChild) && !e.classList.contains('vision');
     });
+    for (let p of possibles) {
+      p.classList.add('possible')
+      kArr.remove(p)
+    }
+    kArr = kArr.filter((e) => {
+      return e && !PIECES.blackPieces.includes(e.firstElementChild) && !e.classList.contains('vision');
+    })
     if (kArr.length >= optionsArr.length) {
       options = false
     }
   } else {
     options = false;
   }
-
-
-  for (let p of possibles) {
-    p.classList.add('possible')
-  }
   if(returnOpponentArr) {
     return opponentArr
   } else {
     return options
   }
-
-
   //DONT RUN THIS FOR KING
 
   //have: The friendly king's options (in newKingArr)
@@ -491,7 +471,8 @@ export function fixCheck(piece) {
   // remove piece's option
 }
 
-export function checkMate(color) {
+export async function checkMate(color) {
+  console.log('////////////////////////')
   let availbleOptions = 0
   if (color == 'white') {
     for (let w of PIECES.whitePieces) {
@@ -501,9 +482,10 @@ export function checkMate(color) {
     }
     if(findKingDanger(PIECES.blackPieces[0])){
       availbleOptions += 1;
-    } 
+    }
     if (availbleOptions == 0) {
-     return 0
+      await sleep(50)
+      alert('Black Wins')
     }
   } else if (color == 'black') {
     for (let w of PIECES.blackPieces) {
@@ -515,7 +497,8 @@ export function checkMate(color) {
       availbleOptions += 1;
     } 
     if (availbleOptions == 0) {
-      return 1
+      await sleep(50)
+      alert('White Wins')
     }
   }
 }
@@ -919,28 +902,28 @@ function findHorses(piece) {
   }
   x = piece.parentElement.value.x;
   y = piece.parentElement.value.y;
-  findSpot(x + 1, y + 2) && !findSpot(x + 1, y + 2).classList.contains("vision")
+  (findSpot(x + 1, y + 2) && !findSpot(x + 1, y + 2).classList.contains("vision")) 
     ? arr.push(findSpot(x + 1, y + 2))
     : null;
-  findSpot(x + 2, y + 2) && !findSpot(x + 2, y + 2).classList.contains("vision")
+  (findSpot(x + 2, y + 1) && !findSpot(x + 2, y + 1).classList.contains("vision")) 
     ? arr.push(findSpot(x + 2, y + 1))
     : null;
-  findSpot(x + 2, y - 2) && !findSpot(x + 2, y - 2).classList.contains("vision")
+  (findSpot(x + 2, y - 2) && !findSpot(x + 2, y - 2).classList.contains("vision")) 
     ? arr.push(findSpot(x + 2, y - 1))
     : null;
-  findSpot(x + 1, y - 2) && !findSpot(x + 1, y - 2).classList.contains("vision")
+  (findSpot(x + 1, y - 2) && !findSpot(x + 1, y - 2).classList.contains("vision")) 
     ? arr.push(findSpot(x + 1, y - 2))
     : null;
-  findSpot(x - 1, y - 2) && !findSpot(x - 1, y - 2).classList.contains("vision")
+  (findSpot(x - 1, y - 2) && !findSpot(x - 1, y - 2).classList.contains("vision")) 
     ? arr.push(findSpot(x - 1, y - 2))
     : null;
-  findSpot(x - 2, y - 1) && !findSpot(x - 2, y - 1).classList.contains("vision")
+  (findSpot(x - 2, y - 1) && !findSpot(x - 2, y - 1).classList.contains("vision")) 
     ? arr.push(findSpot(x - 2, y - 1))
     : null;
-  findSpot(x - 2, y + 1) && !findSpot(x - 2, y + 1).classList.contains("vision")
+  (findSpot(x - 2, y + 1) && !findSpot(x - 2, y + 1).classList.contains("vision")) 
     ? arr.push(findSpot(x - 2, y + 1))
     : null;
-  findSpot(x - 1, y + 2) && !findSpot(x - 1, y + 2).classList.contains("vision")
+  (findSpot(x - 1, y + 2) && !findSpot(x - 1, y + 2).classList.contains("vision")) 
     ? arr.push(findSpot(x - 1, y + 2))
     : null;
   return arr;
@@ -955,15 +938,12 @@ function findWhitePawn(piece, color) {
   piece.parentElement ? (x = piece.parentElement.value.x) : null;
   piece.parentElement ? (y = piece.parentElement.value.y) : null;
   if (piece.value.firstTime) {
-    if (findSpot(x, y + 2) && !findSpot(x, y + 2).firstElementChild)
+    if (findSpot(x, y + 2) && !findSpot(x, y + 2).firstElementChild && !findSpot(x, y + 1).firstElementChild)
       !findSpot(x, y + 2).classList.contains("vision")
         ? arr.push(findSpot(x, y + 2))
         : null;
-    if (findSpot(x, y + 1) && !findSpot(x, y + 1).firstElementChild)
-      !findSpot(x, y + 1).classList.contains("vision")
-        ? arr.push(findSpot(x, y + 1))
-        : null;
-  } else if (findSpot(x, y + 1) && !findSpot(x, y + 1).firstElementChild) {
+  }
+  if (findSpot(x, y + 1) && !findSpot(x, y + 1).firstElementChild) {
     !findSpot(x, y + 1).classList.contains("vision")
       ? arr.push(findSpot(x, y + 1))
       : null;
@@ -1011,15 +991,12 @@ function findBlackPawn(piece, color) {
   piece.parentElement ? (x = piece.parentElement.value.x) : null;
   piece.parentElement ? (y = piece.parentElement.value.y) : null;
   if (piece.value.firstTime) {
-    if (findSpot(x, y - 2) && !findSpot(x, y - 2).firstElementChild)
+    if (findSpot(x, y - 2) && !findSpot(x, y - 2).firstElementChild && !findSpot(x, y - 1).firstElementChild)
       !findSpot(x, y - 2).classList.contains("vision")
         ? arr.push(findSpot(x, y - 2))
         : null;
-    if (findSpot(x, y - 1) && !findSpot(x, y - 1).firstElementChild)
-      !findSpot(x, y - 1).classList.contains("vision")
-        ? arr.push(findSpot(x, y - 1))
-        : null;
-  } else if (findSpot(x, y + 1) && !findSpot(x, y - 1).firstElementChild) {
+  }
+  if (findSpot(x, y - 1) && !findSpot(x, y - 1).firstElementChild) {
     !findSpot(x, y - 1).classList.contains("vision")
       ? arr.push(findSpot(x, y - 1))
       : null;

@@ -27,7 +27,7 @@ function createGrid() {
         x: x,
         y: y,
         letter: alphabet[x],
-        number: y,
+        number: y
       };
       el.classList.add("el");
 
@@ -142,19 +142,22 @@ async function dropHandler(event) {
   removeOptions(draggable);
   if (PIECES.whitePieces.includes(draggable)) {
     await whiteDropHandler(event);
-    if(checkMate('black')==1){
-      removeWhiteListeners()
-      await sleep(50)
-      alert('White wins')
-    }
+    checkMate('black')
   }
   if (PIECES.blackPieces.includes(draggable)) {
     await blackDropHandler(event);
-    if(checkMate('white')==0){
-      removeBlackListeners()
-      await sleep(50)
-      alert('Black wins')
-    }
+    checkMate('white')
+  }
+
+  if (PIECES.kings[0].parentElement.classList.contains("danger")) {
+    PIECES.kings[0].parentElement.classList.add("check");
+  } else {
+    PIECES.kings[0].parentElement.classList.remove("check");
+  }
+  if (PIECES.kings[1].parentElement.classList.contains("danger")) {
+    PIECES.kings[1].parentElement.classList.add("check");
+  } else {
+    PIECES.kings[1].parentElement.classList.remove("check");
   }
 }
 
@@ -213,11 +216,13 @@ function whiteDropHandler(event) {
       turn = "black";
     }
   }
-  if (newMove.value.y == 8) {
+
+  if (newMove.value.y == 8 && !newMove.firstElementChild.value.promoted && PIECES.soldiers.includes(newMove.firstElementChild)) {
     document.getElementById('whitepromotion').classList.remove('hidden')
     removeBlackListeners()
     promoPrompt(newMove, 'white')
   }
+
   mySound.play()
   eventHandler();
   clearAllDanger();
@@ -278,11 +283,24 @@ function blackDropHandler(event) {
       turn = "white";
     }
   }
-  if (newMove.value.y == 0 && PIECES.soldiers.includes(newMove.firstElementChild)) {
+
+  if (newMove.value.y == 1 && !newMove.firstElementChild.value.promoted && PIECES.soldiers.includes(newMove.firstElementChild)) {
     document.getElementById('blackpromotion').classList.remove('hidden')
     removeWhiteListeners()
     promoPrompt(newMove, 'black')
   }
+
+  if (PIECES.kings[0].parentElement.classList.contains("danger")) {
+    PIECES.kings[0].parentElement.classList.add("check");
+  } else {
+    PIECES.kings[0].parentElement.classList.remove("check");
+  }
+  if (PIECES.kings[1].parentElement.classList.contains("danger")) {
+    PIECES.kings[1].parentElement.classList.add("check");
+  } else {
+    PIECES.kings[1].parentElement.classList.remove("check");
+  }
+
   mySound.play()
   eventHandler();
   clearAllDanger();
@@ -303,12 +321,34 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function promoPrompt(spot, color) {
+function promoChoice(newMove, color) {
+  clearAllDanger()
+  findKingDanger(newMove.firstElementChild)
+  if (color == 'white') {
+    checkMate('black')
+  } else if (color == 'black') {
+    checkMate('white')
+  }
+  if (PIECES.kings[0].parentElement.classList.contains("danger")) {
+    PIECES.kings[0].parentElement.classList.add("check");
+  } else {
+    PIECES.kings[0].parentElement.classList.remove("check");
+  }
+  if (PIECES.kings[1].parentElement.classList.contains("danger")) {
+    PIECES.kings[1].parentElement.classList.add("check");
+  } else {
+    PIECES.kings[1].parentElement.classList.remove("check");
+  }
+  newMove.classList.remove('possible')
+}
+
+function promoPrompt(spot, color) {
   let piece = document.createElement("div");
   piece.classList.add("piece");
   piece.draggable = "true";
   piece.value = {};
   piece.value.firstTime = true;
+  piece.value.promoted = true
   piece.style.width = "70%";
   if (color == 'white') {
     document.getElementById('whitewall').addEventListener('click', () => {
@@ -319,8 +359,8 @@ async function promoPrompt(spot, color) {
       piece.style.backgroundImage = "url('./chess_pieces/wallW.png')";
       PIECES.whitePieces.push(piece);
       PIECES.walls.push(piece);
-      addBlackListeners()
       document.getElementById('whitepromotion').classList.add('hidden')
+      promoChoice(spot, color)
       return;
     })
     document.getElementById('whitehorse').addEventListener('click', () => {
@@ -331,8 +371,8 @@ async function promoPrompt(spot, color) {
       piece.style.backgroundImage = "url('./chess_pieces/horseW.png')";
       PIECES.whitePieces.push(piece);
       PIECES.horses.push(piece);
-      addBlackListeners()
       document.getElementById('whitepromotion').classList.add('hidden')
+      promoChoice(spot, color)
       return;
     })
     document.getElementById('whitebishop').addEventListener('click', () => {
@@ -343,8 +383,8 @@ async function promoPrompt(spot, color) {
       piece.style.backgroundImage = "url('./chess_pieces/bishopW.png')";
       PIECES.whitePieces.push(piece);
       PIECES.bishops.push(piece);
-      addBlackListeners()
       document.getElementById('whitepromotion').classList.add('hidden')
+      promoChoice(spot, color)
       return;
     })
     document.getElementById('whitequeen').addEventListener('click', () => {
@@ -355,8 +395,8 @@ async function promoPrompt(spot, color) {
       piece.style.backgroundImage = "url('./chess_pieces/queenW.png')";
       PIECES.whitePieces.push(piece);
       PIECES.queens.push(piece);
-      addBlackListeners()
       document.getElementById('whitepromotion').classList.add('hidden')
+      promoChoice(spot, color)
       return;
     })
   } else if (color == "black") {
@@ -368,8 +408,8 @@ async function promoPrompt(spot, color) {
       piece.style.backgroundImage = "url('./chess_pieces/wallBL.png')";
       PIECES.blackPieces.push(piece);
       PIECES.walls.push(piece);
-      addWhiteListeners()
       document.getElementById('blackpromotion').classList.add('hidden')
+      promoChoice(spot, color)
       return;
     })
     document.getElementById('blackhorse').addEventListener('click', () => {
@@ -380,8 +420,8 @@ async function promoPrompt(spot, color) {
       piece.style.backgroundImage = "url('./chess_pieces/horseBL.png')";
       PIECES.blackPieces.push(piece);
       PIECES.horses.push(piece);
-      addWhiteListeners()
       document.getElementById('blackpromotion').classList.add('hidden')
+      promoChoice(spot, color)
       return;
     })
     document.getElementById('blackbishop').addEventListener('click', () => {
@@ -392,24 +432,24 @@ async function promoPrompt(spot, color) {
       piece.style.backgroundImage = "url('./chess_pieces/bishopBL.png')";
       PIECES.blackPieces.push(piece);
       PIECES.bishops.push(piece);
-      addWhiteListeners()
       document.getElementById('blackpromotion').classList.add('hidden')
+      promoChoice(spot, color)
       return;
     })
     document.getElementById('blackqueen').addEventListener('click', () => {
       spot.firstElementChild.remove()
-
       PIECES.whitePieces.remove(spot.firstElementChild)
       PIECES.queens.remove(spot.firstElementChild)
       spot.appendChild(piece);
       piece.style.backgroundImage = "url('./chess_pieces/queenBL.png')";
       PIECES.blackPieces.push(piece);
       PIECES.queens.push(piece);
-      addWhiteListeners()
       document.getElementById('blackpromotion').classList.add('hidden')
+      promoChoice(spot, color)
       return;
     })
   }
+  return;
 }
 
 async function clearAllDanger() {
