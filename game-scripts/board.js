@@ -1,5 +1,5 @@
 import { addPieces, PIECES } from "./pieces.js";
-import { findOptions, removeOptions, findKingDanger, fixCheck, checkMate} from "./rules.js";
+import { findOptions, removeOptions, findKingDanger, fixCheck, checkMate, findSpot} from "./rules.js";
 
 let turn = "white";
 let firstMove = true;
@@ -158,7 +158,7 @@ async function dropHandler(event) {
   }
 }
 
-async function whiteDropHandler(event) {
+function whiteDropHandler(event) {
   var draggable = document.querySelector(".dragging");
   event.preventDefault();
   if (
@@ -213,12 +213,15 @@ async function whiteDropHandler(event) {
       turn = "black";
     }
   }
+  if (newMove.value.x == 7) {
+    console.log(event.closest.target('.piece'))
+  }
   mySound.play()
   eventHandler();
   clearAllDanger();
 }
 
-async function blackDropHandler(event) {
+function blackDropHandler(event) {
   var draggable = document.querySelector(".dragging");
   event.preventDefault();
   if (

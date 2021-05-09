@@ -281,8 +281,8 @@ export function findKingDanger(piece, curr) {
       }
       for (let c of getArraysIntersection(o, kingArr)) {
         if (c) {
+          !c.classList.contains('danger') ? dangerArr.push(c) : null;
           c.classList.add("danger");
-          dangerArr.push(c)
           dangerZone ? dangerZone.push(c) : null;
         }
       }
@@ -301,11 +301,10 @@ export function findKingDanger(piece, curr) {
       return false
     }
   }
-  if (PIECES.whitePieces.includes(piece)) {
+  else if (PIECES.whitePieces.includes(piece)) {
     newKingArr = kingArr.filter((e) => {
       return e && !PIECES.blackPieces.includes(e.firstElementChild);
     });
-
     for (let b of PIECES.whitePieces) {
       allOppositeMoves.push(findOptions(b, false, false));
     }
@@ -317,8 +316,8 @@ export function findKingDanger(piece, curr) {
       }
       for (let c of getArraysIntersection(o, kingArr)) {
         if (c) {
+          !c.classList.contains('danger') ? dangerArr.push(c) : null;
           c.classList.add("danger");
-          dangerArr.push(c)
           dangerZone ? dangerZone.push(c) : null;
         }
       }
@@ -469,6 +468,8 @@ export function fixCheck(piece) {
   } else {
     options = false;
   }
+
+
   for (let p of possibles) {
     p.classList.add('possible')
   }
@@ -477,6 +478,8 @@ export function fixCheck(piece) {
   } else {
     return options
   }
+
+
   //DONT RUN THIS FOR KING
 
   //have: The friendly king's options (in newKingArr)
