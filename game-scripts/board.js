@@ -78,24 +78,24 @@ function clearAllOptions() {
 }
 
 function addWhiteHoverListeners() {
-  whiteHover = true;
-  for (let w of PIECES.whitePieces) {
-    w.addEventListener("mouseenter", showOptions.bind(this, w, 'white'));
-    w.addEventListener("mouseleave", clearAllOptions);
-  }
+  // whiteHover = true;
+  // for (let w of PIECES.whitePieces) {
+  //   w.addEventListener("mouseenter", showOptions.bind(this, w, 'white'));
+  //   w.addEventListener("mouseleave", clearAllOptions);
+  // }
 }
 function removeWhiteHoverListeners() {
-  whiteHover = false;
+  // whiteHover = false;
 }
 function addBlackHoverListeners() {
-  blackHover = true;
-  for (let w of PIECES.blackPieces) {
-    w.addEventListener("mouseenter", showOptions.bind(this, w, 'black'));
-    w.addEventListener("mouseleave", clearAllOptions);
-  }
+  // blackHover = true;
+  // for (let w of PIECES.blackPieces) {
+  //   w.addEventListener("mouseenter", showOptions.bind(this, w, 'black'));
+  //   w.addEventListener("mouseleave", clearAllOptions);
+  // }
 }
 function removeBlackHoverListeners() {
-  blackHover = false;
+  // blackHover = false;
 }
 
 function addWhiteListeners() {
@@ -228,6 +228,17 @@ function whiteDropHandler(event) {
       currentMove.classList.add("currentMove");
       oldCurrentMove = currentMove;
       turn = "black";
+      if (newMove.classList.contains('castleR')) {
+        let wall = findSpot(newMove.value.x + 1, newMove.value.y).firstElementChild
+        wall.remove()
+        findSpot(newMove.value.x - 1, newMove.value.y).appendChild(wall)
+        newMove.classList.remove('possible')
+      } else if (newMove.classList.contains('castleL')) {
+        let wall = findSpot(newMove.value.x - 1, newMove.value.y).firstElementChild
+        wall.remove()
+        findSpot(newMove.value.x + 1, newMove.value.y).appendChild(wall)
+        newMove.classList.remove('possible')
+      }
     }
     if (
       event.target.closest(".el").firstElementChild &&
@@ -262,6 +273,17 @@ function whiteDropHandler(event) {
       currentMove.classList.add("currentMove");
       oldCurrentMove = currentMove;
       turn = "black";
+      if (newMove.classList.contains('castleR')) {
+        let wall = findSpot(newMove.value.x + 1, newMove.value.y).firstElementChild
+        wall.remove()
+        findSpot(newMove.value.x - 1, newMove.value.y).appendChild(wall)
+        newMove.classList.remove('possible')
+      } else if (newMove.classList.contains('castleL')) {
+        let wall = findSpot(newMove.value.x - 1, newMove.value.y).firstElementChild
+        wall.remove()
+        findSpot(newMove.value.x + 1, newMove.value.y).appendChild(wall)
+        newMove.classList.remove('possible')
+      }
     }
   }
 
@@ -295,6 +317,17 @@ function blackDropHandler(event) {
       currentMove.classList.add("currentMove");
       oldCurrentMove = currentMove;
       turn = "white";
+      if (newMove.classList.contains('castleR')) {
+        let wall = findSpot(newMove.value.x + 1, newMove.value.y).firstElementChild
+        wall.remove()
+        findSpot(newMove.value.x - 1, newMove.value.y).appendChild(wall)
+        newMove.classList.remove('possible')
+      } else if (newMove.classList.contains('castleL')) {
+        let wall = findSpot(newMove.value.x - 1, newMove.value.y).firstElementChild
+        wall.remove()
+        findSpot(newMove.value.x + 1, newMove.value.y).appendChild(wall)
+        newMove.classList.remove('possible')
+      }
     }
     if (
       event.target.closest(".el").firstElementChild &&
@@ -329,6 +362,17 @@ function blackDropHandler(event) {
       currentMove.classList.add("currentMove");
       oldCurrentMove = currentMove;
       turn = "white";
+      if (newMove.classList.contains('castleR')) {
+        let wall = findSpot(newMove.value.x + 1, newMove.value.y).firstElementChild
+        wall.remove()
+        findSpot(newMove.value.x - 1, newMove.value.y).appendChild(wall)
+        newMove.classList.remove('possible')
+      } else if (newMove.classList.contains('castleL')) {
+        let wall = findSpot(newMove.value.x - 1, newMove.value.y).firstElementChild
+        wall.remove()
+        findSpot(newMove.value.x + 1, newMove.value.y).appendChild(wall)
+        newMove.classList.remove('possible')
+      }
     }
   }
 
