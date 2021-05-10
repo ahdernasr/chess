@@ -87,7 +87,6 @@ function addWhiteHoverListeners() {
 function removeWhiteHoverListeners() {
   whiteHover = false;
 }
-
 function addBlackHoverListeners() {
   blackHover = true;
   for (let w of PIECES.blackPieces) {
