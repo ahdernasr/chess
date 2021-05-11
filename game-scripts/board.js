@@ -1,5 +1,12 @@
 import { addPieces, PIECES } from "./pieces.js";
-import { findOptions, removeOptions, findKingDanger, fixCheck, checkMate, findSpot} from "./rules.js";
+import {
+  findOptions,
+  removeOptions,
+  findKingDanger,
+  fixCheck,
+  checkMate,
+  findSpot,
+} from "./rules.js";
 
 let turn = "white";
 let firstMove = true;
@@ -9,7 +16,7 @@ let newMove = "";
 let spinOnTurn = false;
 let possibles = [];
 let whiteHover, blackHover;
-let mySound = new sound("sounds/move.mp3")
+let mySound = new sound("sounds/move.mp3");
 
 function createGrid() {
   //DRAW BOARD
@@ -29,7 +36,7 @@ function createGrid() {
         x: x,
         y: y,
         letter: alphabet[x],
-        number: y
+        number: y,
       };
       el.classList.add("el");
 
@@ -63,17 +70,17 @@ function createGrid() {
 }
 
 function showOptions(w, color) {
-  if (color == 'white' && whiteHover) {
-    possibles = findOptions(w, true, true)
+  if (color == "white" && whiteHover) {
+    possibles = findOptions(w, true, true);
   }
   if (color == "black" && blackHover) {
-    possibles = findOptions(w, true, true)
+    possibles = findOptions(w, true, true);
   }
 }
 
 function clearAllOptions() {
   for (let p of possibles) {
-    p ? p.classList.remove('possible') : null;
+    p ? p.classList.remove("possible") : null;
   }
 }
 
@@ -132,8 +139,8 @@ function removeBlackListeners() {
 }
 
 function whiteDragStart(event) {
-  newMove ? newMove.classList.remove('newMove'): null;
-  currentMove ? currentMove.classList.remove('currentMove'):null;
+  newMove ? newMove.classList.remove("newMove") : null;
+  currentMove ? currentMove.classList.remove("currentMove") : null;
   event.target.closest(".piece").classList.add("dragging");
   currentMove = event.target.closest(".el");
   findOptions(event.target.closest(".piece"), true, true);
@@ -145,8 +152,8 @@ function whiteDragEnd(event) {
   removeOptions();
 }
 function blackDragStart(event) {
-  newMove ? newMove.classList.remove('newMove'): null;
-  currentMove ? currentMove.classList.remove('currentMove'):null;
+  newMove ? newMove.classList.remove("newMove") : null;
+  currentMove ? currentMove.classList.remove("currentMove") : null;
   event.target.closest(".piece").classList.add("dragging");
   currentMove = event.target.closest(".el");
   findOptions(event.target.closest(".piece"), true, true);
@@ -182,18 +189,18 @@ async function initTurn() {
 }
 
 async function dropHandler(event) {
-  clearChecks()
+  clearChecks();
   newMove ? newMove.classList.remove("newMove") : null;
   oldCurrentMove ? oldCurrentMove.classList.remove("currentMove") : null;
   var draggable = document.querySelector(".dragging");
   removeOptions(draggable);
   if (PIECES.whitePieces.includes(draggable)) {
     await whiteDropHandler(event);
-    checkMate('black')
+    checkMate("black");
   }
   if (PIECES.blackPieces.includes(draggable)) {
     await blackDropHandler(event);
-    checkMate('white')
+    checkMate("white");
   }
 
   if (PIECES.kings[0].parentElement.classList.contains("danger")) {
@@ -209,7 +216,6 @@ async function dropHandler(event) {
 }
 
 function whiteDropHandler(event) {
-  mySound.play()
   var draggable = document.querySelector(".dragging");
   event.preventDefault();
   if (
@@ -220,6 +226,7 @@ function whiteDropHandler(event) {
       draggable &&
       event.target.closest(".el").classList.contains("possible")
     ) {
+      mySound.play();
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
       draggable.value.firstTime = false;
@@ -228,16 +235,22 @@ function whiteDropHandler(event) {
       currentMove.classList.add("currentMove");
       oldCurrentMove = currentMove;
       turn = "black";
-      if (newMove.classList.contains('castleR')) {
-        let wall = findSpot(newMove.value.x + 1, newMove.value.y).firstElementChild
-        wall.remove()
-        findSpot(newMove.value.x - 1, newMove.value.y).appendChild(wall)
-        newMove.classList.remove('possible')
-      } else if (newMove.classList.contains('castleL')) {
-        let wall = findSpot(newMove.value.x - 1, newMove.value.y).firstElementChild
-        wall.remove()
-        findSpot(newMove.value.x + 1, newMove.value.y).appendChild(wall)
-        newMove.classList.remove('possible')
+      if (newMove.classList.contains("castleR")) {
+        let wall = findSpot(
+          newMove.value.x + 1,
+          newMove.value.y
+        ).firstElementChild;
+        wall.remove();
+        findSpot(newMove.value.x - 1, newMove.value.y).appendChild(wall);
+        newMove.classList.remove("possible");
+      } else if (newMove.classList.contains("castleL")) {
+        let wall = findSpot(
+          newMove.value.x - 1,
+          newMove.value.y
+        ).firstElementChild;
+        wall.remove();
+        findSpot(newMove.value.x + 1, newMove.value.y).appendChild(wall);
+        newMove.classList.remove("possible");
       }
     }
     if (
@@ -265,6 +278,7 @@ function whiteDropHandler(event) {
       draggable &&
       event.target.closest(".el").classList.contains("possible")
     ) {
+      mySound.play();
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
       draggable.value.firstTime = false;
@@ -273,24 +287,34 @@ function whiteDropHandler(event) {
       currentMove.classList.add("currentMove");
       oldCurrentMove = currentMove;
       turn = "black";
-      if (newMove.classList.contains('castleR')) {
-        let wall = findSpot(newMove.value.x + 1, newMove.value.y).firstElementChild
-        wall.remove()
-        findSpot(newMove.value.x - 1, newMove.value.y).appendChild(wall)
-        newMove.classList.remove('possible')
-      } else if (newMove.classList.contains('castleL')) {
-        let wall = findSpot(newMove.value.x - 1, newMove.value.y).firstElementChild
-        wall.remove()
-        findSpot(newMove.value.x + 1, newMove.value.y).appendChild(wall)
-        newMove.classList.remove('possible')
+      if (newMove.classList.contains("castleR")) {
+        let wall = findSpot(
+          newMove.value.x + 1,
+          newMove.value.y
+        ).firstElementChild;
+        wall.remove();
+        findSpot(newMove.value.x - 1, newMove.value.y).appendChild(wall);
+        newMove.classList.remove("possible");
+      } else if (newMove.classList.contains("castleL")) {
+        let wall = findSpot(
+          newMove.value.x - 1,
+          newMove.value.y
+        ).firstElementChild;
+        wall.remove();
+        findSpot(newMove.value.x + 1, newMove.value.y).appendChild(wall);
+        newMove.classList.remove("possible");
       }
     }
   }
 
-  if (newMove.value.y == 8 && !newMove.firstElementChild.value.promoted && PIECES.soldiers.includes(newMove.firstElementChild)) {
-    document.getElementById('whitepromotion').classList.remove('hidden')
-    removeBlackListeners()
-    promoPrompt(newMove, 'white')
+  if (
+    newMove.value.y == 8 &&
+    !newMove.firstElementChild.value.promoted &&
+    PIECES.soldiers.includes(newMove.firstElementChild)
+  ) {
+    document.getElementById("whitepromotion").classList.remove("hidden");
+    removeBlackListeners();
+    promoPrompt(newMove, "white");
   }
 
   eventHandler();
@@ -298,7 +322,6 @@ function whiteDropHandler(event) {
 }
 
 function blackDropHandler(event) {
-  mySound.play()
   var draggable = document.querySelector(".dragging");
   event.preventDefault();
   if (
@@ -309,6 +332,7 @@ function blackDropHandler(event) {
       draggable &&
       event.target.closest(".el").classList.contains("possible")
     ) {
+      mySound.play();
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
       draggable.value.firstTime = false;
@@ -317,16 +341,22 @@ function blackDropHandler(event) {
       currentMove.classList.add("currentMove");
       oldCurrentMove = currentMove;
       turn = "white";
-      if (newMove.classList.contains('castleR')) {
-        let wall = findSpot(newMove.value.x + 1, newMove.value.y).firstElementChild
-        wall.remove()
-        findSpot(newMove.value.x - 1, newMove.value.y).appendChild(wall)
-        newMove.classList.remove('possible')
-      } else if (newMove.classList.contains('castleL')) {
-        let wall = findSpot(newMove.value.x - 1, newMove.value.y).firstElementChild
-        wall.remove()
-        findSpot(newMove.value.x + 1, newMove.value.y).appendChild(wall)
-        newMove.classList.remove('possible')
+      if (newMove.classList.contains("castleR")) {
+        let wall = findSpot(
+          newMove.value.x + 1,
+          newMove.value.y
+        ).firstElementChild;
+        wall.remove();
+        findSpot(newMove.value.x - 1, newMove.value.y).appendChild(wall);
+        newMove.classList.remove("possible");
+      } else if (newMove.classList.contains("castleL")) {
+        let wall = findSpot(
+          newMove.value.x - 1,
+          newMove.value.y
+        ).firstElementChild;
+        wall.remove();
+        findSpot(newMove.value.x + 1, newMove.value.y).appendChild(wall);
+        newMove.classList.remove("possible");
       }
     }
     if (
@@ -354,6 +384,7 @@ function blackDropHandler(event) {
       draggable &&
       event.target.closest(".el").classList.contains("possible")
     ) {
+      mySound.play()
       draggable.classList.remove("dragging");
       event.target.closest(".el").appendChild(draggable);
       draggable.value.firstTime = false;
@@ -362,24 +393,34 @@ function blackDropHandler(event) {
       currentMove.classList.add("currentMove");
       oldCurrentMove = currentMove;
       turn = "white";
-      if (newMove.classList.contains('castleR')) {
-        let wall = findSpot(newMove.value.x + 1, newMove.value.y).firstElementChild
-        wall.remove()
-        findSpot(newMove.value.x - 1, newMove.value.y).appendChild(wall)
-        newMove.classList.remove('possible')
-      } else if (newMove.classList.contains('castleL')) {
-        let wall = findSpot(newMove.value.x - 1, newMove.value.y).firstElementChild
-        wall.remove()
-        findSpot(newMove.value.x + 1, newMove.value.y).appendChild(wall)
-        newMove.classList.remove('possible')
+      if (newMove.classList.contains("castleR")) {
+        let wall = findSpot(
+          newMove.value.x + 1,
+          newMove.value.y
+        ).firstElementChild;
+        wall.remove();
+        findSpot(newMove.value.x - 1, newMove.value.y).appendChild(wall);
+        newMove.classList.remove("possible");
+      } else if (newMove.classList.contains("castleL")) {
+        let wall = findSpot(
+          newMove.value.x - 1,
+          newMove.value.y
+        ).firstElementChild;
+        wall.remove();
+        findSpot(newMove.value.x + 1, newMove.value.y).appendChild(wall);
+        newMove.classList.remove("possible");
       }
     }
   }
 
-  if (newMove.value.y == 1 && !newMove.firstElementChild.value.promoted && PIECES.soldiers.includes(newMove.firstElementChild)) {
-    document.getElementById('blackpromotion').classList.remove('hidden')
-    removeWhiteListeners()
-    promoPrompt(newMove, 'black')
+  if (
+    newMove.value.y == 1 &&
+    !newMove.firstElementChild.value.promoted &&
+    PIECES.soldiers.includes(newMove.firstElementChild)
+  ) {
+    document.getElementById("blackpromotion").classList.remove("hidden");
+    removeWhiteListeners();
+    promoPrompt(newMove, "black");
   }
 
   if (PIECES.kings[0].parentElement.classList.contains("danger")) {
@@ -412,12 +453,12 @@ function sleep(ms) {
 }
 
 function promoChoice(newMove, color) {
-  clearAllDanger()
-  findKingDanger(newMove.firstElementChild)
-  if (color == 'white') {
-    checkMate('black')
-  } else if (color == 'black') {
-    checkMate('white')
+  clearAllDanger();
+  findKingDanger(newMove.firstElementChild);
+  if (color == "white") {
+    checkMate("black");
+  } else if (color == "black") {
+    checkMate("white");
   }
   if (PIECES.kings[0].parentElement.classList.contains("danger")) {
     PIECES.kings[0].parentElement.classList.add("check");
@@ -429,7 +470,7 @@ function promoChoice(newMove, color) {
   } else {
     PIECES.kings[1].parentElement.classList.remove("check");
   }
-  newMove.classList.remove('possible')
+  newMove.classList.remove("possible");
 }
 
 function promoPrompt(spot, color) {
@@ -438,106 +479,106 @@ function promoPrompt(spot, color) {
   piece.draggable = "true";
   piece.value = {};
   piece.value.firstTime = true;
-  piece.value.promoted = true
+  piece.value.promoted = true;
   piece.style.width = "70%";
-  if (color == 'white') {
-    document.getElementById('whitewall').addEventListener('click', () => {
-      spot.firstElementChild.remove()
-      PIECES.whitePieces.remove(spot.firstElementChild)
-      PIECES.walls.remove(spot.firstElementChild)
+  if (color == "white") {
+    document.getElementById("whitewall").addEventListener("click", () => {
+      spot.firstElementChild.remove();
+      PIECES.whitePieces.remove(spot.firstElementChild);
+      PIECES.walls.remove(spot.firstElementChild);
       spot.appendChild(piece);
       piece.style.backgroundImage = "url('./chess_pieces/wallW.png')";
       PIECES.whitePieces.push(piece);
       PIECES.walls.push(piece);
-      document.getElementById('whitepromotion').classList.add('hidden')
-      promoChoice(spot, color)
+      document.getElementById("whitepromotion").classList.add("hidden");
+      promoChoice(spot, color);
       return;
-    })
-    document.getElementById('whitehorse').addEventListener('click', () => {
-      spot.firstElementChild.remove()
-      PIECES.whitePieces.remove(spot.firstElementChild)
-      PIECES.horses.remove(spot.firstElementChild)
+    });
+    document.getElementById("whitehorse").addEventListener("click", () => {
+      spot.firstElementChild.remove();
+      PIECES.whitePieces.remove(spot.firstElementChild);
+      PIECES.horses.remove(spot.firstElementChild);
       spot.appendChild(piece);
       piece.style.backgroundImage = "url('./chess_pieces/horseW.png')";
       PIECES.whitePieces.push(piece);
       PIECES.horses.push(piece);
-      document.getElementById('whitepromotion').classList.add('hidden')
-      promoChoice(spot, color)
+      document.getElementById("whitepromotion").classList.add("hidden");
+      promoChoice(spot, color);
       return;
-    })
-    document.getElementById('whitebishop').addEventListener('click', () => {
-      spot.firstElementChild.remove()
-      PIECES.whitePieces.remove(spot.firstElementChild)
-      PIECES.bishops.remove(spot.firstElementChild)
+    });
+    document.getElementById("whitebishop").addEventListener("click", () => {
+      spot.firstElementChild.remove();
+      PIECES.whitePieces.remove(spot.firstElementChild);
+      PIECES.bishops.remove(spot.firstElementChild);
       spot.appendChild(piece);
       piece.style.backgroundImage = "url('./chess_pieces/bishopW.png')";
       PIECES.whitePieces.push(piece);
       PIECES.bishops.push(piece);
-      document.getElementById('whitepromotion').classList.add('hidden')
-      promoChoice(spot, color)
+      document.getElementById("whitepromotion").classList.add("hidden");
+      promoChoice(spot, color);
       return;
-    })
-    document.getElementById('whitequeen').addEventListener('click', () => {
-      spot.firstElementChild.remove()
-      PIECES.whitePieces.remove(spot.firstElementChild)
-      PIECES.queens.remove(spot.firstElementChild)
+    });
+    document.getElementById("whitequeen").addEventListener("click", () => {
+      spot.firstElementChild.remove();
+      PIECES.whitePieces.remove(spot.firstElementChild);
+      PIECES.queens.remove(spot.firstElementChild);
       spot.appendChild(piece);
       piece.style.backgroundImage = "url('./chess_pieces/queenW.png')";
       PIECES.whitePieces.push(piece);
       PIECES.queens.push(piece);
-      document.getElementById('whitepromotion').classList.add('hidden')
-      promoChoice(spot, color)
+      document.getElementById("whitepromotion").classList.add("hidden");
+      promoChoice(spot, color);
       return;
-    })
+    });
   } else if (color == "black") {
-    document.getElementById('blackwall').addEventListener('click', () => {
-      spot.firstElementChild.remove()
-      PIECES.blackPieces.remove(spot.firstElementChild)
-      PIECES.walls.remove(spot.firstElementChild)
+    document.getElementById("blackwall").addEventListener("click", () => {
+      spot.firstElementChild.remove();
+      PIECES.blackPieces.remove(spot.firstElementChild);
+      PIECES.walls.remove(spot.firstElementChild);
       spot.appendChild(piece);
       piece.style.backgroundImage = "url('./chess_pieces/wallBL.png')";
       PIECES.blackPieces.push(piece);
       PIECES.walls.push(piece);
-      document.getElementById('blackpromotion').classList.add('hidden')
-      promoChoice(spot, color)
+      document.getElementById("blackpromotion").classList.add("hidden");
+      promoChoice(spot, color);
       return;
-    })
-    document.getElementById('blackhorse').addEventListener('click', () => {
-      spot.firstElementChild.remove()
-      PIECES.blackPieces.remove(spot.firstElementChild)
-      PIECES.horses.remove(spot.firstElementChild)
+    });
+    document.getElementById("blackhorse").addEventListener("click", () => {
+      spot.firstElementChild.remove();
+      PIECES.blackPieces.remove(spot.firstElementChild);
+      PIECES.horses.remove(spot.firstElementChild);
       spot.appendChild(piece);
       piece.style.backgroundImage = "url('./chess_pieces/horseBL.png')";
       PIECES.blackPieces.push(piece);
       PIECES.horses.push(piece);
-      document.getElementById('blackpromotion').classList.add('hidden')
-      promoChoice(spot, color)
+      document.getElementById("blackpromotion").classList.add("hidden");
+      promoChoice(spot, color);
       return;
-    })
-    document.getElementById('blackbishop').addEventListener('click', () => {
-      spot.firstElementChild.remove()
-      PIECES.blackPieces.remove(spot.firstElementChild)
-      PIECES.bishops.remove(spot.firstElementChild)
+    });
+    document.getElementById("blackbishop").addEventListener("click", () => {
+      spot.firstElementChild.remove();
+      PIECES.blackPieces.remove(spot.firstElementChild);
+      PIECES.bishops.remove(spot.firstElementChild);
       spot.appendChild(piece);
       piece.style.backgroundImage = "url('./chess_pieces/bishopBL.png')";
       PIECES.blackPieces.push(piece);
       PIECES.bishops.push(piece);
-      document.getElementById('blackpromotion').classList.add('hidden')
-      promoChoice(spot, color)
+      document.getElementById("blackpromotion").classList.add("hidden");
+      promoChoice(spot, color);
       return;
-    })
-    document.getElementById('blackqueen').addEventListener('click', () => {
-      spot.firstElementChild.remove()
-      PIECES.whitePieces.remove(spot.firstElementChild)
-      PIECES.queens.remove(spot.firstElementChild)
+    });
+    document.getElementById("blackqueen").addEventListener("click", () => {
+      spot.firstElementChild.remove();
+      PIECES.whitePieces.remove(spot.firstElementChild);
+      PIECES.queens.remove(spot.firstElementChild);
       spot.appendChild(piece);
       piece.style.backgroundImage = "url('./chess_pieces/queenBL.png')";
       PIECES.blackPieces.push(piece);
       PIECES.queens.push(piece);
-      document.getElementById('blackpromotion').classList.add('hidden')
-      promoChoice(spot, color)
+      document.getElementById("blackpromotion").classList.add("hidden");
+      promoChoice(spot, color);
       return;
-    })
+    });
   }
   return;
 }
@@ -549,7 +590,9 @@ function clearAllDanger() {
 }
 
 function clearChecks() {
-  document.querySelector(".check") ? document.querySelector(".check").classList.remove('check') : null;
+  document.querySelector(".check")
+    ? document.querySelector(".check").classList.remove("check")
+    : null;
 }
 
 function sound(src) {
@@ -559,12 +602,12 @@ function sound(src) {
   this.sound.setAttribute("controls", "none");
   this.sound.style.display = "none";
   document.body.appendChild(this.sound);
-  this.play = async function(){
+  this.play = async function () {
     this.sound.play();
-  }
-  this.stop = async function(){
+  };
+  this.stop = async function () {
     this.sound.pause();
-  }
+  };
 }
 
 Array.prototype.remove = function () {

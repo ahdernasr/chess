@@ -34,12 +34,12 @@ export function findOptions(
             a.firstElementChild &&
             PIECES.blackPieces.includes(a.firstElementChild)
           ) {
-            color && !a.classList.contains("danger")
+            (color && !a.classList.contains("danger") && !a.classList.contains('vision'))
               ? a.classList.add("possible")
               : null;
           }
           if (!PIECES.whitePieces.includes(a.firstElementChild)) {
-            color && !a.classList.contains("danger")
+            (color && !a.classList.contains("danger") && !a.classList.contains('vision'))
               ? a.classList.add("possible")
               : null;
           }
@@ -53,12 +53,12 @@ export function findOptions(
             a.firstElementChild &&
             PIECES.whitePieces.includes(a.firstElementChild)
           ) {
-            color && !a.classList.contains("danger")
+            (color && !a.classList.contains("danger") && !a.classList.contains('vision'))
               ? a.classList.add("possible")
               : null;
           }
           if (!PIECES.blackPieces.includes(a.firstElementChild)) {
-            color && !a.classList.contains("danger")
+            (color && !a.classList.contains("danger") && !a.classList.contains('vision'))
               ? a.classList.add("possible")
               : null;
           }
@@ -422,7 +422,7 @@ function findPath(piece, returnOpponentArr = true) {
   kingArr.push(findSpot(x - 1, y - 1));
   kingArr.push(findSpot(x + 2, y));
   kingArr.push(findSpot(x - 3, y));
-  if (PIECES.whitePieces.includes(piece) && PIECES.kings[1] != piece) {
+  if (PIECES.whitePieces.includes(piece)  && piece != PIECES.kings[1]) {
     restrictedAreas = [];
     killArr = [];
     newKingArr = kingArr.filter((e) => {
@@ -460,33 +460,34 @@ function findPath(piece, returnOpponentArr = true) {
       }
       a ? a.classList.remove("vision") : null;
     }
-    let c = getArraysIntersection(restrictedAreas, pieceOptions);
-    for (let k of c) {
-      k ? k.classList.remove("possible") : null;
-      k ? kArr.push(k) : null;
+      let c = getArraysIntersection(restrictedAreas, pieceOptions);
+      for (let k of c) {
+        k ? k.classList.remove("possible") : null;
+        k ? kArr.push(k) : null;
+      }
+      let optionsArr = findOptions(piece, false, true).filter((e) => {
+        return (
+          e &&
+          !PIECES.whitePieces.includes(e.firstElementChild) &&
+          !e.classList.contains("vision")
+        );
+      });
+      kArr = kArr.filter((e) => {
+        return (
+          e &&
+          !PIECES.whitePieces.includes(e.firstElementChild) &&
+          !e.classList.contains("vision")
+        );
+      });
+      if (kArr.length >= optionsArr.length) {
+        options = false;
+      }
+      for (let p of possibles) {
+        p.classList.add("possible");
+        kArr.remove(p);
+      }
     }
-    let optionsArr = findOptions(piece, false, true).filter((e) => {
-      return (
-        e &&
-        !PIECES.whitePieces.includes(e.firstElementChild) &&
-        !e.classList.contains("vision")
-      );
-    });
-    for (let p of possibles) {
-      p.classList.add("possible");
-      kArr.remove(p);
-    }
-    kArr = kArr.filter((e) => {
-      return (
-        e &&
-        !PIECES.whitePieces.includes(e.firstElementChild) &&
-        !e.classList.contains("vision")
-      );
-    });
-    if (kArr.length >= optionsArr.length) {
-      options = false;
-    }
-  } else if (PIECES.blackPieces.includes(piece) && PIECES.kings[0] != piece) {
+    else if (PIECES.blackPieces.includes(piece) && PIECES.kings[0] != piece) {
     restrictedAreas = [];
     killArr = [];
     newKingArr = kingArr.filter((e) => {
@@ -553,6 +554,129 @@ function findPath(piece, returnOpponentArr = true) {
   } else {
     options = false;
   }
+  if (piece == PIECES.kings[1]) {
+    restrictedAreas = [];
+    killArr = [];
+    newKingArr = kingArr.filter((e) => {
+      return e && !PIECES.whitePieces.includes(e.firstElementChild);
+    });
+    for (let a of pieceOptions) {
+      opponentArr = [];
+      a && !PIECES.kings.includes(a.firstElementChild)
+        ? a.classList.add("vision")
+        : null;
+      for (let b of PIECES.blackPieces) {
+        tempArr = findOptions(b, false, true, piece);
+        tempArr = tempArr.filter((e) => {
+          return (
+            e &&
+            !PIECES.blackPieces.includes(e) &&
+            !e.classList.contains("vision")
+          );
+        });
+        killArr = findOptions(b, false, false);
+        if (pieceOptions.includes(b.parentElement)) {
+          possibles.push(b.parentElement);
+        }
+        tempArr.length > 0 ? opponentArr.push(tempArr) : null;
+      }
+      for (let t of opponentArr) {
+        if (getArraysIntersection(t, kingArr).length > 0) {
+          console.log(getArraysIntersection(t, kingArr))
+          for (let b of getArraysIntersection(t, kingArr)) {
+            restrictedAreas.push(b)
+          }
+        }
+      }
+      a ? a.classList.remove("vision") : null;
+    }
+      let c = getArraysIntersection(restrictedAreas, pieceOptions);
+      for (let k of c) {
+        k ? k.classList.remove("possible") : null;
+        k ? kArr.push(k) : null;
+      }
+      let optionsArr = findOptions(piece, false, true).filter((e) => {
+        return (
+          e &&
+          !PIECES.whitePieces.includes(e.firstElementChild) 
+        );
+      });
+      kArr = kArr.filter((e) => {
+        return (
+          e &&
+          !PIECES.whitePieces.includes(e.firstElementChild) 
+        );
+      });
+      if (kArr.length >= optionsArr.length) {
+        options = false;
+      }
+      for (let p of possibles) {
+        p.classList.add("possible");
+        kArr.remove(p);
+      }
+    }
+    //FIX FOR RECENT CAMERAROLL BUG (piece doesnt stop looking through king)
+    if (piece == PIECES.kings[0]) {
+      restrictedAreas = [];
+      killArr = [];
+      newKingArr = kingArr.filter((e) => {
+        return e && !PIECES.blackPieces.includes(e.firstElementChild);
+      });
+      for (let a of pieceOptions) {
+        opponentArr = [];
+        a && !PIECES.kings.includes(a.firstElementChild)
+          ? a.classList.add("vision")
+          : null;
+        for (let b of PIECES.whitePieces) {
+          tempArr = findOptions(b, false, true, piece);
+          tempArr = tempArr.filter((e) => {
+            return (
+              e &&
+              !PIECES.whitePieces.includes(e) &&
+              !e.classList.contains("vision")
+            );
+          });
+          killArr = findOptions(b, false, false);
+          if (pieceOptions.includes(b.parentElement)) {
+            possibles.push(b.parentElement);
+          }
+          tempArr.length > 0 ? opponentArr.push(tempArr) : null;
+        }
+        for (let t of opponentArr) {
+          if (getArraysIntersection(t, kingArr).length > 0) {
+            console.log(getArraysIntersection(t, kingArr))
+            for (let b of getArraysIntersection(t, kingArr)) {
+              restrictedAreas.push(b)
+            }
+          }
+        }
+        a ? a.classList.remove("vision") : null;
+      }
+        let c = getArraysIntersection(restrictedAreas, pieceOptions);
+        for (let k of c) {
+          k ? k.classList.remove("possible") : null;
+          k ? kArr.push(k) : null;
+        }
+        let optionsArr = findOptions(piece, false, true).filter((e) => {
+          return (
+            e &&
+            !PIECES.blackPieces.includes(e.firstElementChild) 
+          );
+        });
+        kArr = kArr.filter((e) => {
+          return (
+            e &&
+            !PIECES.blackPieces.includes(e.firstElementChild) 
+          );
+        });
+        if (kArr.length >= optionsArr.length) {
+          options = false;
+        }
+        for (let p of possibles) {
+          p.classList.add("possible");
+          kArr.remove(p);
+        }
+      }
   if (returnOpponentArr) {
     return opponentArr;
   } else {
