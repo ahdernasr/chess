@@ -239,8 +239,8 @@ export function findOptions(
     if (!checkForDanger && PIECES.soldiers.includes(piece)) {
       findSpot(x, y + 1) ? arr.remove(findSpot(x, y + 1)) : null;
       findSpot(x, y + 2) ? arr.remove(findSpot(x, y + 2)) : null;
-      findSpot(x + 1, y + 1) ? arr.push(findSpot(x + 1, y + 1)) : null;
-      findSpot(x - 1, y + 1) ? arr.push(findSpot(x - 1, y + 1)) : null;
+      findSpot(x + 1, y + 1)? arr.push(findSpot(x + 1, y + 1)) : null;
+      findSpot(x - 1, y + 1)? arr.push(findSpot(x - 1, y + 1)) : null;
     }
     if (!checkForDanger && PIECES.kings.includes(piece)) {
       findSpot(x + 2, y) ? arr.remove(findSpot(x + 2, y)) : null;
@@ -392,7 +392,7 @@ export function fixCheck(piece) {
   findPath(piece);
 }
 
-function findPath(piece, returnOpponentArr = true) {
+function findPath(piece, returnOpponentArr = true, runKing = true) {
   possibles = [];
   let x, y;
   let kingArr = [];
@@ -462,8 +462,9 @@ function findPath(piece, returnOpponentArr = true) {
     }
       let c = getArraysIntersection(restrictedAreas, pieceOptions);
       for (let k of c) {
+        // k && !PIECES.blackPieces.includes(k.firstElementChild) ? k.classList.remove("possible") : null;
         k ? k.classList.remove("possible") : null;
-        k ? kArr.push(k) : null;
+        k && !PIECES.blackPieces.includes(k.firstElementChild)? kArr.push(k) : null;
       }
       let optionsArr = findOptions(piece, false, true).filter((e) => {
         return (
@@ -479,6 +480,8 @@ function findPath(piece, returnOpponentArr = true) {
           !e.classList.contains("vision")
         );
       });
+      console.log(kArr)
+      console.log(optionsArr)
       if (kArr.length >= optionsArr.length) {
         options = false;
       }
@@ -554,7 +557,7 @@ function findPath(piece, returnOpponentArr = true) {
   } else {
     options = false;
   }
-  if (piece == PIECES.kings[1]) {
+  if (piece == PIECES.kings[1] && !runKing) {
     restrictedAreas = [];
     killArr = [];
     newKingArr = kingArr.filter((e) => {
@@ -582,7 +585,6 @@ function findPath(piece, returnOpponentArr = true) {
       }
       for (let t of opponentArr) {
         if (getArraysIntersection(t, kingArr).length > 0) {
-          console.log(getArraysIntersection(t, kingArr))
           for (let b of getArraysIntersection(t, kingArr)) {
             restrictedAreas.push(b)
           }
@@ -616,7 +618,7 @@ function findPath(piece, returnOpponentArr = true) {
       }
     }
     //FIX FOR RECENT CAMERAROLL BUG (piece doesnt stop looking through king)
-    if (piece == PIECES.kings[0]) {
+    if (piece == PIECES.kings[0] && !runKing) {
       restrictedAreas = [];
       killArr = [];
       newKingArr = kingArr.filter((e) => {
@@ -644,7 +646,6 @@ function findPath(piece, returnOpponentArr = true) {
         }
         for (let t of opponentArr) {
           if (getArraysIntersection(t, kingArr).length > 0) {
-            console.log(getArraysIntersection(t, kingArr))
             for (let b of getArraysIntersection(t, kingArr)) {
               restrictedAreas.push(b)
             }
@@ -694,34 +695,34 @@ function findPath(piece, returnOpponentArr = true) {
 }
 
 export async function checkMate(color) {
-  let availbleOptions = 0;
-  if (color == "white") {
-    for (let w of PIECES.whitePieces) {
-      if (findPath(w, false)) {
-        availbleOptions += 1;
-      }
-    }
-    if (findKingDanger(PIECES.blackPieces[0])) {
-      availbleOptions += 1;
-    }
-    if (availbleOptions == 0) {
-      await sleep(50);
-      alert("Black Wins");
-    }
-  } else if (color == "black") {
-    for (let w of PIECES.blackPieces) {
-      if (findPath(w, false)) {
-        availbleOptions += 1;
-      }
-    }
-    if (findKingDanger(PIECES.whitePieces[0])) {
-      availbleOptions += 1;
-    }
-    if (availbleOptions == 0) {
-      await sleep(50);
-      alert("White Wins");
-    }
-  }
+  // let availbleOptions = 0;
+  // if (color == "white") {
+  //   for (let w of PIECES.whitePieces) {
+  //     if (findPath(w, false, false)) {
+  //       availbleOptions += 1;
+  //     }
+  //   }
+  //   if (findKingDanger(PIECES.blackPieces[0])) {
+  //     availbleOptions += 1;
+  //   }
+  //   if (availbleOptions == 0) {
+  //     await sleep(50);
+  //     alert("Black Wins");
+  //   }
+  // } else if (color == "black") {
+  //   for (let w of PIECES.blackPieces) {
+  //     if (findPath(w, false, false)) {
+  //       availbleOptions += 1;
+  //     }
+  //   }
+  //   if (findKingDanger(PIECES.whitePieces[0])) {
+  //     availbleOptions += 1;
+  //   }
+  //   if (availbleOptions == 0) {
+  //     await sleep(50);
+  //     alert("White Wins");
+  //   }
+  // }
 }
 
 Array.prototype.remove = function () {
