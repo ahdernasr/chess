@@ -89,8 +89,6 @@ body {
     width: 3rem;
     height: 3rem;
     padding: 0.4rem;
-    /* border: 0.1px solid gray; */
-    /* border: 0.1px solid beige; */
     position: relative;
 }
 
@@ -99,8 +97,7 @@ body {
 }
 
 .white {
-    /* background-color: rgb(207, 206, 206); */
-    /* background-color: #b76f20; */
+
     background-color: #ffcc9c;
 }
 
@@ -130,7 +127,6 @@ body {
 .piece:hover {
     top: 52%;
     transition: top 0.2s;
-    cursor: grab;
 }
 
 .dragging {
@@ -143,24 +139,17 @@ body {
 }
 
 .possible {
-    /* box-shadow: 1px 1px 5px 5px rgba(119, 255, 107, 0.46) inset; */
     background-color: rgba(12, 153, 12, 0.391) !important;
     transition: background-color 0.15s;
-    /* box-shadow: inset 0px 0px 0px 5px #ce5501; */
-    /* background-color: rgba(107, 255, 107, 0.186) */
-    /* background-color: #ce5501; */
-    /* background-color: #ff9205; */
-    /* box-shadow: inset 0px 0px 0px 5px rgb(12, 153, 12); */
+
 }
 
 .check {
-    /* box-shadow: 1px 1px 5px 5px rgba(247, 43, 43, 0.46) inset; */
     background-color: rgba(252, 17, 17, 0.76);
 }
 
 
 .currentMove {
-    /* background-color: rgba(255, 166, 0, 0.781); */
     background-color: rgba(255, 68, 0, 0.726);
 }
 
