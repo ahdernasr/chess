@@ -471,7 +471,6 @@ function findPath(piece, returnOpponentArr = true, runKing = true) {
     }
     let c = getArraysIntersection(restrictedAreas, pieceOptions);
     for (let k of c) {
-      // k && !PIECES.blackPieces.includes(k.firstElementChild) ? k.classList.remove("possible") : null;
       k ? k.classList.remove("possible") : null;
       k && !PIECES.blackPieces.includes(k.firstElementChild)
         ? kArr.push(k)
